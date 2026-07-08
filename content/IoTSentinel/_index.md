@@ -18,7 +18,7 @@ Hệ thống được thiết kế theo mô hình **Event-Driven Architecture** 
 2.  **Processing & Buffering Layer:** Đệm luồng dữ liệu khổng lồ và xử lý logic tự động để phát hiện bất thường.
 3.  **Storage & Alerting Layer:** Lưu trữ chuỗi thời gian (time-series) và kích hoạt cảnh báo khẩn cấp.
 
-![Sơ đồ kiến trúc hệ thống](/images/IoT-Sentinel-Diagram.png)
+![Sơ đồ kiến trúc hệ thống](/aws-project/images/IoT-Sentinel-Diagram.png)
 
 ### Điểm nhấn công nghệ
 * **AWS IoT Core:** Cổng giao tiếp an toàn nhận dữ liệu MQTT từ hàng ngàn thiết bị.

@@ -36,6 +36,6 @@ python truck_simulator.py
 
 Nếu mọi cấu hình chính xác, bạn sẽ thấy Terminal in ra thông báo kết nối thành công và liên tục đẩy dữ liệu GPS cùng nhiệt độ (từ 2°C - 8°C) lên AWS mỗi giây!
 
-![Chạy script Python](/images/IoTSentinel/3-kiem-tra/run_script.png?featherlight=false&width=90pc)
+![Chạy script Python](/aws-project/images/IoTSentinel/3-kiem-tra/run_script.png?featherlight=false&width=90pc)
 
 > **Mẹo:** Cứ để Terminal chạy như vậy để giả lập xe tải đang đi trên đường. Chúng ta sẽ chuyển sang trình duyệt để xem AWS "hứng" dữ liệu này như thế nào.

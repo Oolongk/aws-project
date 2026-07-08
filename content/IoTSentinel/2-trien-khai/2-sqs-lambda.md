@@ -15,9 +15,9 @@ Amazon SQS đóng vai trò là "giảm xóc" cho hệ thống. Khi hàng ngàn x
    - **Type**: Chọn **Standard**.
    - **Name**: `IoT_Fleet_Queue`.
 4. Giữ các thiết lập mặc định và nhấn **Create queue**.
-![Tạo SQS Queue](/images/IoTSentinel/2-trien-khai/sqs_create.png?featherlight=false&width=90pc)
+![Tạo SQS Queue](/aws-project/images/IoTSentinel/2-trien-khai/sqs_create.png?featherlight=false&width=90pc)
 5. **Quan trọng**: Sau khi tạo xong, hãy copy **URL** của hàng đợi (có dạng `https://sqs...`) để sử dụng trong bước cấu hình IoT Rule sau này.
-![Tạo SQS Queue](/images/IoTSentinel/2-trien-khai/sqs_create_2.png?featherlight=false&width=90pc)
+![Tạo SQS Queue](/aws-project/images/IoTSentinel/2-trien-khai/sqs_create_2.png?featherlight=false&width=90pc)
 
 ---
 
@@ -30,18 +30,18 @@ Hàm Lambda này là "bộ não" của hệ thống. Nó sẽ tự động kích
    - **Function name**: `IoT_Process_Data`.
    - **Runtime**: Chọn **Python 3.9** hoặc mới hơn.
 3. Nhấn **Create function**.
-![Cấp quyền cho Lambda](/images/IoTSentinel/2-trien-khai/lambda_create.png?featherlight=false&width=90pc)
+![Cấp quyền cho Lambda](/aws-project/images/IoTSentinel/2-trien-khai/lambda_create.png?featherlight=false&width=90pc)
 
 **Bước B: Cấp quyền (Permissions)**
 Để Lambda có thể đọc SQS, ghi vào DynamoDB và gửi tin qua SNS, bạn cần cấp quyền cho nó:
 1. Vào tab **Configuration** > **Permissions** > Nhấn vào tên **Role** để mở giao diện IAM.
-![Cấp quyền cho Lambda](/images/IoTSentinel/2-trien-khai/lambda_iam_1.png?featherlight=false&width=90pc)
+![Cấp quyền cho Lambda](/aws-project/images/IoTSentinel/2-trien-khai/lambda_iam_1.png?featherlight=false&width=90pc)
 
 2. Nhấn **Add permissions** > **Attach policies**.
-![Cấp quyền cho Lambda](/images/IoTSentinel/2-trien-khai/lambda_iam_2.png?featherlight=false&width=90pc)
+![Cấp quyền cho Lambda](/aws-project/images/IoTSentinel/2-trien-khai/lambda_iam_2.png?featherlight=false&width=90pc)
 
 3. Tìm và thêm các quyền: `AmazonSQSFullAccess`, `AmazonDynamoDBFullAccess`, `AmazonSNSFullAccess`.
-![Cấp quyền cho Lambda](/images/IoTSentinel/2-trien-khai/lambda_iam_3.png?featherlight=false&width=90pc)
+![Cấp quyền cho Lambda](/aws-project/images/IoTSentinel/2-trien-khai/lambda_iam_3.png?featherlight=false&width=90pc)
 
 
 
@@ -78,8 +78,8 @@ def lambda_handler(event, context):
 
 **Bước D: Thêm Trigger**
 1. Nhấn **Add trigger** > Chọn **SQS**.
-![Thêm Trigger SQS](/images/IoTSentinel/2-trien-khai/lambda_trigger_1.png?featherlight=false&width=90pc)
+![Thêm Trigger SQS](/aws-project/images/IoTSentinel/2-trien-khai/lambda_trigger_1.png?featherlight=false&width=90pc)
 
 2. Chọn hàng đợi `IoT_Fleet_Queue` vừa tạo.
-![Thêm Trigger SQS](/images/IoTSentinel/2-trien-khai/lambda_trigger_2.png?featherlight=false&width=90pc)
+![Thêm Trigger SQS](/aws-project/images/IoTSentinel/2-trien-khai/lambda_trigger_2.png?featherlight=false&width=90pc)
 3. Nhấn **Add**.
