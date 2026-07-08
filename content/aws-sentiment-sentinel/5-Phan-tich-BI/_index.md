@@ -22,10 +22,10 @@ Amazon Athena cho phép đọc trực tiếp dữ liệu thô trên S3 mà khôn
    - Từ menu bên trái, chọn **Query editor**
    - Tại màn hình Editor v3, nhìn sang góc phải chọn tab **Query Settings** -> Bấm **Manage**.
    - Tại mục *Query result location*, chỉ định một đường dẫn S3 dùng để lưu log truy vấn (Folder athena_result đã tạo ở mục 2). Bấm **Save**.
-![Athena](/images/youtube/4-Xu-ly-AI/Athena-0.png)
-![Athena](/images/youtube/4-Xu-ly-AI/Athena-1.png)
-![Athena](/images/youtube/4-Xu-ly-AI/Athena-2.png)
-![Athena](/images/youtube/4-Xu-ly-AI/Athena-3.png)
+![Athena](/aws-project/images/youtube/4-Xu-ly-AI/Athena-0.png)
+![Athena](/aws-project/images/youtube/4-Xu-ly-AI/Athena-1.png)
+![Athena](/aws-project/images/youtube/4-Xu-ly-AI/Athena-2.png)
+![Athena](/aws-project/images/youtube/4-Xu-ly-AI/Athena-3.png)
 
 1. Quay lại tab **Editor**, chạy lệnh DDL sau để tạo cơ sở dữ liệu:
    ```sql
@@ -85,11 +85,11 @@ Bây giờ, QuickSight sẽ chỉ làm việc với View sạch sẽ `vw_youtube
    - Tích chọn **Amazon S3**. Một bảng danh sách các Bucket sẽ hiện lên.
    - **BƯỚC QUAN TRỌNG:** Tìm và tích vào Bucket Data Lake của bạn để cấp quyền Đọc (Read). Bắt buộc phải tích thêm vào ô **Write permission for Athena Workgroup** ở cột kế bên để QuickSight có quyền ghi log kết quả truy vấn.
 6. Bấm **Save**.
-![QuickSight](/images/youtube/4-Xu-ly-AI/Quicksight-1.png)
-![QuickSight](/images/youtube/4-Xu-ly-AI/Quicksight-2.png)
-![QuickSight](/images/youtube/4-Xu-ly-AI/Quicksight-3.png)
-![QuickSight](/images/youtube/4-Xu-ly-AI/Quicksight-4.png)
-![QuickSight](/images/youtube/4-Xu-ly-AI/Quicksight-5.png)
+![QuickSight](/aws-project/images/youtube/4-Xu-ly-AI/Quicksight-1.png)
+![QuickSight](/aws-project/images/youtube/4-Xu-ly-AI/Quicksight-2.png)
+![QuickSight](/aws-project/images/youtube/4-Xu-ly-AI/Quicksight-3.png)
+![QuickSight](/aws-project/images/youtube/4-Xu-ly-AI/Quicksight-4.png)
+![QuickSight](/aws-project/images/youtube/4-Xu-ly-AI/Quicksight-5.png)
 
 ---
 
@@ -116,17 +116,17 @@ Tại màn hình Analysis, thiết lập các biểu đồ (Visuals) cốt lõi 
 1. **Tổng quan Phân bổ Cảm xúc (Pie Chart):**
    - *Mục đích:* Thể hiện tỷ lệ % các luồng ý kiến (Tích cực, Tiêu cực, Trung lập).
    - *Cấu hình:* Kéo trường `sentiment` vào mục **Group/Color**. Kéo trường `comment_id` vào mục **Value** (mặc định áp dụng hàm Count).
-![Dashboard](/images/youtube/4-Xu-ly-AI/Quicksight-Dashboard-1.png)
+![Dashboard](/aws-project/images/youtube/4-Xu-ly-AI/Quicksight-Dashboard-1.png)
   
 2. **Bảng Đối soát Dữ liệu (Table):**
    - *Mục đích:* Liệt kê chi tiết văn bản để kiểm chứng độ chính xác của mô hình Claude 3.5.
    - *Cấu hình:* Kéo thả các cột `vietnamese_text`, `sentiment`,`author`,`published_at`,`original_text`,`language` vào mục **Group by**.
-![Dashboard](/images/youtube/4-Xu-ly-AI/Quicksight-Dashboard-3.png)
+![Dashboard](/aws-project/images/youtube/4-Xu-ly-AI/Quicksight-Dashboard-3.png)
 
 3. **Phân loại theo Ngôn ngữ (Donut Chart):**
    - *Mục đích:* Giám sát mức độ đa dạng ngôn ngữ của tập dữ liệu thô cào được từ YouTube.
    - *Cấu hình:* Kéo `language` vào **Group/Color**, `video_id` vào **Value**.
-![Dashboard](/images/youtube/4-Xu-ly-AI/Quicksight-Dashboard-4.png)
+![Dashboard](/aws-project/images/youtube/4-Xu-ly-AI/Quicksight-Dashboard-4.png)
 
 ---
 
