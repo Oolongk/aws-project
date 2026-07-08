@@ -3,7 +3,7 @@ title: "Clickstream Analytics & AI Recommender"
 date: 2026-07-08
 weight: 4
 chapter: true
-pre: "Project 4"
+pre: "Project 4 "
 ---
 
 <<<<<<< HEAD

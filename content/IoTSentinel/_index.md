@@ -3,7 +3,7 @@ title: "IoT Fleet Monitoring System"
 date: 2026-07-08
 weight: 3
 chapter: true
-pre: "Project 3"
+pre: "Project 3 "
 ---
 
 # IoT Fleet Monitoring System

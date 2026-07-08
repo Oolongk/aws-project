@@ -3,7 +3,7 @@ title: "Dota 2 Meta Analytics Data Lakehouse"
 date: 2026-07-08
 weight: 1
 chapter: true
-pre: "Project 1"
+pre: "Project 1 "
 ---
 
 # Dota 2 Meta Analytics Data Lakehouse

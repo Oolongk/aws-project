@@ -3,7 +3,7 @@ title: "Social Media Sentiment Sentinel"
 date: 2026-07-08
 weight: 5
 chapter: true
-pre: "Project 5"
+pre: "Project 5 "
 ---
 
 # Social Media Sentiment Sentinel

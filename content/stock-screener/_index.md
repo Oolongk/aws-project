@@ -3,7 +3,7 @@ title: "Quantamental Stock Screener Time-Series Pipeline"
 date: 2026-07-08
 weight: 2
 chapter: true
-pre: "Project 2"
+pre: "Project 2 "
 ---
 
 # Quantamental Stock Screener Time-Series Pipeline
