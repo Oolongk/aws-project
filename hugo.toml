@@ -1,0 +1,23 @@
+baseURL = "http://example.org/"
+languageCode = "vi-VN"
+title = "AWS IoT Sentinel"
+theme = "learn"  
+
+[params]
+  themeVariant = "blue" # Có thể chọn: "red", "blue", "green"
+    custom_css = ["css/custom.css"]
+    disableHomeIcon = true
+
+
+[outputs]
+  home = [ "HTML", "RSS", "JSON"]
+
+[[menu.shortcuts]] 
+name = "<i class='fab fa-github'></i> Github repo"
+url = "https://github.com/matcornic/hugo-theme-learn"
+weight = 10
+
+[[menu.shortcuts]]
+name = "<i class='fas fa-camera'></i> Showcases"
+url = "https://themes.gohugo.io/theme/hugo-theme-learn/"
+weight = 11
