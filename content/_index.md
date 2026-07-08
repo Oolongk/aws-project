@@ -6,8 +6,6 @@ weight: 1
 
 # AWS FCJ Projects Portfolio
 
-Xin chào, đây là portfolio tổng hợp 5 project AWS của tôi dùng để nộp đánh giá cho chương trình **AWS First Cloud Journey**.
-
 Các project trong portfolio này tập trung vào việc xây dựng hệ thống cloud thực tế trên AWS, bao gồm Data Lakehouse, Big Data Processing, Serverless Data Pipeline, Real-time Streaming, Analytics Dashboard và AI Recommendation System.
 
 ## Mục tiêu của các Workshop
@@ -33,3 +31,4 @@ Workshop này được xây dựng nhằm thể hiện khả năng thiết kế 
 | 4 | Clickstream Analytics & AI Recommender | Thu thập hành vi người dùng, phân tích clickstream và tích hợp Amazon Personalize để gợi ý nội dung bằng AI. |
 | 5 | YouTube Sentinel & Dashboard | Hệ thống serverless tự động phân tích cảm xúc bình luận YouTube và hiển thị kết quả trên dashboard. |
 
+{{% children %}}
