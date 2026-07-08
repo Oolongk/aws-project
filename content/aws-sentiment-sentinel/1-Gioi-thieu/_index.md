@@ -15,7 +15,7 @@ Hệ thống được thiết kế theo mô hình **Event-Driven Architecture** 
 2.  **AI Processing Layer:** Xử lý và phân tích bằng AI.
 3.  **Serving & BI Layer:** Truy vấn và hiển thị.
 
-![Sơ đồ kiến trúc hệ thống](/images/sentinel/architecture_diagram.png)
+![Sơ đồ kiến trúc hệ thống](/images/youtube/sentinel/architecture_diagram.png)
     
 
 ### Điểm nhấn công nghệ

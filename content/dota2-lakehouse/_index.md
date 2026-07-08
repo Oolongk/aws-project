@@ -20,7 +20,7 @@ Dự án này chính là câu trả lời. Tôi sẽ hướng dẫn bạn tự t
 
 Dự án được thiết kế theo chuẩn Enterprise Architecture, phân tách rõ ràng thành 4 lớp (Swimlanes) độc lập. Việc phân tách này đảm bảo nếu một lớp bị lỗi (ví dụ API sập), các lớp khác vẫn hoạt động bình thường (Fault Tolerance).
 
-![Dota 2 Serverless Data Pipeline](/images/Dota2-Pipeline.png?featherlight=false&width=90pc)
+![Dota 2 Serverless Data Pipeline](/images/dota2/Dota2-Pipeline.png?featherlight=false&width=90pc)
 
 ### Chi tiết luồng dữ liệu (Data Flow):
 

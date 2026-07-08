@@ -22,7 +22,7 @@ Bên cạnh đó, chúng ta cũng cần "đánh thức" mô hình Claude 3 trên
 
 *(Lưu ý nhỏ: Nếu tài khoản của bạn là tài khoản mới tinh và AWS hiện lên một form yêu cầu **Submit use case details**, bạn chỉ cần điền đơn giản: Tên dự án, Website (có thể để link Github), và Mô tả là "Phân tích dữ liệu mạng xã hội cho mục đích học tập" rồi bấm Submit là xong).*
 
-![Test Claude 3 trên Playgrounds](/images/2-Chuan-bi/bedrock-playgrounds-test.png)
+![Test Claude 3 trên Playgrounds](/images/youtube/2-Chuan-bi/bedrock-playgrounds-test.png)
 
 ---
 
@@ -33,16 +33,16 @@ Hàm Ingestor làm nhiệm vụ cào dữ liệu thô và ghi vào Data Lake (S3
 1. Truy cập **AWS IAM** -> Chọn **Roles** ở menu bên trái -> Nhấp **Create role**.
 2. **Trusted entity type:** Chọn **AWS service**.
 3. **Use case:** Chọn **Lambda** -> Nhấp **Next**.
-![Tạo IAM role](/images/2-Chuan-bi/IAM-1.png)
+![Tạo IAM role](/images/youtube/2-Chuan-bi/IAM-1.png)
 4. Ở ô tìm kiếm (Permissions policies), tìm và **tích chọn 3 quyền** sau:
    * `AmazonS3FullAccess`
    * `AmazonDynamoDBFullAccess`
    * `AWSLambdaBasicExecutionRole` (Quyền bắt buộc để ghi log hoạt động).
    * `AmazonSQSFullAccess` 
 5. Nhấp **Next** -> Đặt tên Role là `IngestorRole` -> Nhấp **Create role**.
-![Tạo IAM role](/images/2-Chuan-bi/IAM-2.png)
-![Tạo IAM role](/images/2-Chuan-bi/IAM-3.png)
-![Tạo IAM role](/images/2-Chuan-bi/IAM-3-1.png)
+![Tạo IAM role](/images/youtube/2-Chuan-bi/IAM-2.png)
+![Tạo IAM role](/images/youtube/2-Chuan-bi/IAM-3.png)
+![Tạo IAM role](/images/youtube/2-Chuan-bi/IAM-3-1.png)
    
 
 ---

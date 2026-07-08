@@ -15,7 +15,7 @@ Ngay khi script Python đang chạy, dữ liệu đã được đẩy qua IoT Co
 3. Chọn bảng `IoT_Fleet_Data` của bạn.
 4. Nhấn nút **Run** (Hoặc Scan). Bạn sẽ thấy hàng loạt bản ghi (Items) hiện ra với đầy đủ thông tin: `truck_id`, `temperature`, `latitude`, `longitude` và `timestamp_ms`.
 
-![Dữ liệu DynamoDB](/images/3-kiem-tra/dynamo_data.png?featherlight=false&width=90pc)
+![Dữ liệu DynamoDB](/images/IoTSentinel/3-kiem-tra/dynamo_data.png?featherlight=false&width=90pc)
 
 *Dữ liệu được cập nhật liên tục theo thời gian thực (Real-time)!*
 
@@ -27,7 +27,7 @@ Trong mã nguồn giả lập, nhiệt độ được thiết lập dao động 
 2. Bạn sẽ thấy các email cảnh báo được gửi đến với tiêu đề: **Cảnh báo nhiệt độ vắc-xin**.
 3. Nội dung email sẽ chỉ đích danh xe tải nào đang gặp sự cố và mức nhiệt độ hiện tại là bao nhiêu.
 
-![Email cảnh báo](/images/3-kiem-tra/email_alert.png?featherlight=false&width=90pc)
+![Email cảnh báo](/images/IoTSentinel/3-kiem-tra/email_alert.png?featherlight=false&width=90pc)
 
 ---
 

@@ -18,8 +18,8 @@ EventBridge Scheduler là công cụ lập lịch hiện đại của AWS, cho p
 
 1. Truy cập dịch vụ **Amazon EventBridge** trên AWS Console.
 2. Tại menu bên trái, tìm mục *Scheduler* và chọn **Schedules** -> Bấm **Create schedule**.
-![Eventbridge](/images/6-Tu-dong-hoa-he-thong/EventBridge-1.png)
-![Eventbridge](/images/6-Tu-dong-hoa-he-thong/EventBridge-2.png)
+![Eventbridge](/images/youtube/6-Tu-dong-hoa-he-thong/EventBridge-1.png)
+![Eventbridge](/images/youtube/6-Tu-dong-hoa-he-thong/EventBridge-2.png)
    
 3. **Bước 1: Specify schedule detail (Chi tiết lịch trình)**
    - **Schedule name:** `Daily-Youtube-Data-Ingestion`
@@ -28,15 +28,15 @@ EventBridge Scheduler là công cụ lập lịch hiện đại của AWS, cho p
    - **Cron expression:** Điền `0 8 * * ? *` (Tương đương 8:00 AM mỗi ngày).
    - **Timezone:** Gõ và chọn múi giờ của bạn, ví dụ: `Asia/Ho_Chi_Minh`.
    - Bấm **Next**.
-![Eventbridge](/images/6-Tu-dong-hoa-he-thong/EventBridge-3.png)
-![Eventbridge](/images/6-Tu-dong-hoa-he-thong/EventBridge-4.png)
+![Eventbridge](/images/youtube/6-Tu-dong-hoa-he-thong/EventBridge-3.png)
+![Eventbridge](/images/youtube/6-Tu-dong-hoa-he-thong/EventBridge-4.png)
   
 4. **Bước 2: Select target (Chọn mục tiêu)**
    - Chọn **AWS Lambda**.
    - Tại mục *Lambda function*, trỏ vào hàm **`Producer_Lambda`** của bạn.
    - Bấm **Next**.
-![Eventbridge](/images/6-Tu-dong-hoa-he-thong/EventBridge-5.png)
-![Eventbridge](/images/6-Tu-dong-hoa-he-thong/EventBridge-6.png)
+![Eventbridge](/images/youtube/6-Tu-dong-hoa-he-thong/EventBridge-5.png)
+![Eventbridge](/images/youtube/6-Tu-dong-hoa-he-thong/EventBridge-6.png)
   
 5. **Bước 3: Settings**
    - Giữ nguyên các thông số mặc định. Hệ thống sẽ tự động tạo một IAM Role mới cho phép EventBridge gọi hàm Lambda này.
@@ -53,18 +53,18 @@ Dữ liệu mới đã nằm trong S3, nhưng bộ nhớ đệm SPICE của Quic
 1. Mở giao diện **AWS QuickSight**.
 2. Tại menu bên trái, chọn **Datasets**.
 3. Bấm vào Datasets của dự án.
-![Schedule](/images/6-Tu-dong-hoa-he-thong/Schedule-1.png)
+![Schedule](/images/youtube/6-Tu-dong-hoa-he-thong/Schedule-1.png)
    
 4. Chuyển sang tab **Refresh** -> Bấm **Add schedule**.
-![Schedule](/images/6-Tu-dong-hoa-he-thong/Schedule-2.png)
-![Schedule](/images/6-Tu-dong-hoa-he-thong/Schedule-3-0.png)
+![Schedule](/images/youtube/6-Tu-dong-hoa-he-thong/Schedule-2.png)
+![Schedule](/images/youtube/6-Tu-dong-hoa-he-thong/Schedule-3-0.png)
 
    
 5. Cấu hình lịch cập nhật (Refresh setup):
    - **Frequency:** Daily (Hàng ngày).
    - **Timezone:** `Asia/Ho_Chi_Minh`.
    - **Start time:** `08:30`.
-![Schedule](/images/6-Tu-dong-hoa-he-thong/Schedule-3.png)
+![Schedule](/images/youtube/6-Tu-dong-hoa-he-thong/Schedule-3.png)
   
 1. Bấm **Save**.
 

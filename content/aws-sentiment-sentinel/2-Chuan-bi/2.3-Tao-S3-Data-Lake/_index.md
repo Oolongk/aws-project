@@ -17,8 +17,8 @@ Trong kiến trúc chuẩn của Data Engineer, chúng ta sẽ xây dựng một
 3. **Bucket name:** Nhập tên theo cấu trúc `social-sentiment-datalake-tencuaban` (Thay *tencuaban* bằng tên hoặc MSSV của bạn).
 4. Giữ nguyên tất cả cài đặt mặc định (đặc biệt là tính năng chặn truy cập công cộng *Block all public access*).
 5. Kéo xuống dưới cùng và bấm **Create bucket**.
-![Cấu trúc thư mục S3](/images/2-Chuan-bi/S3-1.png)
-![Cấu trúc thư mục S3](/images/2-Chuan-bi/S3-2.png)
+![Cấu trúc thư mục S3](/images/youtube/2-Chuan-bi/S3-1.png)
+![Cấu trúc thư mục S3](/images/youtube/2-Chuan-bi/S3-2.png)
    
 
 ### Bước 2: Tạo các Thư mục (Data Layers)
@@ -29,5 +29,5 @@ Bấm vào Bucket vừa tạo, sau đó bấm nút **Create folder** để tạo
 2. **`processed_data`**: Vùng chứa dữ liệu đã làm sạch và được AI gắn nhãn cảm xúc (Silver Layer).
 3. **`athena_results`**: Thư mục kỹ thuật bắt buộc để lưu file log mỗi khi AWS Athena chạy lệnh truy vấn.
 
-![Cấu trúc thư mục S3](/images/2-Chuan-bi/S3-3.png)
+![Cấu trúc thư mục S3](/images/youtube/2-Chuan-bi/S3-3.png)
 

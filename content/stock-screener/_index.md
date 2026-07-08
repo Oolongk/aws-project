@@ -36,7 +36,7 @@ Sau khi hoàn thành pipeline, hệ thống tạo ba lớp dữ liệu chính:
 Người dùng có thể nhập ticker, ví dụ `AAPL`, trên Web Frontend để xem lịch sử điểm QMJ và các chỉ số phục vụ việc sàng lọc cổ phiếu.
 
 
-![Kiến trúc US Stock Screener Pipeline](/images/diagram.jpg?featherlight=false&width=90pc)
+![Kiến trúc US Stock Screener Pipeline](/images/stock-screener/diagram.jpg?featherlight=false&width=90pc)
 
 ## Các lớp trong kiến trúc
 

@@ -20,15 +20,15 @@ Chúng ta cần 2 cuốn sổ ghi chép để hệ thống Lambda không bị "m
 2. Bấm **Create table** để tạo bảng thứ nhất (Sổ theo dõi bình luận):
    - **Table name:** `YoutubeCommentsTracker`  
    - **Partition key:** `comment_id` (Kiểu dữ liệu: *String*)
-![Tạo DynamoDB](/images/3-Thu-thap-du-lieu/Dynamo-1.png)
+![Tạo DynamoDB](/images/youtube/3-Thu-thap-du-lieu/Dynamo-1.png)
    - Bấm **Create table**.
-![Tạo DynamoDB](/images/3-Thu-thap-du-lieu/Dynamo-2.png)
+![Tạo DynamoDB](/images/youtube/3-Thu-thap-du-lieu/Dynamo-2.png)
    
 1. Tiếp tục bấm **Create table** để tạo bảng thứ hai (Sổ đen video lỗi):
    - **Table name:** `YoutubeVideoBlacklist`
    - **Partition key:** `video_id` (Kiểu dữ liệu: *String*)
    - Bấm **Create table**.
-![Tạo DynamoDB](/images/3-Thu-thap-du-lieu/Dynamo-3.png)
+![Tạo DynamoDB](/images/youtube/3-Thu-thap-du-lieu/Dynamo-3.png)
 
 ---
 
@@ -39,13 +39,13 @@ SQS (Simple Queue Service) sẽ đóng vai trò như một hệ thống giảm x
 2. Chọn **Create queue**.
 3. Chọn loại **Standard** (Tiêu chuẩn).
 4. Đặt tên: `YoutubeVideoQueue`.
-![Tạo SQS](/images/3-Thu-thap-du-lieu/SQS-1.png)
+![Tạo SQS](/images/youtube/3-Thu-thap-du-lieu/SQS-1.png)
    
 5. Giữ nguyên các thông số mặc định và bấm **Create queue**.
-![Tạo SQS](/images/3-Thu-thap-du-lieu/SQS-2.png)
+![Tạo SQS](/images/youtube/3-Thu-thap-du-lieu/SQS-2.png)
    
 6. **Lưu ý:** Hãy copy lại đường link `URL` của Queue này để dùng cho bước sau.
-![Tạo SQS](/images/3-Thu-thap-du-lieu/SQS-3.png)
+![Tạo SQS](/images/youtube/3-Thu-thap-du-lieu/SQS-3.png)
    
 
 ---
@@ -56,20 +56,20 @@ Hàm này có nhiệm vụ tìm kiếm video dựa trên danh sách từ khóa. 
 
 1. Truy cập **AWS Lambda**, tạo hàm mới tên là `Producer_Lambda` (Python 3.x).
 2. Gắn quyền (Role) `IngestorRole` đã tạo ở phần 2(vì nó có quyền truy cập vào Dynamo và SQS nên tận dùng lại ko cần phải tạo 1 role mới).
-![Tạo Producer](/images/3-Thu-thap-du-lieu/Producer_Lambda.png)
-![Tạo Producer](/images/3-Thu-thap-du-lieu/Lambda-2.png)
+![Tạo Producer](/images/youtube/3-Thu-thap-du-lieu/Producer_Lambda.png)
+![Tạo Producer](/images/youtube/3-Thu-thap-du-lieu/Lambda-2.png)
 
 3. Cài đặt **timeout** để **Producer** có thời gian chạy.
 
-   ![Tạo Producer](/images/3-Thu-thap-du-lieu/Producer_Lambda-1.png)
-![Tạo Producer](/images/3-Thu-thap-du-lieu/Producer_Lambda-2.png)
-![Tạo Producer](/images/3-Thu-thap-du-lieu/Producer_Lambda-3.png)
+   ![Tạo Producer](/images/youtube/3-Thu-thap-du-lieu/Producer_Lambda-1.png)
+![Tạo Producer](/images/youtube/3-Thu-thap-du-lieu/Producer_Lambda-2.png)
+![Tạo Producer](/images/youtube/3-Thu-thap-du-lieu/Producer_Lambda-3.png)
 4. Thêm Environment Variable: `YOUTUBE_API_KEY`.
 
-![Tạo Producer](/images/3-Thu-thap-du-lieu/Producer_Lambda-4.png)
-![Tạo Producer](/images/3-Thu-thap-du-lieu/Producer_Lambda-5.png)
-![Tạo Producer](/images/3-Thu-thap-du-lieu/Producer_Lambda-6.png)
-![Tạo Producer](/images/3-Thu-thap-du-lieu/Producer_Lambda-7.png)
+![Tạo Producer](/images/youtube/3-Thu-thap-du-lieu/Producer_Lambda-4.png)
+![Tạo Producer](/images/youtube/3-Thu-thap-du-lieu/Producer_Lambda-5.png)
+![Tạo Producer](/images/youtube/3-Thu-thap-du-lieu/Producer_Lambda-6.png)
+![Tạo Producer](/images/youtube/3-Thu-thap-du-lieu/Producer_Lambda-7.png)
    
 4. Dán đoạn code sau và bấm **Deploy**:
 

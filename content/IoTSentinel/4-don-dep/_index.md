@@ -13,31 +13,31 @@ pre : " <b> 4. </b> "
 2. Chọn `Vaccine_Truck_Fleet` và nhấn **Delete**.
 3. Vào **Message routing** > **Rules**, chọn `IoT_To_SQS_Rule` và nhấn **Delete**.
 
-![Xóa tài nguyên IoT](/images/4-don-dep/IoT-1.png?featherlight=false&width=90pc)
-![Xóa tài nguyên IoT](/images/4-don-dep/IoT-2.png?featherlight=false&width=90pc)
-![Xóa tài nguyên IoT](/images/4-don-dep/IoT-3.png?featherlight=false&width=90pc)
+![Xóa tài nguyên IoT](/images/IoTSentinel/4-don-dep/IoT-1.png?featherlight=false&width=90pc)
+![Xóa tài nguyên IoT](/images/IoTSentinel/4-don-dep/IoT-2.png?featherlight=false&width=90pc)
+![Xóa tài nguyên IoT](/images/IoTSentinel/4-don-dep/IoT-3.png?featherlight=false&width=90pc)
 
 #### 2. Xóa bộ xử lý Lambda & Hàng đợi SQS
 1. Mở dịch vụ **Lambda** > **Functions**, chọn `IoT_Process_Data` và nhấn **Delete**.
 
-![Xóa Lambda và SQS](/images/4-don-dep/Lambda-1.png?featherlight=false&width=90pc)
-![Xóa Lambda và SQS](/images/4-don-dep/Lambda-2.png?featherlight=false&width=90pc)
+![Xóa Lambda và SQS](/images/IoTSentinel/4-don-dep/Lambda-1.png?featherlight=false&width=90pc)
+![Xóa Lambda và SQS](/images/IoTSentinel/4-don-dep/Lambda-2.png?featherlight=false&width=90pc)
 
 2. Mở dịch vụ **SQS** > **Queues**, chọn `IoT_Fleet_Queue` và nhấn **Delete**. Nhập chữ `confirm` vào ô xác nhận.
 
-![Xóa Lambda và SQS](/images/4-don-dep/SQS-1.png?featherlight=false&width=90pc)
+![Xóa Lambda và SQS](/images/IoTSentinel/4-don-dep/SQS-1.png?featherlight=false&width=90pc)
 
 #### 3. Xóa Database DynamoDB & Thông báo SNS
 1. Mở dịch vụ **DynamoDB** > **Tables**, chọn bảng `IoT_Fleet_Data` và nhấn **Delete**. Nhập `confirm` để xác nhận.
 
-![Xóa DynamoDB và SNS](/images/4-don-dep/Dynamodb-1.png?featherlight=false&width=90pc)
-![Xóa DynamoDB và SNS](/images/4-don-dep/Dynamodb-2.png?featherlight=false&width=90pc)
+![Xóa DynamoDB và SNS](/images/IoTSentinel/4-don-dep/Dynamodb-1.png?featherlight=false&width=90pc)
+![Xóa DynamoDB và SNS](/images/IoTSentinel/4-don-dep/Dynamodb-2.png?featherlight=false&width=90pc)
 
 
 2. Mở dịch vụ **SNS** > **Topics**, chọn `TemperatureAlerts` và nhấn **Delete**.
 
-![Xóa DynamoDB và SNS](/images/4-don-dep/SNS-1.png?featherlight=false&width=90pc)
-![Xóa DynamoDB và SNS](/images/4-don-dep/SNS-2.png?featherlight=false&width=90pc)
+![Xóa DynamoDB và SNS](/images/IoTSentinel/4-don-dep/SNS-1.png?featherlight=false&width=90pc)
+![Xóa DynamoDB và SNS](/images/IoTSentinel/4-don-dep/SNS-2.png?featherlight=false&width=90pc)
 
 ---
 

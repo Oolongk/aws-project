@@ -19,7 +19,7 @@ Hệ thống được thiết kế theo mô hình **Event-Driven Architecture** 
 2. **Orchestration & ETL Layer:** Điều phối toàn bộ workflow, khắc phục triệt để lỗi "Race Condition" giữa các dịch vụ, và gọi SQL Serverless để biến đổi dữ liệu sang định dạng chuẩn cho AI.
 3. **Storage & AI Layer:** Lưu trữ dữ liệu khổng lồ trên Data Lake và huấn luyện mô hình Trí tuệ Nhân tạo (Recommender System) với chiến lược quản trị chi phí khắt khe.
 
-![Sơ đồ kiến trúc hệ thống Clickstream](/images/Clicksteam-Diagram.png?featherlight=false&width=90pc)
+![Sơ đồ kiến trúc hệ thống Clickstream](/images/Clickstream/Clicksteam-Diagram.png?featherlight=false&width=90pc)
 
 ### Điểm nhấn công nghệ
 * **Amazon Kinesis Data Firehose:** Cổng tiếp nhận luồng dữ liệu streaming và ép kiểu trực tiếp JSON sang Parquet dựa vào AWS Glue Schema.
