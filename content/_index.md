@@ -29,8 +29,8 @@ Sau khi hoàn thành pipeline, hệ thống tạo ba lớp dữ liệu chính:
 
 | Lớp dữ liệu | Vị trí | Vai trò |
 |---|---|---|
-| Raw Zone | `s3://stock-screener-raw-khanh/raw_us_market/` | Lưu dữ liệu gốc đã chuẩn hóa từ Backfill và Daily Ingestion |
-| Processed Zone | `s3://stock-screener-processed-khanh/processed_qmj/as_of_date=YYYY-MM-DD/` | Lưu Parquet đã tính QMJ, xếp hạng cổ phiếu và các score thành phần |
+| Raw Zone | `s3://stock-screener-raw-tên-của-bạn/raw_us_market/` | Lưu dữ liệu gốc đã chuẩn hóa từ Backfill và Daily Ingestion |
+| Processed Zone | `s3://stock-screener-processed-tên-của-bạn/processed_qmj/as_of_date=YYYY-MM-DD/` | Lưu Parquet đã tính QMJ, xếp hạng cổ phiếu và các score thành phần |
 | Serving Store | DynamoDB table `qmj_screener` | Lưu projection theo `ticker` và `snapshot_date` để API truy vấn nhanh |
 
 Người dùng có thể nhập ticker, ví dụ `AAPL`, trên Web Frontend để xem lịch sử điểm QMJ và các chỉ số phục vụ việc sàng lọc cổ phiếu.
