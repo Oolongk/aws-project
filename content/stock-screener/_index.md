@@ -1,12 +1,12 @@
 ---
-title: "US Stock Screener Pipeline"
-date: 2026-07-06
-weight: 1
+title: "Quantamental Stock Screener Time-Series Pipeline"
+date: 2026-07-08
+weight: 2
 chapter: true
-pre: "Tổng quan"
+pre: "Project 2"
 ---
 
-# US Stock Screener Pipeline
+# Quantamental Stock Screener Time-Series Pipeline
 
 US Stock Screener Pipeline là dự án Data Engineering xây dựng hệ thống thu thập, chuẩn hóa, tính điểm **Quality Minus Junk (QMJ)** cho cổ phiếu S&P 500 và hiển thị kết quả trên Web Frontend.
 

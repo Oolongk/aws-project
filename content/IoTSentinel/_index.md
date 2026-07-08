@@ -1,10 +1,12 @@
 ---
-title: "Tổng quan Dự án"
-date: 2026-05-13
-weight: 1
-chapter: false
+title: "IoT Fleet Monitoring System"
+date: 2026-07-08
+weight: 3
+chapter: true
+pre: "Project 3"
 ---
 
+# IoT Fleet Monitoring System
 ## Bài toán đặt ra
 Trong ngành vận tải y tế (vắc-xin) hoặc thực phẩm đông lạnh, việc duy trì nhiệt độ ổn định là yếu tố sống còn. Việc giám sát thủ công là không thể với hàng ngàn xe tải đang di chuyển, và chỉ một sự cố hỏng hệ thống làm mát cũng có thể gây thiệt hại khổng lồ.
 

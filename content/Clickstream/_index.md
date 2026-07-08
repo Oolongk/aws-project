@@ -1,11 +1,16 @@
 ---
-title: "Xây Dựng Hệ Thống Clickstream AI-Driven Serverless Data Lakehouse"
-date: 2026-06-25
-weight: 1
-chapter: false
-pre: "1. "
+title: "Clickstream Analytics & AI Recommender"
+date: 2026-07-08
+weight: 4
+chapter: true
+pre: "Project 4"
 ---
 
+<<<<<<< HEAD
+=======
+# Clickstream Analytics & AI Recommender
+
+>>>>>>> 0439bd1 (menu)
 ## Bài toán đặt ra
 Trong kỷ nguyên số, việc thấu hiểu hành vi người dùng (độc giả) theo thời gian thực chính là chìa khóa sống còn của các nền tảng báo điện tử. Việc xử lý luồng dữ liệu clickstream khổng lồ (dạng JSON phi cấu trúc) đòi hỏi một hệ thống tự động hóa hoàn toàn từ khâu thu thập, nén, biến đổi dữ liệu (ETL) cho đến việc đưa vào mô hình AI để gợi ý bài viết cá nhân hóa, đồng thời phải tối ưu chi phí vận hành tiệm cận mức $0.
 

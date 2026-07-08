@@ -1,10 +1,12 @@
 ---
-title: "Xây Dựng Data Lakehouse Serverless: Dota 2 Meta Analytics"
-date: 2026-06-29
+title: "Dota 2 Meta Analytics Data Lakehouse"
+date: 2026-07-08
 weight: 1
 chapter: true
-pre: "<b>"
+pre: "Project 1"
 ---
+
+# Dota 2 Meta Analytics Data Lakehouse
 
 #  Giới thiệu Dự án: Dota 2 Meta Analytics Data Lakehouse
 

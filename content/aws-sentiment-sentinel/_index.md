@@ -1,9 +1,9 @@
 ---
-title: "Xây dựng Data Pipeline Phân tích Cảm xúc Mạng xã hội trên AWS"
-date: 2026-02-25
-weight: 10
+title: "Social Media Sentiment Sentinel"
+date: 2026-07-08
+weight: 5
 chapter: true
-pre: "<b>Project </b>"
+pre: "Project 5"
 ---
 
 # Social Media Sentiment Sentinel
