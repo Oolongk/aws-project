@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Triển khai hệ thống on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title>
+		<link>http://localhost:1313/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/</link>
+		<description>Recent content in Triển khai hệ thống on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description>
+		<generator>Hugo</generator>
+		<language>vi</language>
+		
+		
+		
+		
+			<lastBuildDate>Wed, 13 May 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Khởi tạo DynamoDB &amp; SNS</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/1-dynamodb-sns/</link>
+				<pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/1-dynamodb-sns/</guid>
+				<description>&lt;h4 id=&#34;1-khởi-tạo-kho-lưu-trữ-amazon-dynamodb&#34;&gt;1. Khởi tạo kho lưu trữ Amazon DynamoDB&lt;/h4&gt;&#xA;&lt;p&gt;Amazon DynamoDB là cơ sở dữ liệu NoSQL với tốc độ phản hồi tính bằng mili-giây, cực kỳ phù hợp để lưu trữ dữ liệu chuỗi thời gian (time-series) liên tục đổ về từ các xe tải.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Truy cập &lt;strong&gt;AWS Management Console&lt;/strong&gt;, tìm kiếm và mở &lt;strong&gt;DynamoDB&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;Ở menu bên trái, chọn &lt;strong&gt;Tables&lt;/strong&gt; và nhấn nút &lt;strong&gt;Create table&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;Cấu hình bảng với các thông số sau:&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Table name&lt;/strong&gt;: &lt;code&gt;IoT_Fleet_Data&lt;/code&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Partition key&lt;/strong&gt;: &lt;code&gt;truck_id&lt;/code&gt; (Kiểu: &lt;strong&gt;String&lt;/strong&gt;) - &lt;em&gt;Dùng để gom nhóm dữ liệu theo từng xe tải.&lt;/em&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Sort key&lt;/strong&gt;: &lt;code&gt;timestamp_ms&lt;/code&gt; (Kiểu: &lt;strong&gt;Number&lt;/strong&gt;) - &lt;em&gt;Dùng để sắp xếp dữ liệu hành trình theo thời gian thực.&lt;/em&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/aws-project/images/IoTSentinel/2-trien-khai/dynamodb-create.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Tạo bảng DynamoDB&#34;&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Cấu hình SQS &amp; Lambda</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/2-sqs-lambda/</link>
+				<pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/2-sqs-lambda/</guid>
+				<description>&lt;h4 id=&#34;1-tạo-hàng-đợi-amazon-sqs&#34;&gt;1. Tạo hàng đợi Amazon SQS&lt;/h4&gt;&#xA;&lt;p&gt;Amazon SQS đóng vai trò là &amp;ldquo;giảm xóc&amp;rdquo; cho hệ thống. Khi hàng ngàn xe tải gửi dữ liệu cùng lúc, SQS sẽ hứng toàn bộ và giữ chúng trong hàng đợi để Lambda xử lý dần dần, tránh gây tràn tải.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Tìm kiếm và mở dịch vụ &lt;strong&gt;Simple Queue Service (SQS)&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;Nhấn &lt;strong&gt;Create queue&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;Cấu hình hàng đợi:&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Type&lt;/strong&gt;: Chọn &lt;strong&gt;Standard&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Name&lt;/strong&gt;: &lt;code&gt;IoT_Fleet_Queue&lt;/code&gt;.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;Giữ các thiết lập mặc định và nhấn &lt;strong&gt;Create queue&lt;/strong&gt;.&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/IoTSentinel/2-trien-khai/sqs_create.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Tạo SQS Queue&#34;&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Quan trọng&lt;/strong&gt;: Sau khi tạo xong, hãy copy &lt;strong&gt;URL&lt;/strong&gt; của hàng đợi (có dạng &lt;code&gt;https://sqs...&lt;/code&gt;) để sử dụng trong bước cấu hình IoT Rule sau này.&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/IoTSentinel/2-trien-khai/sqs_create_2.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Tạo SQS Queue&#34;&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;hr&gt;&#xA;&lt;h4 id=&#34;2-viết-hàm-xử-lý-aws-lambda&#34;&gt;2. Viết hàm xử lý AWS Lambda&lt;/h4&gt;&#xA;&lt;p&gt;Hàm Lambda này là &amp;ldquo;bộ não&amp;rdquo; của hệ thống. Nó sẽ tự động kích hoạt khi có dữ liệu trong SQS, phân tích nhiệt độ và quyết định có gửi cảnh báo hay không.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Thiết lập AWS IoT Core</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/3-iot-core/</link>
+				<pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/3-iot-core/</guid>
+				<description>&lt;h4 id=&#34;1-tạo-thing-cho-xe-tải&#34;&gt;1. Tạo &amp;ldquo;Thing&amp;rdquo; cho xe tải&lt;/h4&gt;&#xA;&lt;p&gt;Trong AWS IoT Core, mỗi xe tải được coi là một &amp;ldquo;Thing&amp;rdquo;. Chúng ta sẽ tạo một định danh đại diện cho đội xe.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Mở dịch vụ &lt;strong&gt;IoT Core&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;Vào &lt;strong&gt;Manage&lt;/strong&gt; &amp;gt; &lt;strong&gt;All devices&lt;/strong&gt; &amp;gt; &lt;strong&gt;Things&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Create things&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;Chọn &lt;strong&gt;Create single thing&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Thing name&lt;/strong&gt;: &lt;code&gt;Vaccine_Truck_Fleet&lt;/code&gt; &amp;gt; Nhấn &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;Chọn &lt;strong&gt;Auto-generate a new certificate&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;strong&gt;Tải Chứng chỉ bảo mật (Cực kỳ quan trọng):&lt;/strong&gt;&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

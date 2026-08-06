@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Dọn dẹp và Kết luận on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title>
+		<link>http://localhost:1313/aws-project/2-workshop/2.1-clickstream/5-project-cleanup/</link>
+		<description>Recent content in Dọn dẹp và Kết luận on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description>
+		<generator>Hugo</generator>
+		<language>vi</language>
+		
+		
+		
+		
+			<lastBuildDate>Thu, 25 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/2-workshop/2.1-clickstream/5-project-cleanup/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Dọn dẹp tài nguyên triệt để</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.1-clickstream/5-project-cleanup/5.1-clean-up-all-services/</link>
+				<pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.1-clickstream/5-project-cleanup/5.1-clean-up-all-services/</guid>
+				<description>&lt;p&gt;Hãy thực hiện dọn dẹp theo đúng thứ tự các bảng dưới đây. Tuyệt đối không xóa S3 Data Lake trước khi xóa các dịch vụ khác, vì nó sẽ gây ra lỗi nghẽn hệ thống.&lt;/p&gt;&#xA;&lt;h4 id=&#34;1-xóa-tầng-machine-learning-ưu-tiên-cao-nhất&#34;&gt;1. Xóa Tầng Machine Learning (Ưu tiên cao nhất)&lt;/h4&gt;&#xA;&lt;p&gt;Đây là thành phần &amp;ldquo;đốt tiền&amp;rdquo; nhanh nhất. Bạn bắt buộc phải dọn dẹp nó đầu tiên.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th style=&#34;text-align: left&#34;&gt;Bước&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th style=&#34;text-align: left&#34;&gt;Hành động&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th style=&#34;text-align: left&#34;&gt;Chi tiết kỹ thuật&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Xóa Campaign&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Truy cập &lt;strong&gt;Amazon Personalize&lt;/strong&gt; -&amp;gt; Chọn &lt;strong&gt;Campaigns&lt;/strong&gt; -&amp;gt; Bấm &lt;strong&gt;Delete&lt;/strong&gt;. (Nếu bạn đã áp dụng chiến thuật FinOps &amp;ldquo;Hit and Run&amp;rdquo; ở chương trước, hãy bỏ qua bước này).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;2&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Xóa Solution&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Chọn mục &lt;strong&gt;Solutions&lt;/strong&gt; -&amp;gt; Mở Solution của bạn -&amp;gt; Bấm &lt;strong&gt;Delete&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;3&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Xóa Dataset&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Mở mục &lt;strong&gt;Datasets&lt;/strong&gt; -&amp;gt; Lần lượt xóa tất cả các Dataset bên trong.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;4&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Xóa Dataset Group&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Cuối cùng, chọn &lt;strong&gt;Dataset groups&lt;/strong&gt; -&amp;gt; Chọn nhóm &lt;code&gt;news_recommender_group&lt;/code&gt; và bấm &lt;strong&gt;Delete&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Lưu ý:&lt;/strong&gt; Quá trình xóa Solution có thể mất vài phút. Bạn phải đợi Solution biến mất hoàn toàn thì mới có thể xóa được Dataset Group.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>
