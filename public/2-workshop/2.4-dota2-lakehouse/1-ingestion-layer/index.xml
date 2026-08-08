@@ -1,38 +1,129 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Tầng Thu Thập (Ingestion Layer) on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title>
-		<link>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/</link>
-		<description>Recent content in Tầng Thu Thập (Ingestion Layer) on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description>
-		<generator>Hugo</generator>
-		<language>vi</language>
-		
-		
-		
-		
-			<lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate>
-		
-			<atom:link href="http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/index.xml" rel="self" type="application/rss+xml" />
-			<item>
-				<title>Tạo S3 Bucket cho Raw Data</title>
-				<link>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.1-setup-s3-raw/</link>
-				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.1-setup-s3-raw/</guid>
-				<description>&lt;p&gt;Thực hiện tạo Amazon S3 Bucket đóng vai trò là &amp;ldquo;Vùng hạ cánh&amp;rdquo; (Landing Zone) để chứa dữ liệu JSON thô.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Bước&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Hành động&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Truy cập AWS Console&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Đăng nhập và tìm kiếm dịch vụ &lt;strong&gt;S3&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Khởi tạo Bucket&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Click nút &lt;strong&gt;Create bucket&lt;/strong&gt; màu cam.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cấu hình General&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tên bucket: &lt;code&gt;dota2-raw-zone-tencuaban&lt;/code&gt; (tên phải viết thường, không dấu, duy nhất). Region: &lt;code&gt;ap-southeast-1&lt;/code&gt; (Singapore).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cấu hình Object Ownership&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Giữ nguyên &lt;strong&gt;ACLs disabled (recommended)&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cấu hình Block Public Access&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tích chọn &lt;strong&gt;Block all public access&lt;/strong&gt; để bảo mật an toàn tuyệt đối.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;6&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Hoàn tất&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cuộn xuống cuối và nhấn &lt;strong&gt;Create bucket&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/1-ingestion-layer/s3-create-raw-bucket.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Giao diện tạo S3 Bucket&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/1-ingestion-layer/s3-create-raw-bucket-1.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Giao diện tạo S3 Bucket&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/1-ingestion-layer/s3-create-raw-bucket-2.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Giao diện tạo S3 Bucket&#34;&gt;&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Tạo IAM Policy với Quyền Least Privilege</title>
-				<link>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.2-create-iam-user/</link>
-				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.2-create-iam-user/</guid>
-				<description>&lt;p&gt;Để Python script có thể đẩy dữ liệu lên S3, nó cần một bộ chìa khóa (Access Key). Chúng ta sẽ tạo một IAM User và chỉ cấp đúng quyền ghi file vào Raw Bucket.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Bước&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Hành động&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Truy cập IAM&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tìm dịch vụ &lt;strong&gt;IAM&lt;/strong&gt; &amp;gt; Chọn &lt;strong&gt;Users&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Create user&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Nhập thông tin User&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;User name: &lt;code&gt;dota2-ingestion-bot&lt;/code&gt;. Bỏ qua tùy chọn &lt;em&gt;Provide user access to the AWS Management Console&lt;/em&gt;. Nhấn &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Khởi tạo Policy&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Ở màn hình Permissions, chọn &lt;strong&gt;Attach policies directly&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Create policy&lt;/strong&gt; (hệ thống sẽ mở tab mới).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cấu hình Policy (JSON)&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chuyển sang định dạng &lt;strong&gt;JSON&lt;/strong&gt; và dán đoạn mã phân quyền bên dưới vào &amp;gt; Nhấn &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Lưu Policy&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tên Policy: &lt;code&gt;S3_PutObject_Dota2_Raw&lt;/code&gt;. Nhấn &lt;strong&gt;Create policy&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;6&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Gắn Policy cho User&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Quay lại tab tạo User, nhấn nút &lt;em&gt;Refresh&lt;/em&gt;, tìm và tích chọn &lt;code&gt;S3_PutObject_Dota2_Raw&lt;/code&gt; &amp;gt; Nhấn &lt;strong&gt;Next&lt;/strong&gt; &amp;gt; &lt;strong&gt;Create user&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;7&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Sinh Access Key&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Click vào User vừa tạo &amp;gt; Tab &lt;strong&gt;Security credentials&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Create access key&lt;/strong&gt; &amp;gt; Chọn &lt;em&gt;Local code&lt;/em&gt;. Tải file &lt;code&gt;.csv&lt;/code&gt; chứa cặp Access Key và Secret Key về máy.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;Mã JSON Policy (Nhớ thay thế phần &lt;code&gt;YOUR_BUCKET_NAME&lt;/code&gt; bằng tên bucket bạn vừa tạo ở bài 1.1):&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Python Data Fetcher (OpenDota API)</title>
-				<link>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.3-python-data-fetcher/</link>
-				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.3-python-data-fetcher/</guid>
-				<description>&lt;p&gt;Chúng ta sẽ viết một Script Python để đóng vai trò Ingestion Bot: gọi OpenDota API, lấy 100 trận đấu chuyên nghiệp mới nhất và ném cục Payload JSON đó lên S3.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Bước&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Hành động&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chuẩn bị môi trường&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Mở Terminal (Command Prompt), cài đặt thư viện AWS: &lt;code&gt;pip install boto3 requests&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Nạp chìa khóa IAM&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Gõ lệnh &lt;code&gt;aws configure&lt;/code&gt;. Lần lượt dán Access Key, Secret Key vừa lấy ở Bài 1.2. Chọn Region là &lt;code&gt;ap-southeast-1&lt;/code&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Viết mã nguồn&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tạo một file tên &lt;code&gt;dota2_ingestion.py&lt;/code&gt; và dán đoạn code bên dưới vào. (Nhớ sửa tên &lt;code&gt;BUCKET_NAME&lt;/code&gt;).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chạy Script&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Gõ lệnh &lt;code&gt;python dota2_ingestion.py&lt;/code&gt; trên Terminal.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Kiểm duyệt (Validate)&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Truy cập AWS Console &amp;gt; &lt;strong&gt;S3&lt;/strong&gt; &amp;gt; Mở Raw Bucket. Bạn sẽ thấy một cấu trúc thư mục mới được tạo tự động chứa file JSON.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;Mã nguồn &lt;code&gt;dota2_ingestion.py&lt;/code&gt;:&lt;/p&gt;</description>
-			</item>
-	</channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tầng Thu Thập (Ingestion Layer) on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/</link><description>Recent content in Tầng Thu Thập (Ingestion Layer) on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description><generator>Hugo</generator><language>vi</language><lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/index.xml" rel="self" type="application/rss+xml"/><item><title>Tạo S3 Bucket cho Raw Data</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.1-setup-s3-raw/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.1-setup-s3-raw/</guid><description>&lt;p&gt;Thực hiện tạo Amazon S3 Bucket đóng vai trò là &amp;ldquo;Vùng hạ cánh&amp;rdquo; (Landing Zone) để chứa dữ liệu JSON thô.&lt;/p&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Bước&lt;/th&gt;
+					&lt;th&gt;Hành động&lt;/th&gt;
+					&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;1&lt;/td&gt;
+					&lt;td&gt;Truy cập AWS Console&lt;/td&gt;
+					&lt;td&gt;Đăng nhập và tìm kiếm dịch vụ &lt;strong&gt;S3&lt;/strong&gt;.&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;2&lt;/td&gt;
+					&lt;td&gt;Khởi tạo Bucket&lt;/td&gt;
+					&lt;td&gt;Click nút &lt;strong&gt;Create bucket&lt;/strong&gt; màu cam.&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;3&lt;/td&gt;
+					&lt;td&gt;Cấu hình General&lt;/td&gt;
+					&lt;td&gt;Tên bucket: &lt;code&gt;dota2-raw-zone-tencuaban&lt;/code&gt; (tên phải viết thường, không dấu, duy nhất). Region: &lt;code&gt;ap-southeast-1&lt;/code&gt; (Singapore).&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;4&lt;/td&gt;
+					&lt;td&gt;Cấu hình Object Ownership&lt;/td&gt;
+					&lt;td&gt;Giữ nguyên &lt;strong&gt;ACLs disabled (recommended)&lt;/strong&gt;.&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;5&lt;/td&gt;
+					&lt;td&gt;Cấu hình Block Public Access&lt;/td&gt;
+					&lt;td&gt;Tích chọn &lt;strong&gt;Block all public access&lt;/strong&gt; để bảo mật an toàn tuyệt đối.&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;6&lt;/td&gt;
+					&lt;td&gt;Hoàn tất&lt;/td&gt;
+					&lt;td&gt;Cuộn xuống cuối và nhấn &lt;strong&gt;Create bucket&lt;/strong&gt;.&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/1-ingestion-layer/s3-create-raw-bucket.png?featherlight=false&amp;amp;width=90pc" alt="Giao diện tạo S3 Bucket"&gt;
+&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/1-ingestion-layer/s3-create-raw-bucket-1.png?featherlight=false&amp;amp;width=90pc" alt="Giao diện tạo S3 Bucket"&gt;
+&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/1-ingestion-layer/s3-create-raw-bucket-2.png?featherlight=false&amp;amp;width=90pc" alt="Giao diện tạo S3 Bucket"&gt;&lt;/p&gt;</description></item><item><title>Tạo IAM Policy với Quyền Least Privilege</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.2-create-iam-user/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.2-create-iam-user/</guid><description>&lt;p&gt;Để Python script có thể đẩy dữ liệu lên S3, nó cần một bộ chìa khóa (Access Key). Chúng ta sẽ tạo một IAM User và chỉ cấp đúng quyền ghi file vào Raw Bucket.&lt;/p&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Bước&lt;/th&gt;
+					&lt;th&gt;Hành động&lt;/th&gt;
+					&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;1&lt;/td&gt;
+					&lt;td&gt;Truy cập IAM&lt;/td&gt;
+					&lt;td&gt;Tìm dịch vụ &lt;strong&gt;IAM&lt;/strong&gt; &amp;gt; Chọn &lt;strong&gt;Users&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Create user&lt;/strong&gt;.&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;2&lt;/td&gt;
+					&lt;td&gt;Nhập thông tin User&lt;/td&gt;
+					&lt;td&gt;User name: &lt;code&gt;dota2-ingestion-bot&lt;/code&gt;. Bỏ qua tùy chọn &lt;em&gt;Provide user access to the AWS Management Console&lt;/em&gt;. Nhấn &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;3&lt;/td&gt;
+					&lt;td&gt;Khởi tạo Policy&lt;/td&gt;
+					&lt;td&gt;Ở màn hình Permissions, chọn &lt;strong&gt;Attach policies directly&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Create policy&lt;/strong&gt; (hệ thống sẽ mở tab mới).&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;4&lt;/td&gt;
+					&lt;td&gt;Cấu hình Policy (JSON)&lt;/td&gt;
+					&lt;td&gt;Chuyển sang định dạng &lt;strong&gt;JSON&lt;/strong&gt; và dán đoạn mã phân quyền bên dưới vào &amp;gt; Nhấn &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;5&lt;/td&gt;
+					&lt;td&gt;Lưu Policy&lt;/td&gt;
+					&lt;td&gt;Tên Policy: &lt;code&gt;S3_PutObject_Dota2_Raw&lt;/code&gt;. Nhấn &lt;strong&gt;Create policy&lt;/strong&gt;.&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;6&lt;/td&gt;
+					&lt;td&gt;Gắn Policy cho User&lt;/td&gt;
+					&lt;td&gt;Quay lại tab tạo User, nhấn nút &lt;em&gt;Refresh&lt;/em&gt;, tìm và tích chọn &lt;code&gt;S3_PutObject_Dota2_Raw&lt;/code&gt; &amp;gt; Nhấn &lt;strong&gt;Next&lt;/strong&gt; &amp;gt; &lt;strong&gt;Create user&lt;/strong&gt;.&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;7&lt;/td&gt;
+					&lt;td&gt;Sinh Access Key&lt;/td&gt;
+					&lt;td&gt;Click vào User vừa tạo &amp;gt; Tab &lt;strong&gt;Security credentials&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Create access key&lt;/strong&gt; &amp;gt; Chọn &lt;em&gt;Local code&lt;/em&gt;. Tải file &lt;code&gt;.csv&lt;/code&gt; chứa cặp Access Key và Secret Key về máy.&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Mã JSON Policy (Nhớ thay thế phần &lt;code&gt;YOUR_BUCKET_NAME&lt;/code&gt; bằng tên bucket bạn vừa tạo ở bài 1.1):&lt;/p&gt;</description></item><item><title>Python Data Fetcher (OpenDota API)</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.3-python-data-fetcher/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.3-python-data-fetcher/</guid><description>&lt;p&gt;Chúng ta sẽ viết một Script Python để đóng vai trò Ingestion Bot: gọi OpenDota API, lấy 100 trận đấu chuyên nghiệp mới nhất và ném cục Payload JSON đó lên S3.&lt;/p&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Bước&lt;/th&gt;
+					&lt;th&gt;Hành động&lt;/th&gt;
+					&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;1&lt;/td&gt;
+					&lt;td&gt;Chuẩn bị môi trường&lt;/td&gt;
+					&lt;td&gt;Mở Terminal (Command Prompt), cài đặt thư viện AWS: &lt;code&gt;pip install boto3 requests&lt;/code&gt;&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;2&lt;/td&gt;
+					&lt;td&gt;Nạp chìa khóa IAM&lt;/td&gt;
+					&lt;td&gt;Gõ lệnh &lt;code&gt;aws configure&lt;/code&gt;. Lần lượt dán Access Key, Secret Key vừa lấy ở Bài 1.2. Chọn Region là &lt;code&gt;ap-southeast-1&lt;/code&gt;.&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;3&lt;/td&gt;
+					&lt;td&gt;Viết mã nguồn&lt;/td&gt;
+					&lt;td&gt;Tạo một file tên &lt;code&gt;dota2_ingestion.py&lt;/code&gt; và dán đoạn code bên dưới vào. (Nhớ sửa tên &lt;code&gt;BUCKET_NAME&lt;/code&gt;).&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;4&lt;/td&gt;
+					&lt;td&gt;Chạy Script&lt;/td&gt;
+					&lt;td&gt;Gõ lệnh &lt;code&gt;python dota2_ingestion.py&lt;/code&gt; trên Terminal.&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;5&lt;/td&gt;
+					&lt;td&gt;Kiểm duyệt (Validate)&lt;/td&gt;
+					&lt;td&gt;Truy cập AWS Console &amp;gt; &lt;strong&gt;S3&lt;/strong&gt; &amp;gt; Mở Raw Bucket. Bạn sẽ thấy một cấu trúc thư mục mới được tạo tự động chứa file JSON.&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Mã nguồn &lt;code&gt;dota2_ingestion.py&lt;/code&gt;:&lt;/p&gt;</description></item></channel></rss>

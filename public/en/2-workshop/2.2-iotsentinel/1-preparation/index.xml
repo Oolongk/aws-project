@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Environment and Simulator Preparation on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/1-preparation/</link><description>Recent content in Environment and Simulator Preparation on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 13 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/1-preparation/index.xml" rel="self" type="application/rss+xml"/><item><title>Configure Python Environment</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/1-preparation/1.1-setup-python/</link><pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/1-preparation/1.1-setup-python/</guid><description>&lt;h4 id="setup-python-environment"&gt;Setup Python Environment&lt;/h4&gt;
+&lt;p&gt;To run the truck simulator source code, your computer needs to have Python and the AWS IoT connection library installed.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Check the Python version on your computer by opening Terminal/Command Prompt and typing the command:
+&lt;code&gt;python --version&lt;/code&gt; (Requires version 3.9 or higher).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://Oolongk.github.io/aws-project/images/IoTSentinel/1-chuan-bi/python-check.png?featherlight=false&amp;amp;width=90pc" alt="Check Python"&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Install Python (For computers without it):&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;For Windows:&lt;/strong&gt; Visit the &lt;a href="https://www.python.org/downloads/"&gt;python.org/downloads&lt;/a&gt; page, download the latest installer.
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Important note:&lt;/strong&gt; On the first installation screen, you MUST check the box &lt;strong&gt;&amp;ldquo;Add Python.exe to PATH&amp;rdquo;&lt;/strong&gt; before clicking Install Now. This helps the Terminal recognize the &lt;code&gt;python&lt;/code&gt; command.&lt;/p&gt;</description></item><item><title>Write IoT Simulator Source Code</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/1-preparation/1.2-code/</link><pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/1-preparation/1.2-code/</guid><description>&lt;h4 id="create-the-simulator-source-code-file"&gt;Create the simulator source code file&lt;/h4&gt;
+&lt;p&gt;We will create a Python file that acts as a smart sensor on the truck. [cite_start]This file is responsible for simulating the journey data of 10 trucks and sending it to the AWS Cloud via the MQTT protocol. [cite: 1]&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open the &lt;strong&gt;VS Code&lt;/strong&gt; editor.&lt;/li&gt;
+&lt;li&gt;Create a new file named &lt;strong&gt;truck_simulator.py&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Copy and paste the code below into the file:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; time
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; json
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; random
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; AWSIoTPythonSDK.MQTTLib &lt;span style="color:#f92672"&gt;import&lt;/span&gt; AWSIoTMQTTClient
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# ==========================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 🔴 PARAMETER CONFIGURATION (WILL BE UPDATED IN CHAPTER 2)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# ==========================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# This Endpoint will be obtained from AWS IoT Core Settings&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;IOT_ENDPOINT &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;YOUR_AWS_IOT_ENDPOINT&amp;#34;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Path to security certificates&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PATH_TO_ROOT_CA &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;certs/AmazonRootCA1.pem&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PATH_TO_CERT &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;certs/your-certificate.pem.crt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PATH_TO_PRIVATE_KEY &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;certs/your-private.pem.key&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;CLIENT_ID &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Vaccine_Fleet_Simulator&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;TOPIC &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;telemetry/trucks&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Create a simulated list of 10 trucks with origin coordinates&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;TRUCKS &lt;span style="color:#f92672"&gt;=&lt;/span&gt; [{&lt;span style="color:#e6db74"&gt;&amp;#34;id&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;f&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;T-&lt;/span&gt;&lt;span style="color:#e6db74"&gt;{&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;100&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;i&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#34;lat&amp;#34;&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;10.7626&lt;/span&gt; &lt;span style="color:#f92672"&gt;+&lt;/span&gt; (i &lt;span style="color:#f92672"&gt;*&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0.01&lt;/span&gt;), &lt;span style="color:#e6db74"&gt;&amp;#34;lon&amp;#34;&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;106.6602&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt; (i &lt;span style="color:#f92672"&gt;*&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0.01&lt;/span&gt;)} &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; i &lt;span style="color:#f92672"&gt;in&lt;/span&gt; range(&lt;span style="color:#ae81ff"&gt;10&lt;/span&gt;)]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# ==========================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# INITIALIZE SECURE MQTT CONNECTION&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# ==========================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;myMQTTClient &lt;span style="color:#f92672"&gt;=&lt;/span&gt; AWSIoTMQTTClient(CLIENT_ID)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;myMQTTClient&lt;span style="color:#f92672"&gt;.&lt;/span&gt;configureEndpoint(IOT_ENDPOINT, &lt;span style="color:#ae81ff"&gt;8883&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;myMQTTClient&lt;span style="color:#f92672"&gt;.&lt;/span&gt;configureCredentials(PATH_TO_ROOT_CA, PATH_TO_PRIVATE_KEY, PATH_TO_CERT)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print(&lt;span style="color:#e6db74"&gt;f&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;Connecting to AWS IoT Core...&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# ==========================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# DATA SENDING LOOP (1 SECOND/TIME)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# ==========================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;try&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; myMQTTClient&lt;span style="color:#f92672"&gt;.&lt;/span&gt;connect()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print(&lt;span style="color:#e6db74"&gt;&amp;#34;✅ Connection successful!&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;\n&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;while&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;True&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; truck &lt;span style="color:#f92672"&gt;in&lt;/span&gt; TRUCKS:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# Generate random data for temperature and position&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; data &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;truck_id&amp;#34;&lt;/span&gt;: truck[&lt;span style="color:#e6db74"&gt;&amp;#34;id&amp;#34;&lt;/span&gt;],
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;temperature&amp;#34;&lt;/span&gt;: round(random&lt;span style="color:#f92672"&gt;.&lt;/span&gt;uniform(&lt;span style="color:#ae81ff"&gt;2.0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;8.0&lt;/span&gt;), &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;latitude&amp;#34;&lt;/span&gt;: round(truck[&lt;span style="color:#e6db74"&gt;&amp;#34;lat&amp;#34;&lt;/span&gt;] &lt;span style="color:#f92672"&gt;+&lt;/span&gt; random&lt;span style="color:#f92672"&gt;.&lt;/span&gt;uniform(&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;0.001&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0.001&lt;/span&gt;), &lt;span style="color:#ae81ff"&gt;6&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;longitude&amp;#34;&lt;/span&gt;: round(truck[&lt;span style="color:#e6db74"&gt;&amp;#34;lon&amp;#34;&lt;/span&gt;] &lt;span style="color:#f92672"&gt;+&lt;/span&gt; random&lt;span style="color:#f92672"&gt;.&lt;/span&gt;uniform(&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;0.001&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;0.001&lt;/span&gt;), &lt;span style="color:#ae81ff"&gt;6&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;timestamp_ms&amp;#34;&lt;/span&gt;: int(time&lt;span style="color:#f92672"&gt;.&lt;/span&gt;time() &lt;span style="color:#f92672"&gt;*&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1000&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; payload &lt;span style="color:#f92672"&gt;=&lt;/span&gt; json&lt;span style="color:#f92672"&gt;.&lt;/span&gt;dumps(data)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; myMQTTClient&lt;span style="color:#f92672"&gt;.&lt;/span&gt;publish(TOPIC, payload, &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print(&lt;span style="color:#e6db74"&gt;f&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;[&lt;/span&gt;&lt;span style="color:#e6db74"&gt;{&lt;/span&gt;truck[&lt;span style="color:#e6db74"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;]&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;] Sent: &lt;/span&gt;&lt;span style="color:#e6db74"&gt;{&lt;/span&gt;payload&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; time&lt;span style="color:#f92672"&gt;.&lt;/span&gt;sleep(&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;) 
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;except&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;KeyboardInterrupt&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print(&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;\n&lt;/span&gt;&lt;span style="color:#e6db74"&gt;🛑 Stopped sending data.&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; myMQTTClient&lt;span style="color:#f92672"&gt;.&lt;/span&gt;disconnect()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start="4"&gt;
+&lt;li&gt;Save the file to your project directory.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; You need to replace &lt;code&gt;YOUR_AWS_IOT_ENDPOINT&lt;/code&gt; and the certificate file names with the real information that you will initialize in the next &lt;strong&gt;System Deployment&lt;/strong&gt; section.&lt;/p&gt;</description></item></channel></rss>

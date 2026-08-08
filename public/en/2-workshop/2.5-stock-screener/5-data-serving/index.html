@@ -1,0 +1,3211 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head><script src="/aws-project/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=aws-project/livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.164.0">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/aws-project/images/favicon.png" type="image/png">
+
+    <title>Data Serving :: AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title>
+
+    
+    <link href="/aws-project/css/nucleus.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/fontawesome-all.min.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/hybrid.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/featherlight.min.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/perfect-scrollbar.min.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/auto-complete.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/atom-one-dark-reasonable.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/theme.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/tabs.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/hugo-theme.css?1786107730" rel="stylesheet">
+    
+    <link href="/aws-project/css/theme-workshop.css?1786107730" rel="stylesheet">
+    
+    <link href="/aws-project/css/custom.css?1786107730" rel="stylesheet">
+
+    <script src="/aws-project/js/jquery-3.3.1.min.js?1786107730"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/aws-project/en/2-workshop/2.5-stock-screener/5-data-serving/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/aws-project/js/lunr.min.js?1786107730"></script>
+<script type="text/javascript" src="/aws-project/js/auto-complete.js?1786107730"></script>
+<script type="text/javascript">
+    
+        var baseurl = "http:\/\/localhost:1313\/aws-project\/\/en";
+    
+</script>
+<script type="text/javascript" src="/aws-project/js/search.js?1786107730"></script>
+
+    
+  </div>
+  
+    
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/1-introduction/" title="Introduction" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/1-introduction/">
+          <b>1. </b>Introduction
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/" title="Workshop" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/">
+          <b>2. </b>Workshop
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/" title="Social Media Sentiment Sentinel" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/">
+          <b>2.1. </b>Social Media Sentiment Sentinel
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/1-overview/" title="Overview" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/1-overview/">
+          <b>2.1.1 </b>Overview
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/2-prerequisites/" title="Prerequisites" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/2-prerequisites/">
+          <b>2.1.2 </b>Prerequisites
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/3-data-ingestion/" title="Data Ingestion" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/3-data-ingestion/">
+          <b>2.1.3 </b>Data Ingestion
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/4-data-processing/" title="Data Processing" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/4-data-processing/">
+          <b>2.1.4 </b>Data Processing
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/5-data-serving/" title="Data Serving" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/5-data-serving/">
+          <b>2.1.5 </b>Data Serving
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/6-resource-cleanup/" title="Resource Cleanup" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/6-resource-cleanup/">
+          <b>2.1.6 </b>Resource Cleanup
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/" title="IoT Fleet Monitoring System" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/">
+          <b>2.2. </b>IoT Fleet Monitoring System
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/1-overview/" title="Overview" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/1-overview/">
+          <b>2.2.1 </b>Overview
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/2-prerequisites/" title="Prerequisites" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/2-prerequisites/">
+          <b>2.2.2 </b>Prerequisites
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/3-data-ingestion/" title="Data Ingestion" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/3-data-ingestion/">
+          <b>2.2.3 </b>Data Ingestion
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/4-data-processing/" title="Data Processing" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/4-data-processing/">
+          <b>2.2.4 </b>Data Processing
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/5-data-serving/" title="Data Serving" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/5-data-serving/">
+          <b>2.2.5 </b>Data Serving
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/6-resource-cleanup/" title="Resource Cleanup" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/6-resource-cleanup/">
+          <b>2.2.6 </b>Resource Cleanup
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/" title="Clickstream Analytics &amp; AI Recommender" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/">
+          <b>2.3. </b>Clickstream Analytics &amp; AI Recommender
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/1-overview/" title="Overview" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/1-overview/">
+          <b>2.3.1 </b>Overview
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/2-prerequisites/" title="Prerequisites" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/2-prerequisites/">
+          <b>2.3.2 </b>Prerequisites
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/3-data-ingestion/" title="Data Ingestion" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/3-data-ingestion/">
+          <b>2.3.3 </b>Data Ingestion
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/4-data-processing/" title="Data Processing" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/4-data-processing/">
+          <b>2.3.4 </b>Data Processing
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/5-data-serving/" title="Data Serving" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/5-data-serving/">
+          <b>2.3.5 </b>Data Serving
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/6-resource-cleanup/" title="Resource Cleanup" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/6-resource-cleanup/">
+          <b>2.3.6 </b>Resource Cleanup
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/" title="Dota 2 Meta Analytics Data Lakehouse" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/">
+          <b>2.4. </b>Dota 2 Meta Analytics Data Lakehouse
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-overview/" title="Overview" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-overview/">
+          <b>2.4.1 </b>Overview
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-prerequisites/" title="Prerequisites" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-prerequisites/">
+          <b>2.4.2 </b>Prerequisites
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-data-ingestion/" title="Data Ingestion" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-data-ingestion/">
+          <b>2.4.3 </b>Data Ingestion
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-data-processing/" title="Data Processing" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-data-processing/">
+          <b>2.4.4 </b>Data Processing
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-data-serving/" title="Data Serving" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-data-serving/">
+          <b>2.4.5 </b>Data Serving
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/6-resource-cleanup/" title="Resource Cleanup" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/6-resource-cleanup/">
+          <b>2.4.6 </b>Resource Cleanup
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/" title="Quantamental Stock Screener Time-Series Pipeline" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/">
+          <b>2.5. </b>Quantamental Stock Screener Time-Series Pipeline
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/1-overview/" title="Overview" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/1-overview/">
+          <b>2.5.1 </b>Overview
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/2-prerequisites/" title="Prerequisites" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/2-prerequisites/">
+          <b>2.5.2 </b>Prerequisites
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/3-data-ingestion/" title="Data Ingestion" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/3-data-ingestion/">
+          <b>2.5.3 </b>Data Ingestion
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/4-data-processing/" title="Data Processing" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/4-data-processing/">
+          <b>2.5.4 </b>Data Processing
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/5-data-serving/" title="Data Serving" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/5-data-serving/">
+          <b>2.5.5 </b>Data Serving
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/6-resource-cleanup/" title="Resource Cleanup" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/6-resource-cleanup/">
+          <b>2.5.6 </b>Resource Cleanup
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="en" value="http://localhost:1313/aws-project/en/2-workshop/2.5-stock-screener/5-data-serving/" selected>English</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    <b>Last Updated</b> <br>
+    <i><span id="lastUpdated" style="color: #fd9827;"></span></i>
+    <script>
+        const today = new Date();
+        const formattedDate = today.toLocaleDateString("en-GB");
+        document.getElementById("lastUpdated").textContent = formattedDate;
+    </script>
+</left>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/aws-project/en/'>Final Report</a> > <a href='/aws-project/en/2-workshop/'>Workshop</a> > <a href='/aws-project/en/2-workshop/2.5-stock-screener/'>Quantamental Stock Screener Time-Series Pipeline</a> > Data Serving
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#item-contract">Item Contract</a></li>
+    <li><a href="#prepare-deployment-package">Prepare Deployment Package</a></li>
+    <li><a href="#create-lambda-function">Create Lambda Function</a></li>
+    <li><a href="#add-environment-variables">Add Environment Variables</a></li>
+    <li><a href="#create-s3-trigger">Create S3 Trigger</a></li>
+    <li><a href="#lambda-loader-source-code">Lambda Loader Source Code</a></li>
+    <li><a href="#test-lambda-loader">Test Lambda Loader</a></li>
+    <li><a href="#lambda-source-code">Lambda Source Code</a></li>
+    <li><a href="#frontend-source-code">Frontend Source Code</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Data Serving
+            </h1>
+          
+
+        
+
+
+
+	<p>The Lambda QMJ Loader writes one item per <code>ticker</code> for each <code>as_of_date</code>. The Lambda Reader queries history by ticker, so the table uses <code>ticker</code> as the Partition Key and <code>snapshot_date</code> as the Sort Key.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>AWS Console  DynamoDB  <strong>Tables</strong></td>
+					<td>Select <strong>Create table</strong></td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Table name</td>
+					<td>Enter <code>qmj_screener</code> to match the default <code>TABLE_NAME</code> in the Lambda Loader</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Partition key</td>
+					<td>Enter <code>ticker</code>, type <code>String</code></td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Sort key</td>
+					<td>Check &ldquo;Add sort key&rdquo;, enter <code>snapshot_date</code>, type <code>String</code></td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Table settings</td>
+					<td>Select On-demand for demo/portfolio when traffic volume is unknown</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Select <strong>Create table</strong></td>
+					<td>Wait for the Table status to change to <code>Active</code></td>
+			</tr>
+	</tbody>
+</table>
+<p><img src="/aws-project/images/stock-screener/create-dynamodb-qmj-table.png?featherlight=false&amp;width=90pc" alt="Tạo DynamoDB QMJ table"></p>
+<h2 id="item-contract">Item Contract</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;ticker&#34;</span>: <span style="color:#e6db74">&#34;AAPL&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;snapshot_date&#34;</span>: <span style="color:#e6db74">&#34;2026-07-06&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;as_of_date&#34;</span>: <span style="color:#e6db74">&#34;2026-07-06&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;source_s3_key&#34;</span>: <span style="color:#e6db74">&#34;processed_qmj/as_of_date=2026-07-06/part-00000.parquet&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;company_name&#34;</span>: <span style="color:#e6db74">&#34;Apple Inc.&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;qmj_rank&#34;</span>: <span style="color:#ae81ff">12</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;qmj_score&#34;</span>: <span style="color:#ae81ff">84.52</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;qmj_profitability&#34;</span>: <span style="color:#ae81ff">90.12</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;qmj_growth&#34;</span>: <span style="color:#ae81ff">75.31</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;qmj_safety&#34;</span>: <span style="color:#ae81ff">88.14</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;momentum_recent_score&#34;</span>: <span style="color:#ae81ff">63.45</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p><strong>Architectural Thinking – Access Pattern First.</strong> Using <code>ticker + snapshot_date</code> enables the Reader Lambda to use a <code>Query</code> operation to retrieve the historical series of a specific symbol. Avoid using <code>Scan</code> to populate charts.</p>
+</blockquote>
+<hr>
+<p><code>qmj_transform.py</code> writes Parquet files to <code>processed_qmj/as_of_date=YYYY-MM-DD/</code>. This section walks you through deploying the Lambda QMJ Loader to receive S3 <code>ObjectCreated</code> events, read the Parquet files using <code>awswrangler</code>, and perform a batch write to DynamoDB.</p>
+<p>This Lambda functions in two modes:</p>
+<table>
+	<thead>
+			<tr>
+					<th>Mode</th>
+					<th>Trigger / Invocation</th>
+					<th>Purpose</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>s3_trigger</code></td>
+					<td>S3 automatically sends an event when a new <code>.parquet</code> is created</td>
+					<td>Incremental loading of new outputs from Glue PySpark</td>
+			</tr>
+			<tr>
+					<td><code>backfill</code></td>
+					<td>Lambda Test Event or manual invocation API</td>
+					<td>Scans the entire <code>processed_qmj/</code> prefix and loads historical QMJ data</td>
+			</tr>
+	</tbody>
+</table>
+<blockquote>
+<p><strong>Architectural Thinking – Source Boundary.</strong> This is not a Glue Publisher Job. S3 acts as the event source, Lambda serves as the compute layer loading the Serving Store, and DynamoDB acts as the read-optimized projection for the website.</p>
+</blockquote>
+<h2 id="prepare-deployment-package">Prepare Deployment Package</h2>
+<p>Your source imports the <code>awswrangler</code>, <code>pandas</code>, and <code>pyarrow</code> dependencies. The default Lambda runtime does not include these packages. Therefore, you must attach a Lambda Layer or upload a deployment package compatible with your Python runtime and architecture.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Open AWS CloudShell or a Lambda-compatible build environment</td>
+					<td>Used to create a Linux-compatible deployment package</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Create package directory</td>
+					<td>The package must contain <code>lambda_function.py</code> and its dependencies</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Install dependencies</td>
+					<td>Install <code>awswrangler</code>, <code>pandas</code>, and <code>pyarrow</code> into the package directory or Layer</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Copy Lambda source code</td>
+					<td>Save the source code as <code>lambda_function.py</code></td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Zip the package</td>
+					<td>Upload the resulting ZIP file to Lambda in the next step</td>
+			</tr>
+	</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Run in a Lambda-compatible build environment.</span>
+</span></span><span style="display:flex;"><span>mkdir qmj-loader-package
+</span></span><span style="display:flex;"><span>cd qmj-loader-package
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install dependencies and place the Lambda source in the package.</span>
+</span></span><span style="display:flex;"><span>python -m pip install --target . awswrangler pandas pyarrow
+</span></span><span style="display:flex;"><span>cp ../lambda_qmj_loader.py lambda_function.py
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create the upload ZIP file for Lambda.</span>
+</span></span><span style="display:flex;"><span>zip -r ../qmj-loader.zip .
+</span></span></code></pre></div><h2 id="create-lambda-function">Create Lambda Function</h2>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>AWS Lambda  Functions  <strong>Create function</strong></td>
+					<td>Select <strong>Author from scratch</strong></td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Function name</td>
+					<td>Enter <code>qmj-s3-to-dynamodb-loader</code></td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Runtime</td>
+					<td>Select the Python runtime matching your deployment package/Lambda Layer</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Architecture</td>
+					<td>Keep this consistent with the package or Layer you built</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Execution role</td>
+					<td>Select <strong>Use an existing role</strong>  <code>LambdaQMJLoaderRole</code></td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Select <strong>Create function</strong></td>
+					<td>Open the newly created function</td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td>Code  <strong>Upload from</strong>  <code>.zip file</code></td>
+					<td>Upload the <code>qmj-loader.zip</code> file</td>
+			</tr>
+			<tr>
+					<td>8</td>
+					<td>Runtime settings  Edit</td>
+					<td>Ensure the Handler is set to <code>lambda_function.lambda_handler</code></td>
+			</tr>
+			<tr>
+					<td>9</td>
+					<td>Configuration  General configuration</td>
+					<td>Increase the timeout sufficiently to read Parquet and write all tickers</td>
+			</tr>
+			<tr>
+					<td>10</td>
+					<td>Select <strong>Deploy</strong></td>
+					<td>Save the function and deploy the package</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="add-environment-variables">Add Environment Variables</h2>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Lambda  Configuration  Environment variables</td>
+					<td>Select <strong>Edit</strong></td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Add <code>TABLE_NAME</code></td>
+					<td>Set value to <code>qmj_screener</code></td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Add <code>PROCESSED_BUCKET</code></td>
+					<td>Set value to <code>stock-screener-processed-your-name</code></td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Add <code>PROCESSED_PREFIX</code></td>
+					<td>Set value to <code>processed_qmj/</code></td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Select <strong>Save</strong></td>
+					<td>Do not store access keys here</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="create-s3-trigger">Create S3 Trigger</h2>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Lambda  Function overview  <strong>Add trigger</strong></td>
+					<td>Select trigger source <code>S3</code></td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Bucket</td>
+					<td>Select <code>stock-screener-processed-your-name</code></td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Event type</td>
+					<td>Select <code>All object create events</code></td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Prefix</td>
+					<td>Enter <code>processed_qmj/</code></td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Suffix</td>
+					<td>Enter <code>.parquet</code></td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Recursive invocation</td>
+					<td>Acknowledge the recursive invocation warning if shown</td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td>Select <strong>Add</strong></td>
+					<td>The S3 event notification will now trigger the Lambda</td>
+			</tr>
+	</tbody>
+</table>
+<p>When Glue PySpark writes output as shown below, the S3 trigger only processes the <code>part-...parquet</code> file, while <code>_SUCCESS</code> is ignored due to the suffix filter and Lambda logic.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>processed_qmj/
+</span></span><span style="display:flex;"><span>└── as_of_date=2026-07-06/
+</span></span><span style="display:flex;"><span>    ├── part-00000-....snappy.parquet    Triggers Lambda
+</span></span><span style="display:flex;"><span>    └── _SUCCESS                          Ignored
+</span></span></code></pre></div><h2 id="lambda-loader-source-code">Lambda Loader Source Code</h2>
+<p>The line <code>import json</code> is included because the source needs <code>json.dumps(response)</code> when <code>failed_files</code> are encountered.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> re
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> math
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> boto3
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> urllib.parse
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> awswrangler <span style="color:#66d9ef">as</span> wr
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> date, datetime
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> decimal <span style="color:#f92672">import</span> Decimal
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> numbers <span style="color:#f92672">import</span> Integral, Real
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TABLE_NAME <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>environ<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;TABLE_NAME&#34;</span>, <span style="color:#e6db74">&#34;qmj_screener&#34;</span>)
+</span></span><span style="display:flex;"><span>PROCESSED_BUCKET <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>environ<span style="color:#f92672">.</span>get(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;PROCESSED_BUCKET&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;stock-screener-processed-your-name&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>PROCESSED_PREFIX <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>environ<span style="color:#f92672">.</span>get(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;PROCESSED_PREFIX&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;processed_qmj/&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dynamodb <span style="color:#f92672">=</span> boto3<span style="color:#f92672">.</span>resource(<span style="color:#e6db74">&#34;dynamodb&#34;</span>)
+</span></span><span style="display:flex;"><span>s3 <span style="color:#f92672">=</span> boto3<span style="color:#f92672">.</span>client(<span style="color:#e6db74">&#34;s3&#34;</span>)
+</span></span><span style="display:flex;"><span>table <span style="color:#f92672">=</span> dynamodb<span style="color:#f92672">.</span>Table(TABLE_NAME)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">to_dynamodb_value</span>(value):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Standardize Pandas/NumPy values to DynamoDB-compatible types.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> value <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> bool(pd<span style="color:#f92672">.</span>isna(value)):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> isinstance(value, (datetime, date)):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> value<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#34;%Y-%m-</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> isinstance(value, bool):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> value
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> isinstance(value, Decimal):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> value
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> isinstance(value, Integral):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Decimal(str(int(value)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> isinstance(value, Real):
+</span></span><span style="display:flex;"><span>        number <span style="color:#f92672">=</span> float(value)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> math<span style="color:#f92672">.</span>isfinite(number):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Decimal(str(number))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> isinstance(value, str):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> value
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> str(value)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extract_as_of_date</span>(s3_key):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Extract partition date from processed_qmj/as_of_date=YYYY-MM-DD/.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">match</span> <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>search(
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;(?:^|/)as_of_date=(\d</span><span style="color:#e6db74">{4}</span><span style="color:#e6db74">-\d</span><span style="color:#e6db74">{2}</span><span style="color:#e6db74">-\d</span><span style="color:#e6db74">{2}</span><span style="color:#e6db74">)(?:/|$)&#34;</span>,
+</span></span><span style="display:flex;"><span>        s3_key
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">match</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;as_of_date not found in key: </span><span style="color:#e6db74">{</span>s3_key<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    as_of_date <span style="color:#f92672">=</span> <span style="color:#66d9ef">match</span><span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    datetime<span style="color:#f92672">.</span>strptime(as_of_date, <span style="color:#e6db74">&#34;%Y-%m-</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> as_of_date
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_parquet_to_dynamodb</span>(bucket, key):
+</span></span><span style="display:flex;"><span>    as_of_date <span style="color:#f92672">=</span> extract_as_of_date(key)
+</span></span><span style="display:flex;"><span>    s3_path <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;s3://</span><span style="color:#e6db74">{</span>bucket<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>key<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    df <span style="color:#f92672">=</span> wr<span style="color:#f92672">.</span>s3<span style="color:#f92672">.</span>read_parquet(path<span style="color:#f92672">=</span>s3_path)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> df<span style="color:#f92672">.</span>empty:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;ticker&#34;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> df<span style="color:#f92672">.</span>columns:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;File missing ticker column: </span><span style="color:#e6db74">{</span>s3_path<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    loaded_rows <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    skipped_rows <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    columns <span style="color:#f92672">=</span> list(df<span style="color:#f92672">.</span>columns)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Overwrite identical ticker + snapshot_date so retry events do not create duplicate logical items.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> table<span style="color:#f92672">.</span>batch_writer(
+</span></span><span style="display:flex;"><span>        overwrite_by_pkeys<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;ticker&#34;</span>, <span style="color:#e6db74">&#34;snapshot_date&#34;</span>]
+</span></span><span style="display:flex;"><span>    ) <span style="color:#66d9ef">as</span> batch:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> values <span style="color:#f92672">in</span> df<span style="color:#f92672">.</span>itertuples(index<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, name<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>            item <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> column, value <span style="color:#f92672">in</span> zip(columns, values):
+</span></span><span style="display:flex;"><span>                clean_value <span style="color:#f92672">=</span> to_dynamodb_value(value)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> clean_value <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>                    item[column] <span style="color:#f92672">=</span> clean_value
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            ticker <span style="color:#f92672">=</span> str(item<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;ticker&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>))<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper()
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> ticker:
+</span></span><span style="display:flex;"><span>                skipped_rows <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            item[<span style="color:#e6db74">&#34;ticker&#34;</span>] <span style="color:#f92672">=</span> ticker
+</span></span><span style="display:flex;"><span>            item[<span style="color:#e6db74">&#34;snapshot_date&#34;</span>] <span style="color:#f92672">=</span> as_of_date
+</span></span><span style="display:flex;"><span>            item[<span style="color:#e6db74">&#34;as_of_date&#34;</span>] <span style="color:#f92672">=</span> as_of_date
+</span></span><span style="display:flex;"><span>            item[<span style="color:#e6db74">&#34;source_s3_key&#34;</span>] <span style="color:#f92672">=</span> key
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            batch<span style="color:#f92672">.</span>put_item(Item<span style="color:#f92672">=</span>item)
+</span></span><span style="display:flex;"><span>            loaded_rows <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> loaded_rows, skipped_rows
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_existing_parquet_files</span>(bucket, prefix):
+</span></span><span style="display:flex;"><span>    keys <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    paginator <span style="color:#f92672">=</span> s3<span style="color:#f92672">.</span>get_paginator(<span style="color:#e6db74">&#34;list_objects_v2&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> page <span style="color:#f92672">in</span> paginator<span style="color:#f92672">.</span>paginate(Bucket<span style="color:#f92672">=</span>bucket, Prefix<span style="color:#f92672">=</span>prefix):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> obj <span style="color:#f92672">in</span> page<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;Contents&#34;</span>, []):
+</span></span><span style="display:flex;"><span>            key <span style="color:#f92672">=</span> obj[<span style="color:#e6db74">&#34;Key&#34;</span>]
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> key<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">&#34;.parquet&#34;</span>):
+</span></span><span style="display:flex;"><span>                keys<span style="color:#f92672">.</span>append(key)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sorted(keys)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">process_files</span>(bucket, keys):
+</span></span><span style="display:flex;"><span>    processed_files <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    loaded_rows <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    skipped_rows <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    failed_files <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> keys:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            loaded, skipped <span style="color:#f92672">=</span> load_parquet_to_dynamodb(bucket, key)
+</span></span><span style="display:flex;"><span>            processed_files <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            loaded_rows <span style="color:#f92672">+=</span> loaded
+</span></span><span style="display:flex;"><span>            skipped_rows <span style="color:#f92672">+=</span> skipped
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> error:
+</span></span><span style="display:flex;"><span>            failed_files<span style="color:#f92672">.</span>append({<span style="color:#e6db74">&#34;key&#34;</span>: key, <span style="color:#e6db74">&#34;error&#34;</span>: str(error)})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;processed_files&#34;</span>: processed_files,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;loaded_rows&#34;</span>: loaded_rows,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;skipped_rows&#34;</span>: skipped_rows,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;failed_files&#34;</span>: failed_files
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lambda_handler</span>(event, context):
+</span></span><span style="display:flex;"><span>    event <span style="color:#f92672">=</span> event <span style="color:#f92672">or</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Manual backfill mode: scan all QMJ Parquet files in the Processed Zone.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> event<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;mode&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;backfill&#34;</span>:
+</span></span><span style="display:flex;"><span>        bucket <span style="color:#f92672">=</span> event<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;bucket&#34;</span>, PROCESSED_BUCKET)
+</span></span><span style="display:flex;"><span>        prefix <span style="color:#f92672">=</span> event<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;prefix&#34;</span>, PROCESSED_PREFIX)
+</span></span><span style="display:flex;"><span>        keys <span style="color:#f92672">=</span> get_existing_parquet_files(bucket, prefix)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> keys:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;mode&#34;</span>: <span style="color:#e6db74">&#34;backfill&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;processed_files&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;loaded_rows&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;skipped_rows&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;failed_files&#34;</span>: []
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        result <span style="color:#f92672">=</span> process_files(bucket, keys)
+</span></span><span style="display:flex;"><span>        result[<span style="color:#e6db74">&#34;mode&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;backfill&#34;</span>
+</span></span><span style="display:flex;"><span>        result[<span style="color:#e6db74">&#34;total_parquet_files_found&#34;</span>] <span style="color:#f92672">=</span> len(keys)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># S3 trigger mode: filter ObjectCreated events under the Processed QMJ prefix.</span>
+</span></span><span style="display:flex;"><span>    keys_by_bucket <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> record <span style="color:#f92672">in</span> event<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;Records&#34;</span>, []):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> record<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;eventSource&#34;</span>) <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;aws:s3&#34;</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> record<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;eventName&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;ObjectCreated:&#34;</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        bucket <span style="color:#f92672">=</span> record[<span style="color:#e6db74">&#34;s3&#34;</span>][<span style="color:#e6db74">&#34;bucket&#34;</span>][<span style="color:#e6db74">&#34;name&#34;</span>]
+</span></span><span style="display:flex;"><span>        key <span style="color:#f92672">=</span> urllib<span style="color:#f92672">.</span>parse<span style="color:#f92672">.</span>unquote_plus(record[<span style="color:#e6db74">&#34;s3&#34;</span>][<span style="color:#e6db74">&#34;object&#34;</span>][<span style="color:#e6db74">&#34;key&#34;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> key<span style="color:#f92672">.</span>startswith(PROCESSED_PREFIX) <span style="color:#f92672">or</span> <span style="color:#f92672">not</span> key<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">&#34;.parquet&#34;</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        keys_by_bucket<span style="color:#f92672">.</span>setdefault(bucket, [])<span style="color:#f92672">.</span>append(key)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    total_processed_files <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    total_loaded_rows <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    total_skipped_rows <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    failed_files <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> bucket, keys <span style="color:#f92672">in</span> keys_by_bucket<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>        result <span style="color:#f92672">=</span> process_files(bucket, keys)
+</span></span><span style="display:flex;"><span>        total_processed_files <span style="color:#f92672">+=</span> result[<span style="color:#e6db74">&#34;processed_files&#34;</span>]
+</span></span><span style="display:flex;"><span>        total_loaded_rows <span style="color:#f92672">+=</span> result[<span style="color:#e6db74">&#34;loaded_rows&#34;</span>]
+</span></span><span style="display:flex;"><span>        total_skipped_rows <span style="color:#f92672">+=</span> result[<span style="color:#e6db74">&#34;skipped_rows&#34;</span>]
+</span></span><span style="display:flex;"><span>        failed_files<span style="color:#f92672">.</span>extend(result[<span style="color:#e6db74">&#34;failed_files&#34;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;mode&#34;</span>: <span style="color:#e6db74">&#34;s3_trigger&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;processed_files&#34;</span>: total_processed_files,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;loaded_rows&#34;</span>: total_loaded_rows,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;skipped_rows&#34;</span>: total_skipped_rows,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;failed_files&#34;</span>: failed_files
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> failed_files:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(json<span style="color:#f92672">.</span>dumps(response))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> response
+</span></span></code></pre></div><h2 id="test-lambda-loader">Test Lambda Loader</h2>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Lambda  <strong>Test</strong>  Create new event</td>
+					<td>Use this test event to load existing historical QMJ files from S3</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Event name</td>
+					<td>Enter <code>backfill-processed-qmj</code></td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Paste the JSON event below</td>
+					<td>No need to generate a fake S3 event manually</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Select <strong>Test</strong></td>
+					<td>Lambda lists all Parquet files under the prefix</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Open the Monitor tab  View CloudWatch logs</td>
+					<td>Verify <code>processed_files</code>, <code>loaded_rows</code>, and <code>failed_files</code></td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>DynamoDB  Explore table items</td>
+					<td>Verify that <code>ticker</code> and <code>snapshot_date</code> entries are present</td>
+			</tr>
+	</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;mode&#34;</span>: <span style="color:#e6db74">&#34;backfill&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p><strong>Architectural Thinking – Event Delivery.</strong> Lambda might receive duplicate events if S3 retries. The Loader manages this idempotently using the business key <code>ticker + snapshot_date</code>; duplicate events will not create multiple logical items in DynamoDB.</p>
+</blockquote>
+<hr>
+<p>The Lambda Reader is a separate function from the Lambda QMJ Loader. The Reader receives a <code>ticker</code> parameter from API Gateway, queries DynamoDB by Partition Key, and returns historical QMJ data in JSON format.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>AWS Lambda  Functions  <strong>Create function</strong></td>
+					<td>Select <strong>Author from scratch</strong></td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Function name</td>
+					<td>Enter <code>stock-screener-reader</code></td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Runtime</td>
+					<td>Select the Python runtime currently supported in the Console</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Execution role</td>
+					<td>Select <strong>Use an existing role</strong>  <code>LambdaStockScreenerReaderRole</code></td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Select <strong>Create function</strong></td>
+					<td>Open the Code tab</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Paste the source code below</td>
+					<td>This function does not read S3 and does not require awswrangler</td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td>Configuration  Environment variables</td>
+					<td>Add <code>DYNAMODB_TABLE=qmj_screener</code></td>
+			</tr>
+			<tr>
+					<td>8</td>
+					<td>Select <strong>Deploy</strong></td>
+					<td>Save and deploy the code</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="lambda-source-code">Lambda Source Code</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> decimal <span style="color:#f92672">import</span> Decimal
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> boto3
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> boto3.dynamodb.conditions <span style="color:#f92672">import</span> Key
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TABLE_NAME <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#34;DYNAMODB_TABLE&#34;</span>]
+</span></span><span style="display:flex;"><span>table <span style="color:#f92672">=</span> boto3<span style="color:#f92672">.</span>resource(<span style="color:#e6db74">&#34;dynamodb&#34;</span>)<span style="color:#f92672">.</span>Table(TABLE_NAME)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">json_default</span>(value):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># DynamoDB returns Decimal; API response requires a JSON number.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> isinstance(value, Decimal):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> float(value)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">TypeError</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Unsupported type: </span><span style="color:#e6db74">{</span>type(value)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">response</span>(status_code, body):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;statusCode&#34;</span>: status_code,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;headers&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/json&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>: <span style="color:#e6db74">&#34;*&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>: <span style="color:#e6db74">&#34;GET,OPTIONS&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>: <span style="color:#e6db74">&#34;Content-Type&#34;</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;body&#34;</span>: json<span style="color:#f92672">.</span>dumps(body, default<span style="color:#f92672">=</span>json_default)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lambda_handler</span>(event, context):
+</span></span><span style="display:flex;"><span>    params <span style="color:#f92672">=</span> event<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;queryStringParameters&#34;</span>) <span style="color:#f92672">or</span> {}
+</span></span><span style="display:flex;"><span>    ticker <span style="color:#f92672">=</span> (params<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;ticker&#34;</span>) <span style="color:#f92672">or</span> <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>upper()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> ticker:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> response(<span style="color:#ae81ff">400</span>, {<span style="color:#e6db74">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;ticker is required&#34;</span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span>query(
+</span></span><span style="display:flex;"><span>        KeyConditionExpression<span style="color:#f92672">=</span>Key(<span style="color:#e6db74">&#34;ticker&#34;</span>)<span style="color:#f92672">.</span>eq(ticker),
+</span></span><span style="display:flex;"><span>        ScanIndexForward<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> response(<span style="color:#ae81ff">200</span>, {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;ticker&#34;</span>: ticker,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;items&#34;</span>: result<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;Items&#34;</span>, [])
+</span></span><span style="display:flex;"><span>    })
+</span></span></code></pre></div><blockquote>
+<p><strong>Architectural Thinking – Query, Not Scan.</strong> The Reader only has <code>dynamodb:Query</code> permissions. It is not granted <code>dynamodb:Scan</code> capability, does not require S3 permissions, and does not use the Loader Role.</p>
+</blockquote>
+<hr>
+<p>The HTTP API exposes the Lambda Reader as an endpoint for browser requests. API Gateway routes requests to the Lambda, which queries DynamoDB and returns the response to the client.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>AWS Console  API Gateway  <strong>Create API</strong></td>
+					<td>Select HTTP API</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Select Build</td>
+					<td>Under the HTTP API section</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Integration</td>
+					<td>Select the <code>stock-screener-reader</code> Lambda function</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>API name</td>
+					<td><code>stock-screener-http-api</code></td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Create</td>
+					<td>Create the default <code>$default</code> stage or a custom stage</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Routes  Create</td>
+					<td>Method <code>GET</code>, route path <code>/scores</code></td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td>Attach integration</td>
+					<td>Select the Lambda reader</td>
+			</tr>
+			<tr>
+					<td>8</td>
+					<td>CORS configuration</td>
+					<td>Set allowed origins to your Web Bucket/CloudFront domain; allowed methods to <code>GET,OPTIONS</code></td>
+			</tr>
+			<tr>
+					<td>9</td>
+					<td>Copy Invoke URL</td>
+					<td>Used as <code>API_BASE_URL</code> in the frontend code</td>
+			</tr>
+			<tr>
+					<td>10</td>
+					<td>Test API</td>
+					<td>Send request <code>GET /scores?ticker=AAPL</code></td>
+			</tr>
+	</tbody>
+</table>
+<p><img src="/aws-project/images/stock-screener/5-serving-layer/create-api-1.png?featherlight=false&amp;width=90pc" alt="Tạo HTTP API">
+<img src="/aws-project/images/stock-screener/5-serving-layer/create-api-2.png?featherlight=false&amp;width=90pc" alt="Tạo HTTP API">
+<img src="/aws-project/images/stock-screener/5-serving-layer/create-api-3.png?featherlight=false&amp;width=90pc" alt="Tạo HTTP API">
+<img src="/aws-project/images/stock-screener/5-serving-layer/create-api-4.png?featherlight=false&amp;width=90pc" alt="Tạo HTTP API">
+<img src="/aws-project/images/stock-screener/5-serving-layer/create-api-5.png?featherlight=false&amp;width=90pc" alt="Tạo HTTP API"></p>
+<blockquote>
+<p><strong>Architectural Thinking – CORS.</strong> CORS configuration is required when the frontend and the API reside on different origins. After production deployment, replace <code>*</code> with your specific website domain.</p>
+</blockquote>
+<hr>
+<p>The frontend loads HTML/JavaScript from S3 Static Website and calls API Gateway to render the QMJ history using Chart.js.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Open the <code>static/frontend/index.html</code> file</td>
+					<td>Replace <code>YOUR_API_ID</code> with the HTTP API Invoke URL</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Amazon S3  <code>stock-screener-web-your-name</code></td>
+					<td>Upload <code>index.html</code></td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Bucket  Properties</td>
+					<td>Enable Static website hosting if using the website endpoint</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Index document</td>
+					<td>Enter <code>index.html</code></td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Permissions</td>
+					<td>Configure public read permissions only for web assets or use CloudFront OAC</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Open website endpoint</td>
+					<td>Enter a ticker to test</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="frontend-source-code">Frontend Source Code</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span> <span style="color:#a6e22e">data-bs-theme</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dark&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">title</span>&gt;QMJ Stock Screener Dashboard&lt;/<span style="color:#f92672">title</span>&gt;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34;</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">style</span>&gt;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">body</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#0e1117</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">font-family</span>: <span style="color:#e6db74">&#39;Inter&#39;</span>, <span style="color:#f92672">-</span>apple-system, BlinkMacSystemFont, <span style="color:#e6db74">&#34;Segoe UI&#34;</span>, Roboto, <span style="color:#66d9ef">sans-serif</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#fafafa</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">navbar-custom</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#262730</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">border-bottom</span>: <span style="color:#ae81ff">1</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#333</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">main-container</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">2</span><span style="color:#66d9ef">rem</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">max-width</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">auto</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">table-container</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#262730</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">8</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">box-shadow</span>: <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">4</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">6</span><span style="color:#66d9ef">px</span> rgba(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0.3</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">border</span>: <span style="color:#ae81ff">1</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#333</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">table</span>.<span style="color:#a6e22e">dataTable</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#e0e0e0</span> <span style="color:#75715e">!important</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">border-collapse</span>: <span style="color:#66d9ef">collapse</span> <span style="color:#75715e">!important</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span> <span style="color:#75715e">!important</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">table</span>.<span style="color:#a6e22e">dataTable</span> <span style="color:#f92672">thead</span> <span style="color:#f92672">th</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">border-bottom</span>: <span style="color:#ae81ff">2</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#444</span> <span style="color:#75715e">!important</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#9e9e9e</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">font-weight</span>: <span style="color:#ae81ff">600</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">text-transform</span>: <span style="color:#66d9ef">uppercase</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">0.75</span><span style="color:#66d9ef">rem</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">letter-spacing</span>: <span style="color:#ae81ff">0.5</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">white-space</span>: <span style="color:#66d9ef">nowrap</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">table</span>.<span style="color:#a6e22e">dataTable</span> <span style="color:#f92672">tbody</span> <span style="color:#f92672">td</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">border-bottom</span>: <span style="color:#ae81ff">1</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#333</span> <span style="color:#75715e">!important</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">vertical-align</span>: <span style="color:#66d9ef">middle</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">0.85</span><span style="color:#66d9ef">rem</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">table</span>.<span style="color:#a6e22e">dataTable</span> <span style="color:#f92672">tbody</span> <span style="color:#f92672">tr</span>:<span style="color:#a6e22e">hover</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#31333f</span> <span style="color:#75715e">!important</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">score-excellent</span> { <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#00cc96</span>; <span style="color:#66d9ef">font-weight</span>: <span style="color:#66d9ef">bold</span>; }
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">score-good</span> { <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#636efa</span>; <span style="color:#66d9ef">font-weight</span>: <span style="color:#66d9ef">bold</span>; }
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">score-average</span> { <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#ffa15a</span>; <span style="color:#66d9ef">font-weight</span>: <span style="color:#66d9ef">bold</span>; }
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">score-bad</span> { <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#ef553b</span>; <span style="color:#66d9ef">font-weight</span>: <span style="color:#66d9ef">bold</span>; }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">ticker-badge</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#444</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">color</span>: <span style="color:#66d9ef">white</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">4</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">8</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">4</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">font-family</span>: <span style="color:#66d9ef">monospace</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">13</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">exchange-HSX</span> { <span style="color:#66d9ef">border-left</span>: <span style="color:#ae81ff">3</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#00cc96</span>; <span style="color:#66d9ef">padding-left</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>; }
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">exchange-HNX</span> { <span style="color:#66d9ef">border-left</span>: <span style="color:#ae81ff">3</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#636efa</span>; <span style="color:#66d9ef">padding-left</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>; }
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">exchange-UPCOM</span> { <span style="color:#66d9ef">border-left</span>: <span style="color:#ae81ff">3</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#ffa15a</span>; <span style="color:#66d9ef">padding-left</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        #loading-screen {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">fixed</span>; <span style="color:#66d9ef">top</span>: <span style="color:#ae81ff">0</span>; <span style="color:#66d9ef">left</span>: <span style="color:#ae81ff">0</span>; <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>; <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">background</span>: <span style="color:#ae81ff">#0e1117</span>; <span style="color:#66d9ef">z-index</span>: <span style="color:#ae81ff">9999</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">display</span>: <span style="color:#66d9ef">flex</span>; <span style="color:#66d9ef">flex-direction</span>: <span style="color:#66d9ef">column</span>; <span style="color:#66d9ef">justify-content</span>: <span style="color:#66d9ef">center</span>; <span style="color:#66d9ef">align-items</span>: <span style="color:#66d9ef">center</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">style</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;loading-screen&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spinner-border text-light&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width: 3rem; height: 3rem;&#34;</span> <span style="color:#a6e22e">role</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;status&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">h4</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mt-3 text-light&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;font-weight: 300;&#34;</span>&gt;Loading quantitative data...&lt;/<span style="color:#f92672">h4</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">nav</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;navbar navbar-custom py-3&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container-fluid px-4 d-flex justify-content-between align-items-center&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;navbar-brand mb-0 h1 fs-4 fw-bold&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">i</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;fa-solid fa-chart-line text-info me-2&#34;</span>&gt;&lt;/<span style="color:#f92672">i</span>&gt; QMJ Quant Screener
+</span></span><span style="display:flex;"><span>        &lt;/<span style="color:#f92672">span</span>&gt;
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;d-flex align-items-center&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-secondary small me-2&#34;</span>&gt;&lt;<span style="color:#f92672">i</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;fa-regular fa-calendar-check&#34;</span>&gt;&lt;/<span style="color:#f92672">i</span>&gt; Assessment Period:&lt;/<span style="color:#f92672">span</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">select</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dateSelector&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-select form-select-sm bg-dark text-light border-secondary&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width: 150px; font-weight: bold;&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>                &lt;<span style="color:#f92672">option</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt;Loading...&lt;/<span style="color:#f92672">option</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;/<span style="color:#f92672">select</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">nav</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;main-container&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mb-3&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">h4</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;fw-light&#34;</span>&gt;Panoramic Multi-Dimensional Analysis Table&lt;/<span style="color:#f92672">h4</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">p</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-secondary small&#34;</span>&gt;System analyzing 14 dimensions of data. 100% Serverless Data Pipeline (S3, AWS Glue, DynamoDB).&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table-container&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">table</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stockTable&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table table-dark table-hover w-100&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">thead</span>&gt;
+</span></span><span style="display:flex;"><span>                &lt;<span style="color:#f92672">tr</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span>&gt;Rank&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span>&gt;Ticker&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span>&gt;Exchange&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span>&gt;Company Name&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span>&gt;Industry Group&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span>&gt;Sector Detail&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-end&#34;</span>&gt;Market Cap ($B)&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-end text-muted&#34;</span>&gt;Quarterly Market Cap&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-center border-start border-secondary&#34;</span>&gt;Total QMJ&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-center&#34;</span>&gt;Profitability&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-center&#34;</span>&gt;Growth&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-center&#34;</span>&gt;Safety&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-center&#34;</span>&gt;Value&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                    &lt;<span style="color:#f92672">th</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-center&#34;</span>&gt;Momentum&lt;/<span style="color:#f92672">th</span>&gt;
+</span></span><span style="display:flex;"><span>                &lt;/<span style="color:#f92672">tr</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;/<span style="color:#f92672">thead</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;<span style="color:#f92672">tbody</span>&gt;
+</span></span><span style="display:flex;"><span>            &lt;/<span style="color:#f92672">tbody</span>&gt;
+</span></span><span style="display:flex;"><span>        &lt;/<span style="color:#f92672">table</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://code.jquery.com/jquery-3.7.0.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ==========================================
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ENTER YOUR API GATEWAY URL HERE
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ==========================================
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">API_URL</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;xxxxxxxxxxxxxxxxxxxxx&#34;</span>;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">allData</span> <span style="color:#f92672">=</span> []; <span style="color:#75715e">// Store all historical data
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">dataTableInstance</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getScoreColorClass</span>(<span style="color:#a6e22e">score</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">score</span> <span style="color:#f92672">===</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">score</span> <span style="color:#f92672">===</span> <span style="color:#66d9ef">undefined</span>) <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;text-secondary&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">score</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">80</span>) <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;score-excellent&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">score</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">60</span>) <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;score-good&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">score</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">40</span>) <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;score-average&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;score-bad&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">formatNumber</span>(<span style="color:#a6e22e">num</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">num</span>) <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;-&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Number(<span style="color:#a6e22e">num</span>).<span style="color:#a6e22e">toLocaleString</span>(<span style="color:#e6db74">&#39;en-US&#39;</span>, { <span style="color:#a6e22e">maximumFractionDigits</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span> });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">initApp</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">response</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">fetch</span>(<span style="color:#a6e22e">API_URL</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">allData</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">json</span>();
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Filter valid data
+</span></span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">allData</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">allData</span>.<span style="color:#a6e22e">filter</span>(<span style="color:#a6e22e">s</span> =&gt; <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">ticker</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 1. Extract list of unique Date/Quarters (Remove duplicates and Sort newest first)
+</span></span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">uniqueDates</span> <span style="color:#f92672">=</span> [...<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Set</span>(<span style="color:#a6e22e">allData</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">item</span> =&gt; <span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">snapshot_date</span>))].<span style="color:#a6e22e">filter</span>(Boolean).<span style="color:#a6e22e">sort</span>().<span style="color:#a6e22e">reverse</span>();
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 2. Load dates into Dropdown
+</span></span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">dateSelector</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;dateSelector&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">dateSelector</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>; <span style="color:#75715e">// Clear loading text
+</span></span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">uniqueDates</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">uniqueDates</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#a6e22e">date</span> =&gt; {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">option</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#34;option&#34;</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">option</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">date</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">option</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">date</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">dateSelector</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">option</span>);
+</span></span><span style="display:flex;"><span>                });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Listen for dropdown changes
+</span></span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">dateSelector</span>.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;change&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">e</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">renderTableForDate</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">value</span>);
+</span></span><span style="display:flex;"><span>                });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Display data of the latest date by default
+</span></span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">renderTableForDate</span>(<span style="color:#a6e22e">uniqueDates</span>[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">dateSelector</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;option&gt;No data available&lt;/option&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Turn off loading screen
+</span></span></span><span style="display:flex;"><span>            document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;loading-screen&#34;</span>).<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">display</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;none&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">error</span>) {
+</span></span><span style="display:flex;"><span>            document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;loading-screen&#34;</span>).<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;h3 class=&#34;text-danger&#34;&gt;API connection error&lt;/h3&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;p class=&#34;text-secondary&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">error</span>.<span style="color:#a6e22e">message</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            `</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Filter and Render table based on chosen date
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">renderTableForDate</span>(<span style="color:#a6e22e">selectedDate</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Filter data of the chosen date
+</span></span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">filteredData</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">allData</span>.<span style="color:#a6e22e">filter</span>(<span style="color:#a6e22e">item</span> =&gt; <span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">snapshot_date</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">selectedDate</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Sort by Rank
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">filteredData</span>.<span style="color:#a6e22e">sort</span>((<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span>) =&gt; (<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">qmj_rank</span> <span style="color:#f92672">||</span> <span style="color:#ae81ff">999</span>) <span style="color:#f92672">-</span> (<span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">qmj_rank</span> <span style="color:#f92672">||</span> <span style="color:#ae81ff">999</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Destroy previous table instance to prevent DataTables errors
+</span></span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">dataTableInstance</span> <span style="color:#f92672">!==</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">dataTableInstance</span>.<span style="color:#a6e22e">destroy</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">tbody</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#34;#stockTable tbody&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">tbody</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>; <span style="color:#75715e">// Clear old data
+</span></span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">filteredData</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#a6e22e">stock</span> =&gt; {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">tr</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#34;tr&#34;</span>);
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">exchangeClass</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">exchange</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;HSX&#34;</span>) <span style="color:#a6e22e">exchangeClass</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;exchange-HSX&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">exchange</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;HNX&#34;</span>) <span style="color:#a6e22e">exchangeClass</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;exchange-HNX&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">exchangeClass</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;exchange-UPCOM&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">tr</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-center text-secondary fw-bold&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_rank</span> <span style="color:#f92672">||</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td&gt;&lt;span class=&#34;ticker-badge </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">exchangeClass</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">ticker</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/span&gt;&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-secondary small fw-bold&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">exchange</span> <span style="color:#f92672">||</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-truncate&#34; style=&#34;max-width: 180px;&#34; title=&#34;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">company_name</span> <span style="color:#f92672">||</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">company_name</span> <span style="color:#f92672">||</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-truncate&#34; style=&#34;max-width: 150px;&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">industry_group</span> <span style="color:#f92672">||</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-truncate text-secondary&#34; style=&#34;max-width: 150px;&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">sector_detail</span> <span style="color:#f92672">||</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-end fw-semibold&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">formatNumber</span>(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">current_market_cap</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-end text-muted small&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">formatNumber</span>(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">quarter_market_cap</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-center fs-6 border-start border-secondary </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">getScoreColorClass</span>(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_score</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_score</span> <span style="color:#f92672">?</span> Number(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_score</span>).<span style="color:#a6e22e">toFixed</span>(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-center </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">getScoreColorClass</span>(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_profitability</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_profitability</span> <span style="color:#f92672">?</span> Number(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_profitability</span>).<span style="color:#a6e22e">toFixed</span>(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-center </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">getScoreColorClass</span>(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_growth</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_growth</span> <span style="color:#f92672">?</span> Number(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_growth</span>).<span style="color:#a6e22e">toFixed</span>(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-center </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">getScoreColorClass</span>(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_safety</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_safety</span> <span style="color:#f92672">?</span> Number(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">qmj_safety</span>).<span style="color:#a6e22e">toFixed</span>(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-center </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">getScoreColorClass</span>(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">value_recent_score</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">value_recent_score</span> <span style="color:#f92672">?</span> Number(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">value_recent_score</span>).<span style="color:#a6e22e">toFixed</span>(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;td class=&#34;text-center </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">getScoreColorClass</span>(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">momentum_recent_score</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">momentum_recent_score</span> <span style="color:#f92672">?</span> Number(<span style="color:#a6e22e">stock</span>.<span style="color:#a6e22e">momentum_recent_score</span>).<span style="color:#a6e22e">toFixed</span>(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;-&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            `</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">tbody</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">tr</span>);
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Re-initialize DataTables
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">dataTableInstance</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#39;#stockTable&#39;</span>).<span style="color:#a6e22e">DataTable</span>({
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">pageLength</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">20</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">lengthMenu</span><span style="color:#f92672">:</span> [<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">500</span>],
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">scrollX</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>, 
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">language</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Filter stocks:&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">lengthMenu</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Show _MENU_ symbols&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">info</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Showing _START_ to _END_ of _TOTAL_ symbols&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">paginate</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">next</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Next&#34;</span>, <span style="color:#a6e22e">previous</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Previous&#34;</span> },
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">zeroRecords</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;No matching stocks found.&#34;</span>
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">order</span><span style="color:#f92672">:</span> [[<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;asc&#39;</span>]], 
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">columnDefs</span><span style="color:#f92672">:</span> [
+</span></span><span style="display:flex;"><span>                { <span style="color:#a6e22e">orderable</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>, <span style="color:#a6e22e">targets</span><span style="color:#f92672">:</span> [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>] } 
+</span></span><span style="display:flex;"><span>            ]
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    window.<span style="color:#a6e22e">onload</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">initApp</span>;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;
+</span></span></code></pre></div><p><img src="/aws-project/images/stock-screener/5-serving-layer/web.png?featherlight=false&amp;width=90pc" alt="Web frontend"></p>
+<blockquote>
+<p><strong>Architectural Thinking – Serving Separation.</strong> The browser does not load Parquet files from S3 Processed. Parquet files are published to DynamoDB, and the API returns only the JSON fields required for the chart.</p>
+</blockquote>
+<hr>
+<p>This chapter covers bringing the QMJ Parquet files from S3 Processed to the website using an event-driven architecture: S3 triggers the Lambda QMJ Loader, the Loader writes to DynamoDB, the Lambda Reader queries by ticker, API Gateway returns JSON, and the Web Frontend renders charts using Chart.js.</p>
+
+
+
+
+
+
+
+<ul class="children children-li">
+	
+
+	
+		
+	
+
+	
+
+	
+		
+	
+
+	
+</ul>
+
+
+<p>The EventBridge Scheduler triggers the Glue Python Shell Job daily. Do not configure the scheduler to run the transform or publisher tasks at the same time, as they must wait for the Raw output to be fully completed.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>EventBridge  Scheduler  <strong>Create schedule</strong></td>
+					<td>Create a recurring schedule</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Schedule name</td>
+					<td><code>stock-screener-daily-ingestion</code></td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Schedule pattern</td>
+					<td>Select cron-based schedule</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Expression</td>
+					<td>For example: <code>cron(0 7 ? * TUE-SAT *)</code></td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Timezone</td>
+					<td>Select <code>Asia/Ho_Chi_Minh</code> if supported by the UI</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Target</td>
+					<td>Universal target: AWS SDK  Glue  <code>StartJobRun</code></td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td>Input payload</td>
+					<td>Paste the JSON payload below</td>
+			</tr>
+			<tr>
+					<td>8</td>
+					<td>Execution role</td>
+					<td><code>EventBridgeSchedulerStockScreenerRole</code></td>
+			</tr>
+			<tr>
+					<td>9</td>
+					<td>Create schedule</td>
+					<td>Verify the schedule is enabled</td>
+			</tr>
+	</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;JobName&#34;</span>: <span style="color:#e6db74">&#34;us-stock-daily-ingestion&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<p>EventBridge Scheduler only triggers the Daily Ingestion. Glue Workflow is not included in the project because there is currently no workflow code or configuration. Transform and Publisher tasks are run separately to avoid describing non-existent dependencies.</p>
+
+
+
+
+
+
+
+<ul class="children children-li">
+	
+
+	
+		
+	
+
+	
+
+	
+		
+	
+
+	
+</ul>
+
+
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/aws-project/en/2-workshop/2.5-stock-screener/4-data-processing/" title="Data Processing"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/aws-project/en/2-workshop/2.5-stock-screener/6-resource-cleanup/" title="Resource Cleanup" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/aws-project/js/clipboard.min.js?1786107730"></script>
+    <script src="/aws-project/js/perfect-scrollbar.min.js?1786107730"></script>
+    <script src="/aws-project/js/perfect-scrollbar.jquery.min.js?1786107730"></script>
+    <script src="/aws-project/js/jquery.sticky.js?1786107730"></script>
+    <script src="/aws-project/js/featherlight.min.js?1786107730"></script>
+    <script src="/aws-project/js/highlight.pack.js?1786107730"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/aws-project/js/modernizr.custom-3.6.0.js?1786107730"></script>
+    <script src="/aws-project/js/learn.js?1786107730"></script>
+    <script src="/aws-project/js/hugo-learn.js?1786107730"></script>
+    
+        
+            <script src="/aws-project/mermaid/mermaid.js?1786107730"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

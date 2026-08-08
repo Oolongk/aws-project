@@ -1,29 +1,74 @@
-/* Import font chữ Open Sans chuẩn Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
 
-body {
+/* Áp dụng font Open Sans toàn trang */
+body, input, select, textarea, button {
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-    font-size: 15px !important;
-    line-height: 1.7 !important;
-    color: #2c3e50 !important;
 }
 
-/* Kiểu chữ cho các tiêu đề (H1, H2, H3) giống Hình 2 */
-h1 {
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-    font-weight: 300 !important;
-    color: #527699 !important; /* Màu xanh mờ Slate đặc trưng của AWS Workshop */
+/* Chỉ định dạng chữ và màu sắc cho phần nội dung chính (không ảnh hưởng sidebar) */
+#body {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #2c3e50;
+}
+
+#body p, #body li, #body span, #body em, #body td, #body th {
+    color: #2c3e50;
+}
+
+#body strong, #body b {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+#body h1, #body h2, #body h3, #body h4, #body h5, #body h6 {
+    color: #2c3e50;
+}
+
+#body h1 {
+    font-weight: 300;
+    color: #527699; /* Màu xanh mờ Slate đặc trưng của AWS Workshop */
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-h2, h3, h4 {
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-    font-weight: 400 !important;
-    color: #2c3e50 !important;
-}
-
-/* Đổi màu phần logo AWS sang màu xanh đen AWS chuẩn */
 #header {
     background-color: #232f3e !important;
+}
+
+/* ===== TÙY CHỈNH THANH SIDEBAR ===== */
+
+/* Màu mặc định cho thẻ link và thẻ số <b> */
+#sidebar a {
+    color: #d1d5db !important;
+}
+
+#sidebar a:hover {
+    color: #ffffff !important;
+}
+
+#sidebar b, #sidebar strong {
+    color: #ffffff !important;
+}
+
+/* Khi mục được bấm / đang chọn (Active State) */
+#sidebar ul li.active > a {
+    background: #ffffff !important;
+    color: #111827 !important;
+}
+
+/* Màu thẻ số <b> khi mục đang active (Chuyển sang màu tối để nổi bật trên nền trắng) */
+#sidebar ul li.active > a b,
+#sidebar ul li.active > a strong {
+    color: #111827 !important;
+}
+
+/* Màu mục cha đang mở (Parent State) */
+#sidebar ul li.parent > a {
+    color: #ffffff !important;
+}
+
+#sidebar ul li.parent > a b,
+#sidebar ul li.parent > a strong {
+    color: #ff9900 !important; /* Cam AWS cho số mục cha */
 }

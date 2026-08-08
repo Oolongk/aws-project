@@ -1,17 +1,1 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Dota 2 Meta Analytics Data Lakehouse on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title>
-		<link>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/</link>
-		<description>Recent content in Dota 2 Meta Analytics Data Lakehouse on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description>
-		<generator>Hugo</generator>
-		<language>vi</language>
-		
-		
-		
-		
-			<lastBuildDate></lastBuildDate>
-		
-			<atom:link href="http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/index.xml" rel="self" type="application/rss+xml" />
-	</channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Xây Dựng Data Lakehouse Serverless: Dota 2 Meta Analytics on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/</link><description>Recent content in Xây Dựng Data Lakehouse Serverless: Dota 2 Meta Analytics on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description><generator>Hugo</generator><language>vi</language><lastBuildDate/><atom:link href="https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/index.xml" rel="self" type="application/rss+xml"/></channel></rss>

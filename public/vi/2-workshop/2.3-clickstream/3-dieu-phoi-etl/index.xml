@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Tầng Điều phối và ETL on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title>
+		<link>http://localhost:1313/aws-project/vi/2-workshop/2.3-clickstream/3-dieu-phoi-etl/</link>
+		<description>Recent content in Tầng Điều phối và ETL on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description>
+		<generator>Hugo</generator>
+		<language>vi</language>
+		
+		
+		
+		
+			<lastBuildDate>Thu, 25 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/vi/2-workshop/2.3-clickstream/3-dieu-phoi-etl/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Thiết kế Nhạc trưởng Step Functions</title>
+				<link>http://localhost:1313/aws-project/vi/2-workshop/2.3-clickstream/3-dieu-phoi-etl/3.1-step-functions/</link>
+				<pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/vi/2-workshop/2.3-clickstream/3-dieu-phoi-etl/3.1-step-functions/</guid>
+				<description>&lt;p&gt;Để giải phóng hệ thống khỏi các tác vụ kích hoạt bằng tay, chúng ta sẽ sử dụng &lt;strong&gt;AWS Step Functions Workflow Studio&lt;/strong&gt; nhằm xây dựng một quy trình tự động hóa hoàn toàn theo chuỗi tuần tự.&lt;/p&gt;&#xA;&lt;h4 id=&#34;bước-1-khởi-tạo-aws-glue-crawler-để-quét-dữ-liệu&#34;&gt;Bước 1: Khởi tạo AWS Glue Crawler để quét dữ liệu&lt;/h4&gt;&#xA;&lt;p&gt;Trước khi Step Functions có thể điều phối, chúng ta cần một công cụ tự động nhận diện các file Parquet mới hạ cánh xuống S3 nhằm cập nhật sổ cái (Data Catalog).&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Xử lý ETL với Lambda và Athena</title>
+				<link>http://localhost:1313/aws-project/vi/2-workshop/2.3-clickstream/3-dieu-phoi-etl/3.2-lambda-athena-etl/</link>
+				<pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/vi/2-workshop/2.3-clickstream/3-dieu-phoi-etl/3.2-lambda-athena-etl/</guid>
+				<description>&lt;p&gt;Bài viết này hướng dẫn bạn cấu hình khối xử lý dữ liệu lõi (Core ETL Compute Layer). Chúng ta sẽ viết một đoạn script Python thực thi trên nền AWS Lambda để điều khiển dịch vụ Amazon Athena chạy truy vấn SQL Serverless, ép kiểu dữ liệu Parquet và bóc tách mốc mốc thời gian về dạng số nguyên nguyên bản cho AI.&lt;/p&gt;&#xA;&lt;h4 id=&#34;hướng-dẫn-cấu-hình-hàm-tính-toán-aws-lambda&#34;&gt;Hướng dẫn cấu hình hàm tính toán AWS Lambda&lt;/h4&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th style=&#34;text-align: left&#34;&gt;Bước&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th style=&#34;text-align: left&#34;&gt;Hành động&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th style=&#34;text-align: left&#34;&gt;Chi tiết kỹ thuật&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Khởi tạo hàm&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Vào dịch vụ &lt;strong&gt;AWS Lambda&lt;/strong&gt; -&amp;gt; Bấm &lt;strong&gt;Create function&lt;/strong&gt; -&amp;gt; Chọn &lt;strong&gt;Author from scratch&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;2&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Thiết lập cơ bản&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Đặt tên hàm là &lt;code&gt;AthenaETLProcessor&lt;/code&gt;. Chọn Runtime ngôn ngữ là &lt;strong&gt;Python 3.12&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;3&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Cấu hình thời gian&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Chuyển sang tab &lt;strong&gt;Configuration&lt;/strong&gt; -&amp;gt; mục &lt;strong&gt;General configuration&lt;/strong&gt; -&amp;gt; Bấm Edit, tăng thông số &lt;strong&gt;Timeout&lt;/strong&gt; lên mức tối thiểu là &lt;code&gt;2 minutes&lt;/code&gt; (để tránh hàm bị ngắt giữa chừng khi đợi Athena kết xuất file).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;4&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Cấp quyền hệ thống&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Tại mục &lt;strong&gt;Permissions&lt;/strong&gt;, bấm vào link Execution Role để mở giao diện IAM. Tiến hành đính kèm thêm 2 chính sách quyền chuẩn: &lt;code&gt;AmazonAthenaFullAccess&lt;/code&gt; và &lt;code&gt;AmazonS3FullAccess&lt;/code&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;hr&gt;&#xA;&lt;h4 id=&#34;mã-nguồn-xử-lý-etl-python--serverless-sql&#34;&gt;Mã nguồn xử lý ETL (Python &amp;amp; Serverless SQL)&lt;/h4&gt;&#xA;&lt;p&gt;Bạn hãy quay lại tab &lt;strong&gt;Code&lt;/strong&gt; của hàm Lambda, xóa sạch đoạn mã mặc định, dán toàn bộ khối mã nguồn chuẩn Enterprise dưới đây vào và bấm nút &lt;strong&gt;Deploy&lt;/strong&gt; màu cam:&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

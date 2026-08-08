@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cloud Infrastructure Deployment on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/</link><description>Recent content in Cloud Infrastructure Deployment on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 13 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/index.xml" rel="self" type="application/rss+xml"/><item><title>Create DynamoDB &amp; Configure Amazon SNS</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/1-dynamodb-sns/</link><pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/1-dynamodb-sns/</guid><description>&lt;h4 id="1-initialize-amazon-dynamodb-storage"&gt;1. Initialize Amazon DynamoDB storage&lt;/h4&gt;
+&lt;p&gt;Amazon DynamoDB is a NoSQL database with response times in milliseconds, extremely suitable for storing continuous time-series data streaming from trucks.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Access the &lt;strong&gt;AWS Management Console&lt;/strong&gt;, search for and open &lt;strong&gt;DynamoDB&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;In the left menu, select &lt;strong&gt;Tables&lt;/strong&gt; and click the &lt;strong&gt;Create table&lt;/strong&gt; button.&lt;/li&gt;
+&lt;li&gt;Configure the table with the following parameters:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Table name&lt;/strong&gt;: &lt;code&gt;IoT_Fleet_Data&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Partition key&lt;/strong&gt;: &lt;code&gt;truck_id&lt;/code&gt; (Type: &lt;strong&gt;String&lt;/strong&gt;) - &lt;em&gt;Used to group data by each truck.&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sort key&lt;/strong&gt;: &lt;code&gt;timestamp_ms&lt;/code&gt; (Type: &lt;strong&gt;Number&lt;/strong&gt;) - &lt;em&gt;Used to sort journey data in real-time.&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://Oolongk.github.io/aws-project/images/IoTSentinel/2-trien-khai/dynamodb-create.png?featherlight=false&amp;amp;width=90pc" alt="Create DynamoDB table"&gt;&lt;/p&gt;</description></item><item><title>Create Amazon SQS &amp; Write AWS Lambda</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/2-sqs-lambda/</link><pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/2-sqs-lambda/</guid><description>&lt;h4 id="1-create-amazon-sqs-queue"&gt;1. Create Amazon SQS Queue&lt;/h4&gt;
+&lt;p&gt;Amazon SQS acts as the &amp;ldquo;shock absorber&amp;rdquo; for the system. When thousands of trucks send data simultaneously, SQS will buffer all of it and hold the messages in the queue for Lambda to process gradually, preventing overload.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Search for and open the &lt;strong&gt;Simple Queue Service (SQS)&lt;/strong&gt; service.&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;Create queue&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Configure the queue:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Type&lt;/strong&gt;: Select &lt;strong&gt;Standard&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Name&lt;/strong&gt;: &lt;code&gt;IoT_Fleet_Queue&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Keep the default settings and click &lt;strong&gt;Create queue&lt;/strong&gt;.
+&lt;img src="https://Oolongk.github.io/aws-project/images/IoTSentinel/2-trien-khai/sqs_create.png?featherlight=false&amp;amp;width=90pc" alt="Create SQS Queue"&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Important&lt;/strong&gt;: After creation, copy the queue &lt;strong&gt;URL&lt;/strong&gt; (in the format &lt;code&gt;https://sqs...&lt;/code&gt;) for use in the IoT Rule configuration step later.
+&lt;img src="https://Oolongk.github.io/aws-project/images/IoTSentinel/2-trien-khai/sqs_create_2.png?featherlight=false&amp;amp;width=90pc" alt="Create SQS Queue"&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h4 id="2-write-the-aws-lambda-processing-function"&gt;2. Write the AWS Lambda Processing Function&lt;/h4&gt;
+&lt;p&gt;This Lambda function is the &amp;ldquo;brain&amp;rdquo; of the system. It will automatically trigger when data is in SQS, analyze the temperature, and decide whether to send an alert.&lt;/p&gt;</description></item><item><title>Configure AWS IoT Core &amp; IoT Rules</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/3-iot-core/</link><pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/3-iot-core/</guid><description>&lt;h4 id="1-create-a-thing-for-the-truck-fleet"&gt;1. Create a &amp;ldquo;Thing&amp;rdquo; for the Truck Fleet&lt;/h4&gt;
+&lt;p&gt;In AWS IoT Core, each truck is treated as a &amp;ldquo;Thing&amp;rdquo;. We will create an identity representing the entire fleet.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open the &lt;strong&gt;IoT Core&lt;/strong&gt; service.&lt;/li&gt;
+&lt;li&gt;Go to &lt;strong&gt;Manage&lt;/strong&gt; &amp;gt; &lt;strong&gt;All devices&lt;/strong&gt; &amp;gt; &lt;strong&gt;Things&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Create things&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Select &lt;strong&gt;Create single thing&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Thing name&lt;/strong&gt;: &lt;code&gt;Vaccine_Truck_Fleet&lt;/code&gt; &amp;gt; Click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Select &lt;strong&gt;Auto-generate a new certificate&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Download Security Certificates (Extremely Important):&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>

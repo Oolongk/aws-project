@@ -1,0 +1,631 @@
+<!doctype html><html lang=vi class="js csstransforms3d"><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.164.0"><meta name=description content><link rel=icon href=/aws-project/images/favicon.png type=image/png><title>Triển khai Daily Ingestion bằng Glue Python Shell :: AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title><link href=/aws-project/css/nucleus.css?1786168074 rel=stylesheet><link href=/aws-project/css/fontawesome-all.min.css?1786168074 rel=stylesheet><link href=/aws-project/css/hybrid.css?1786168074 rel=stylesheet><link href=/aws-project/css/featherlight.min.css?1786168074 rel=stylesheet><link href=/aws-project/css/perfect-scrollbar.min.css?1786168074 rel=stylesheet><link href=/aws-project/css/auto-complete.css?1786168074 rel=stylesheet><link href=/aws-project/css/atom-one-dark-reasonable.css?1786168074 rel=stylesheet><link href=/aws-project/css/theme.css?1786168074 rel=stylesheet><link href=/aws-project/css/tabs.css?1786168074 rel=stylesheet><link href=/aws-project/css/hugo-theme.css?1786168074 rel=stylesheet><link href=/aws-project/css/theme-workshop.css?1786168074 rel=stylesheet><link href=/aws-project/css/custom.css?1786168074 rel=stylesheet><script src=/aws-project/js/jquery-3.3.1.min.js?1786168074></script><style>:root #header+#content>#left>#rlblock_left{display:none!important}</style></head><body data-url=/aws-project/2-workshop/2.5-stock-screener/2-tang-thu-thap/2.2-daily-ingestion-glue-python-shell/><nav id=sidebar class=showVisitedLinks><div id=header-wrapper><div id=header><a id=logo href=/><svg id="Layer_1" data-name="Layer 1" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff}.cls-2{fill:#f90;fill-rule:evenodd}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09 10.85a4.7 4.7.0 00.19 1.48 7.73 7.73.0 00.54 1.19.77.77.0 01.12.38.64.64.0 01-.32.49l-1 .7a.83.83.0 01-.44.15.69.69.0 01-.49-.23 3.8 3.8.0 01-.6-.77q-.25-.42-.51-1a6.14 6.14.0 01-4.89 2.3 4.54 4.54.0 01-3.32-1.19 4.27 4.27.0 01-1.22-3.2 4.28 4.28.0 011.46-3.4A6.06 6.06.0 017.69 6.46a12.47 12.47.0 011.76.13q.92.13 1.91.36V5.73a3.65 3.65.0 00-.79-2.66A3.81 3.81.0 007.86 2.3a7.71 7.71.0 00-1.79.22 12.78 12.78.0 00-1.79.57 4.55 4.55.0 01-.58.22h-.26q-.35.0-.35-.52V2a1.09 1.09.0 01.12-.58 1.2 1.2.0 01.47-.35A10.88 10.88.0 015.77.32 10.19 10.19.0 018.36.0a6 6 0 014.35 1.35 5.49 5.49.0 011.38 4.09zM7.34 13.38a5.36 5.36.0 001.72-.31A3.63 3.63.0 0010.63 12 2.62 2.62.0 0011.19 11a5.63 5.63.0 00.16-1.44v-.7a14.35 14.35.0 00-1.53-.28 12.37 12.37.0 00-1.56-.1 3.84 3.84.0 00-2.47.67A2.34 2.34.0 005 11a2.35 2.35.0 00.61 1.76A2.4 2.4.0 007.34 13.38zm13.35 1.8a1 1 0 01-.64-.16 1.3 1.3.0 01-.35-.65L15.81 1.51a3 3 0 01-.15-.67.36.36.0 01.41-.41H17.7a1 1 0 01.65.16 1.4 1.4.0 01.33.65l2.79 11 2.59-11A1.17 1.17.0 0124.39.6a1.1 1.1.0 01.67-.16H26.4a1.1 1.1.0 01.67.16 1.17 1.17.0 01.32.65L30 12.39 32.88 1.25A1.39 1.39.0 0133.22.6a1 1 0 01.65-.16h1.54a.36.36.0 01.41.41 1.36 1.36.0 010 .26 3.64 3.64.0 01-.12.41l-4 12.86a1.3 1.3.0 01-.35.65 1 1 0 01-.64.16H29.25a1 1 0 01-.67-.17 1.26 1.26.0 01-.32-.67L25.67 3.64l-2.56 10.7a1.26 1.26.0 01-.32.67 1 1 0 01-.67.17zm21.36.44a11.28 11.28.0 01-2.56-.29 7.44 7.44.0 01-1.92-.67 1 1 0 01-.61-.93v-.84q0-.52.38-.52a.9.9.0 01.31.06l.42.17a8.77 8.77.0 001.83.58 9.78 9.78.0 002 .2 4.48 4.48.0 002.43-.55 1.76 1.76.0 00.86-1.57 1.61 1.61.0 00-.45-1.16A4.29 4.29.0 0043 9.22l-2.41-.76A5.15 5.15.0 0138 6.78a3.94 3.94.0 01-.83-2.41 3.7 3.7.0 01.45-1.85 4.47 4.47.0 011.19-1.37 5.27 5.27.0 011.7-.86A7.4 7.4.0 0142.6.0a8.87 8.87.0 011.12.07q.57.07 1.08.19t.95.26a4.27 4.27.0 01.7.29 1.59 1.59.0 01.49.41.94.94.0 01.15.55v.79q0 .52-.38.52a1.76 1.76.0 01-.64-.2 7.74 7.74.0 00-3.2-.64 4.37 4.37.0 00-2.21.47 1.6 1.6.0 00-.79 1.48 1.58 1.58.0 00.49 1.18 4.94 4.94.0 001.83.92L44.55 7a5.08 5.08.0 012.57 1.6A3.76 3.76.0 0147.9 11a4.21 4.21.0 01-.44 1.93 4.4 4.4.0 01-1.21 1.47 5.43 5.43.0 01-1.85.93A8.25 8.25.0 0142.05 15.62z"/><path class="cls-2" d="M45.19 23.81C39.72 27.85 31.78 30 25 30A36.64 36.64.0 01.22 20.57c-.51-.46-.06-1.09.56-.74A49.78 49.78.0 0025.53 26.4 49.23 49.23.0 0044.4 22.53C45.32 22.14 46.1 23.14 45.19 23.81z"/><path class="cls-2" d="M47.47 21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74 3.13-2.2 8.27-1.57 8.86-.83s-.16 5.89-3.09 8.35c-.45.38-.88.18-.68-.32C46.69 25.8 48.17 22.11 47.47 21.21z"/></svg></a></div><div class=searchbox><label for=search-by><i class="fas fa-search"></i></label>
+<input data-search-input id=search-by type=search placeholder>
+<span data-search-clear><i class="fas fa-times"></i></span></div><script type=text/javascript src=/aws-project/js/lunr.min.js?1786168074></script><script type=text/javascript src=/aws-project/js/auto-complete.js?1786168074></script><script type=text/javascript>var baseurl="https://Oolongk.github.io/aws-project/"</script><script type=text/javascript src=/aws-project/js/search.js?1786168074></script></div><div class=highlightable><ul class=topics><li data-nav-id=/aws-project/1-gioi-thieu/ title="1. Giới thiệu" class=dd-item><a href=/aws-project/1-gioi-thieu/>1. Giới thiệu
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/ title=Workshops class="dd-item
+parent"><a href=/aws-project/2-workshop/><b>2. </b>Workshops
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.1-sentiment-sentinel/ title="Xây dựng Data Pipeline Phân tích Cảm xúc Mạng xã hội trên AWS" class=dd-item><a href=/aws-project/2-workshop/2.1-sentiment-sentinel/><b>2.1. </b>Xây dựng Data Pipeline Phân tích Cảm xúc Mạng xã hội trên AWS
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.1-sentiment-sentinel/1-gioi-thieu/ title="Giới thiệu và Kiến trúc" class=dd-item><a href=/aws-project/2-workshop/2.1-sentiment-sentinel/1-gioi-thieu/><b>2.1.1. </b>Giới thiệu và Kiến trúc
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.1-sentiment-sentinel/2-chuan-bi/ title="Các bước chuẩn bị" class=dd-item><a href=/aws-project/2-workshop/2.1-sentiment-sentinel/2-chuan-bi/><b>2.1.2. </b>Các bước chuẩn bị
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.1-sentiment-sentinel/2-chuan-bi/2.2-iam-role/ title="Tạo IAM Role & Kích hoạt AI" class=dd-item><a href=/aws-project/2-workshop/2.1-sentiment-sentinel/2-chuan-bi/2.2-iam-role/><b>2.1.2.2. </b>Tạo IAM Role & Kích hoạt AI
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.1-sentiment-sentinel/2-chuan-bi/2.3-tao-s3-data-lake/ title="Xây dựng Data Lake với Amazon S3" class=dd-item><a href=/aws-project/2-workshop/2.1-sentiment-sentinel/2-chuan-bi/2.3-tao-s3-data-lake/><b>2.1.2.3. </b>Xây dựng Data Lake với Amazon S3
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.1-sentiment-sentinel/2-chuan-bi/2.1-youtube-api/ title="Tạo YouTube API Key" class=dd-item><a href=/aws-project/2-workshop/2.1-sentiment-sentinel/2-chuan-bi/2.1-youtube-api/><b>2.1.2.1. </b>Tạo YouTube API Key
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.1-sentiment-sentinel/3-thu-thap-du-lieu/ title="Thu thập dữ liệu (Ingestion Layer) với AWS SQS & Lambda" class=dd-item><a href=/aws-project/2-workshop/2.1-sentiment-sentinel/3-thu-thap-du-lieu/><b>2.1.3. </b>Thu thập dữ liệu (Ingestion Layer) với AWS SQS & Lambda
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.1-sentiment-sentinel/4-xu-ly-ai/ title="Xử lý Dữ liệu và Tích hợp LLM với Amazon Bedrock (Transformation Layer)" class=dd-item><a href=/aws-project/2-workshop/2.1-sentiment-sentinel/4-xu-ly-ai/><b>2.1.4. </b>Xử lý Dữ liệu và Tích hợp LLM với Amazon Bedrock (Transformation Layer)
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.1-sentiment-sentinel/5-phan-tich-bi/ title="Trực quan hóa dữ liệu: Amazon Athena và AWS QuickSight" class=dd-item><a href=/aws-project/2-workshop/2.1-sentiment-sentinel/5-phan-tich-bi/><b>2.1.5. </b>Trực quan hóa dữ liệu: Amazon Athena và AWS QuickSight
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.1-sentiment-sentinel/6-tu-dong-hoa-he-thong/ title="Tự động hóa toàn phần (Full Automation) với Amazon EventBridge" class=dd-item><a href=/aws-project/2-workshop/2.1-sentiment-sentinel/6-tu-dong-hoa-he-thong/><b>2.1.6. </b>Tự động hóa toàn phần (Full Automation) với Amazon EventBridge
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.1-sentiment-sentinel/7-don-dep/ title="Dọn dẹp tài nguyên (Clean up)" class=dd-item><a href=/aws-project/2-workshop/2.1-sentiment-sentinel/7-don-dep/><b>2.1.7. </b>Dọn dẹp tài nguyên (Clean up)
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.2-iotsentinel/ title="IoT Fleet Monitoring System" class=dd-item><a href=/aws-project/2-workshop/2.2-iotsentinel/><b>2.2. </b>IoT Fleet Monitoring System
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.2-iotsentinel/1-chuan-bi/ title="Chuẩn bị Môi trường và Giả lập" class=dd-item><a href=/aws-project/2-workshop/2.2-iotsentinel/1-chuan-bi/><b>2.2.1. </b>Chuẩn bị Môi trường và Giả lập
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.2-iotsentinel/1-chuan-bi/1.1-setup-python/ title="Cấu hình Môi trường Python" class=dd-item><a href=/aws-project/2-workshop/2.2-iotsentinel/1-chuan-bi/1.1-setup-python/><b>2.2.1.1. </b>Cấu hình Môi trường Python
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.2-iotsentinel/1-chuan-bi/1.2-code/ title="Viết Mã nguồn Giả lập IoT" class=dd-item><a href=/aws-project/2-workshop/2.2-iotsentinel/1-chuan-bi/1.2-code/><b>2.2.1.2. </b>Viết Mã nguồn Giả lập IoT
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/ title="Triển khai Cơ sở hạ tầng Cloud" class=dd-item><a href=/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/><b>2.2.2. </b>Triển khai Cơ sở hạ tầng Cloud
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/1-dynamodb-sns/ title="Tạo DynamoDB & Cấu hình Amazon SNS" class=dd-item><a href=/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/1-dynamodb-sns/><b>2.2.2.1. </b>Tạo DynamoDB & Cấu hình Amazon SNS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/2-sqs-lambda/ title="Tạo Amazon SQS & Viết AWS Lambda" class=dd-item><a href=/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/2-sqs-lambda/><b>2.2.2.2. </b>Tạo Amazon SQS & Viết AWS Lambda
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/3-iot-core/ title="Cấu hình AWS IoT Core & IoT Rules" class=dd-item><a href=/aws-project/2-workshop/2.2-iotsentinel/2-trien-khai/3-iot-core/><b>2.2.2.3. </b>Cấu hình AWS IoT Core & IoT Rules
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.2-iotsentinel/3-kiem-tra/ title="Kiểm tra và Xác minh Hệ thống" class=dd-item><a href=/aws-project/2-workshop/2.2-iotsentinel/3-kiem-tra/><b>2.2.3. </b>Kiểm tra và Xác minh Hệ thống
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.2-iotsentinel/3-kiem-tra/1-chay-gia-lap/ title="Chạy Giả lập Thiết bị IoT" class=dd-item><a href=/aws-project/2-workshop/2.2-iotsentinel/3-kiem-tra/1-chay-gia-lap/><b>2.2.3.1. </b>Chạy Giả lập Thiết bị IoT
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.2-iotsentinel/3-kiem-tra/2-xac-minh/ title="Xác minh Luồng Dữ liệu & Cảnh báo" class=dd-item><a href=/aws-project/2-workshop/2.2-iotsentinel/3-kiem-tra/2-xac-minh/><b>2.2.3.2. </b>Xác minh Luồng Dữ liệu & Cảnh báo
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.2-iotsentinel/4-don-dep/ title="Dọn dẹp Tài nguyên" class=dd-item><a href=/aws-project/2-workshop/2.2-iotsentinel/4-don-dep/><b>2.2.4. </b>Dọn dẹp Tài nguyên
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/ title="Xây Dựng Hệ Thống Clickstream AI-Driven Serverless Data Lakehouse" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/><b>2.3. </b>Xây Dựng Hệ Thống Clickstream AI-Driven Serverless Data Lakehouse
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/1-chuan-bi/ title="Chuẩn bị Tài nguyên (Preparation)" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/1-chuan-bi/><b>2.3.1. </b>Chuẩn bị Tài nguyên (Preparation)
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/1-chuan-bi/1.1-s3-datalake/ title="Khởi tạo Amazon S3 Data Lake" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/1-chuan-bi/1.1-s3-datalake/><b>2.3.1.1. </b>Khởi tạo Amazon S3 Data Lake
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/1-chuan-bi/1.2-glue-schema/ title="Khởi tạo AWS Glue Catalog" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/1-chuan-bi/1.2-glue-schema/><b>2.3.1.2. </b>Khởi tạo AWS Glue Catalog
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/1-chuan-bi/1.3-sns-nofitication/ title="Thiết lập Kênh thông báo SNS" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/1-chuan-bi/1.3-sns-nofitication/><b>2.3.1.3. </b>Thiết lập Kênh thông báo SNS
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/2-tang-thu-thap/ title="Tầng Tiếp nhận (Ingestion Layer)" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/2-tang-thu-thap/><b>2.3.2. </b>Tầng Tiếp nhận (Ingestion Layer)
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/2-tang-thu-thap/2.1-kinesis-firehose/ title="Cấu hình Kinesis Data Firehose" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/2-tang-thu-thap/2.1-kinesis-firehose/><b>2.3.2.1. </b>Cấu hình Kinesis Data Firehose
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/2-tang-thu-thap/2.2-data-simulator/ title="Trình giả lập dữ liệu (Simulator)" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/2-tang-thu-thap/2.2-data-simulator/><b>2.3.2.2. </b>Trình giả lập dữ liệu (Simulator)
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/3-dieu-phoi-etl/ title="Tầng Điều phối và ETL" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/3-dieu-phoi-etl/><b>2.3.3. </b>Tầng Điều phối và ETL
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/3-dieu-phoi-etl/3.1-step-functions/ title="Thiết kế Nhạc trưởng Step Functions" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/3-dieu-phoi-etl/3.1-step-functions/><b>2.3.3.1. </b>Thiết kế Nhạc trưởng Step Functions
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/3-dieu-phoi-etl/3.2-lambda-athena-etl/ title="Xử lý ETL với Lambda và Athena" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/3-dieu-phoi-etl/3.2-lambda-athena-etl/><b>2.3.3.2. </b>Xử lý ETL với Lambda và Athena
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/4-goi-y-ai/ title="Tầng Trí tuệ Nhân tạo (AI)" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/4-goi-y-ai/><b>2.3.4. </b>Tầng Trí tuệ Nhân tạo (AI)
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/4-goi-y-ai/4.1-amazon-personalize/ title="Amazon Personalize và Phân tích kết quả" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/4-goi-y-ai/4.1-amazon-personalize/><b>2.3.4.1. </b>Amazon Personalize và Phân tích kết quả
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/5-don-dep/ title="Dọn dẹp và Kết luận" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/5-don-dep/><b>2.3.5. </b>Dọn dẹp và Kết luận
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.3-clickstream/5-don-dep/5.1-clean-up-all-services/ title="Dọn dẹp tài nguyên triệt để" class=dd-item><a href=/aws-project/2-workshop/2.3-clickstream/5-don-dep/5.1-clean-up-all-services/><b>2.3.5.1. </b>Dọn dẹp tài nguyên triệt để
+<i class="fas fa-check read-icon"></i></a></li></ul></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/ title="Xây Dựng Data Lakehouse Serverless: Dota 2 Meta Analytics" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/><b>2.4. </b>Xây Dựng Data Lakehouse Serverless: Dota 2 Meta Analytics
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/ title="Tầng Thu Thập (Ingestion Layer)" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/><b>2.4.1. </b>Tầng Thu Thập (Ingestion Layer)
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.1-setup-s3-raw/ title="Tạo S3 Bucket cho Raw Data" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.1-setup-s3-raw/><b>2.4.1.1. </b>Tạo S3 Bucket cho Raw Data
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.2-create-iam-user/ title="Tạo IAM Policy với Quyền Least Privilege" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.2-create-iam-user/><b>2.4.1.2. </b>Tạo IAM Policy với Quyền Least Privilege
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.3-python-data-fetcher/ title="Python Data Fetcher (OpenDota API)" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.3-python-data-fetcher/><b>2.4.1.3. </b>Python Data Fetcher (OpenDota API)
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/ title="Tầng Xử Lý Dữ Liệu (Processing Layer)" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/><b>2.4.2. </b>Tầng Xử Lý Dữ Liệu (Processing Layer)
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.1-setup-s3-processed/ title="Tạo S3 Bucket cho Dữ liệu Đã Xử Lý" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.1-setup-s3-processed/><b>2.4.2.1. </b>Tạo S3 Bucket cho Dữ liệu Đã Xử Lý
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.2-create-iam-role-glue/ title="Cấp quyền cho AWS Glue (IAM Role)" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.2-create-iam-role-glue/><b>2.4.2.2. </b>Cấp quyền cho AWS Glue (IAM Role)
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.3-glue-pyspark-etl/ title="Viết Job ETL bằng PySpark" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.3-glue-pyspark-etl/><b>2.4.2.3. </b>Viết Job ETL bằng PySpark
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/ title="Tầng Phân Tích Dữ Liệu (Analytics Layer)" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/><b>2.4.3. </b>Tầng Phân Tích Dữ Liệu (Analytics Layer)
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.1-athena-result-location/ title="Thiết lập Vùng đệm cho Athena (Query Result)" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.1-athena-result-location/><b>2.4.3.1. </b>Thiết lập Vùng đệm cho Athena (Query Result)
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.2-athena-partition-projection/ title="Tạo External Table với Partition Projection" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.2-athena-partition-projection/><b>2.4.3.2. </b>Tạo External Table với Partition Projection
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/4-serving-layer/ title="Tầng Phục Vụ Dữ Liệu (Serving Layer)" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/4-serving-layer/><b>2.4.4. </b>Tầng Phục Vụ Dữ Liệu (Serving Layer)
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/4-serving-layer/4.1-create-dynamodb-table/ title="Khởi tạo bảng Amazon DynamoDB" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/4-serving-layer/4.1-create-dynamodb-table/><b>2.4.4.1. </b>Khởi tạo bảng Amazon DynamoDB
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/4-serving-layer/4.2-update-glue-role/ title="Cập nhật IAM Role cho AWS Glue" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/4-serving-layer/4.2-update-glue-role/><b>2.4.4.2. </b>Cập nhật IAM Role cho AWS Glue
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/4-serving-layer/4.3-glue-calculate-metrics/ title="Nâng cấp Glue Job: Tính toán và nạp Metrics" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/4-serving-layer/4.3-glue-calculate-metrics/><b>2.4.4.3. </b>Nâng cấp Glue Job: Tính toán và nạp Metrics
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/5-api-va-giao-dien/ title="Tầng API & Giao Diện Người Dùng (API & UI Layer)" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/5-api-va-giao-dien/><b>2.4.5. </b>Tầng API & Giao Diện Người Dùng (API & UI Layer)
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/5-api-va-giao-dien/5.1-lambda-backend-api/ title="Tạo Lambda Function kết nối DynamoDB" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/5-api-va-giao-dien/5.1-lambda-backend-api/><b>2.4.5.1. </b>Tạo Lambda Function kết nối DynamoDB
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/5-api-va-giao-dien/5.2-api-gateway-setup/ title="Cấu hình HTTP API Gateway kiểm soát cổng vào" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/5-api-va-giao-dien/5.2-api-gateway-setup/><b>2.4.5.2. </b>Cấu hình HTTP API Gateway kiểm soát cổng vào
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/5-api-va-giao-dien/5.3-s3-static-website/ title="Deploy Giao diện người dùng lên S3 Static Hosting" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/5-api-va-giao-dien/5.3-s3-static-website/><b>2.4.5.3. </b>Deploy Giao diện người dùng lên S3 Static Hosting
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/6-tu-dong-hoa-va-don-dep/ title="Tự Động Hóa & Dọn Dẹp (Automation & FinOps)" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/6-tu-dong-hoa-va-don-dep/><b>2.4.6. </b>Tự Động Hóa & Dọn Dẹp (Automation & FinOps)
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/6-tu-dong-hoa-va-don-dep/6.1-eventbridge-automation/ title="Tự động hóa Pipeline với Amazon EventBridge" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/6-tu-dong-hoa-va-don-dep/6.1-eventbridge-automation/><b>2.4.6.1. </b>Tự động hóa Pipeline với Amazon EventBridge
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.4-dota2-lakehouse/6-tu-dong-hoa-va-don-dep/6.2-clean-up-resources/ title="Dọn Dẹp Tài Nguyên (Clean up)" class=dd-item><a href=/aws-project/2-workshop/2.4-dota2-lakehouse/6-tu-dong-hoa-va-don-dep/6.2-clean-up-resources/><b>2.4.6.2. </b>Dọn Dẹp Tài Nguyên (Clean up)
+<i class="fas fa-check read-icon"></i></a></li></ul></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/ title="US Stock Screener Pipeline" class="dd-item
+parent"><a href=/aws-project/2-workshop/2.5-stock-screener/><b>2.5. </b>US Stock Screener Pipeline
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/ title="Chuẩn bị kiến trúc, Storage và IAM" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/><b>2.5.1. </b>Chuẩn bị kiến trúc, Storage và IAM
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.1-current-architecture-and-data-contract/ title="Kiến trúc và Data Contract" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.1-current-architecture-and-data-contract/><b>2.5.1.1. </b>Kiến trúc và Data Contract
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.2-create-s3-data-zones/ title="Tạo S3 Data Zones" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.2-create-s3-data-zones/><b>2.5.1.2. </b>Tạo S3 Data Zones
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.3-create-iam-roles/ title="Tạo IAM Role theo Least Privilege" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.3-create-iam-roles/><b>2.5.1.3. </b>Tạo IAM Role theo Least Privilege
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/2-tang-thu-thap/ title="Ingestion Layer" class="dd-item
+parent"><a href=/aws-project/2-workshop/2.5-stock-screener/2-tang-thu-thap/><b>2.5.2. </b>Ingestion Layer
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/2-tang-thu-thap/2.1-local-backfill-history/ title="Chạy Local Backfill lịch sử giá" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/2-tang-thu-thap/2.1-local-backfill-history/><b>2.5.2.1. </b>Chạy Local Backfill lịch sử giá
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/2-tang-thu-thap/2.2-daily-ingestion-glue-python-shell/ title="Triển khai Daily Ingestion bằng Glue Python Shell" class="dd-item active"><a href=/aws-project/2-workshop/2.5-stock-screener/2-tang-thu-thap/2.2-daily-ingestion-glue-python-shell/><b>2.5.2.2. </b>Triển khai Daily Ingestion bằng Glue Python Shell
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/3-processing-layer/ title="Processing Layer – QMJ Transform" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/3-processing-layer/><b>2.5.3. </b>Processing Layer – QMJ Transform
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/3-processing-layer/3.1-create-glue-pyspark-job/ title="Tạo Glue PySpark Job để chạy QMJ Transform" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/3-processing-layer/3.1-create-glue-pyspark-job/><b>2.5.3.1. </b>Tạo Glue PySpark Job để chạy QMJ Transform
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/3-processing-layer/3.2-qmj-pyspark-transformation/ title="Phân tích và triển khai QMJ PySpark Transform" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/3-processing-layer/3.2-qmj-pyspark-transformation/><b>2.5.3.2. </b>Phân tích và triển khai QMJ PySpark Transform
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/4-serving-layer/ title="Serving Layer và Web Frontend" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/4-serving-layer/><b>2.5.4. </b>Serving Layer và Web Frontend
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/4-serving-layer/4.1-create-dynamodb-table/ title="Tạo DynamoDB Table cho QMJ Scores" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/4-serving-layer/4.1-create-dynamodb-table/><b>2.5.4.1. </b>Tạo DynamoDB Table cho QMJ Scores
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/4-serving-layer/4.2-create-s3-triggered-lambda-loader/ title="Tạo Lambda QMJ Loader với S3 Trigger" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/4-serving-layer/4.2-create-s3-triggered-lambda-loader/><b>2.5.4.2. </b>Tạo Lambda QMJ Loader với S3 Trigger
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/4-serving-layer/4.3-build-lambda-reader-api/ title="Tạo Lambda Reader API" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/4-serving-layer/4.3-build-lambda-reader-api/><b>2.5.4.3. </b>Tạo Lambda Reader API
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/4-serving-layer/4.4-create-http-api-cors/ title="Tạo HTTP API Gateway và CORS" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/4-serving-layer/4.4-create-http-api-cors/><b>2.5.4.4. </b>Tạo HTTP API Gateway và CORS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/4-serving-layer/4.5-build-static-frontend/ title="Deploy Static Web Frontend" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/4-serving-layer/4.5-build-static-frontend/><b>2.5.4.5. </b>Deploy Static Web Frontend
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/5-tu-dong-hoa-va-giam-sat/ title="Automation và Observability" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/5-tu-dong-hoa-va-giam-sat/><b>2.5.5. </b>Automation và Observability
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/5-tu-dong-hoa-va-giam-sat/5.1-schedule-daily-ingestion/ title="Tạo EventBridge Scheduler cho Daily Ingestion" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/5-tu-dong-hoa-va-giam-sat/5.1-schedule-daily-ingestion/><b>2.5.5.1. </b>Tạo EventBridge Scheduler cho Daily Ingestion
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/6-don-dep/ title="Cleanup và Bàn giao" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/6-don-dep/><b>2.5.6. </b>Cleanup và Bàn giao
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/6-don-dep/6.1-archive-evidence/ title="Archive Evidence trước khi Cleanup" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/6-don-dep/6.1-archive-evidence/><b>2.5.6.1. </b>Archive Evidence trước khi Cleanup
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/2-workshop/2.5-stock-screener/6-don-dep/6.2-delete-aws-resources/ title="Xóa AWS Resources" class=dd-item><a href=/aws-project/2-workshop/2.5-stock-screener/6-don-dep/6.2-delete-aws-resources/><b>2.5.6.2. </b>Xóa AWS Resources
+<i class="fas fa-check read-icon"></i></a></li></ul></li></ul></li></ul></li></ul><section id=prefooter><hr><ul><li><a class=padding><i class="fas fa-language fa-fw"></i><div class=select-style><select id=select-language onchange="location=this.value"><option id=vi value=https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/2-tang-thu-thap/2.2-daily-ingestion-glue-python-shell/ selected>Tiếng Việt</option></select>
+<svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" width="255" height="255" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255"><g><g id="arrow-drop-down"><polygon points="0,63.75 127.5,191.25 255,63.75"/></g></g></svg></div></a></li><li><a class=padding href=# data-clear-history-toggle><i class="fas fa-history fa-fw"></i></a></li></ul></section><section id=footer><left><b>Last Updated</b><br><i><span id=lastUpdated style=color:#fd9827></span></i>
+<script>const today=new Date,formattedDate=today.toLocaleDateString("en-GB");document.getElementById("lastUpdated").textContent=formattedDate</script></left><script async defer src=https://buttons.github.io/buttons.js></script><script>(function(){function e(){var t,n,s,o,i,e=document.querySelector("#sidebar .highlightable");if(!e)return;t=sessionStorage.getItem("sidebar-scroll-pos"),t!==null?(e.scrollTop=parseInt(t,10),window.jQuery&&jQuery.fn.perfectScrollbar&&jQuery(e).perfectScrollbar("update")):(n=e.querySelector("li.active"),n&&(s=e.getBoundingClientRect(),o=n.getBoundingClientRect(),i=o.top-s.top,e.scrollTop=e.scrollTop+i-s.height/2,window.jQuery&&jQuery.fn.perfectScrollbar&&jQuery(e).perfectScrollbar("update")))}function t(){var t,n,e=document.querySelector("#sidebar .highlightable");if(!e)return;e.addEventListener("scroll",function(){sessionStorage.setItem("sidebar-scroll-pos",e.scrollTop)});for(n=e.querySelectorAll("a"),t=0;t<n.length;t++)n[t].addEventListener("click",function(){sessionStorage.setItem("sidebar-scroll-pos",e.scrollTop)})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",function(){t(),e()}):(t(),e()),window.addEventListener("load",function(){e()}),setTimeout(e,100),setTimeout(e,300),setTimeout(e,600)})()</script></section></div></nav><section id=body><div id=overlay></div><div class="padding highlightable"><div><div id=top-bar><div id=breadcrumbs itemscope itemtype=http://data-vocabulary.org/Breadcrumb><span id=sidebar-toggle-span><a href=# id=sidebar-toggle data-sidebar-toggle><i class="fas fa-bars"></i>
+</a></span><span id=toc-menu><i class="fas fa-list-alt"></i></span>
+<span class=links><a href=/aws-project/>Báo cáo cuối khóa</a> > <a href=/aws-project/2-workshop/>Workshops</a> > <a href=/aws-project/2-workshop/2.5-stock-screener/>US Stock Screener Pipeline</a> > <a href=/aws-project/2-workshop/2.5-stock-screener/2-tang-thu-thap/>Ingestion Layer</a> > Triển khai Daily Ingestion bằng Glue Python Shell</span></div><div class=progress><div class=wrapper><nav id=TableOfContents><ul><li><a href=#chuẩn-bị-trước-khi-tạo-job>Chuẩn bị trước khi tạo Job</a></li><li><a href=#tạo-glue-python-shell-job-và-dán-code-trực-tiếp>Tạo Glue Python Shell Job và dán code trực tiếp</a></li><li><a href=#thêm-python-package-dependencies>Thêm Python package dependencies</a></li><li><a href=#kiểm-tra-cấu-hình-job-trước-khi-run>Kiểm tra cấu hình Job trước khi Run</a></li><li><a href=#quy-tắc-partition-và-dedupe-của-source-code>Quy tắc partition và dedupe của source code</a></li><li><a href=#kiểm-tra-kết-quả-trên-amazon-s3>Kiểm tra kết quả trên Amazon S3</a></li><li><a href=#full-source-daily_ingestionpy>Full source: <code>daily_ingestion.py</code></a></li></ul></nav></div></div></div></div><div id=head-tags></div><div id=body-inner><h1>Triển khai Daily Ingestion bằng Glue Python Shell</h1><p>Daily Ingestion lấy danh sách S&amp;P 500 từ Wikipedia, lấy dữ liệu từ Yahoo Finance qua <code>yfinance</code>, sau đó ghi ba Raw dataset vào Amazon S3:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-text data-lang=text><span style=display:flex><span>us_prices_raw.parquet
+</span></span><span style=display:flex><span>us_company_info.parquet
+</span></span><span style=display:flex><span>us_financials_raw.parquet
+</span></span></code></pre></div><p>Khác với Backfill chạy local, bài này tạo AWS Glue Python Shell Job và <strong>dán trực tiếp source code vào Glue Script editor</strong>. Không cần tự tạo thư mục <code>glue-scripts/</code> hoặc upload file <code>daily_ingestion.py</code> lên S3 bằng tay.</p><h2 id=chuẩn-bị-trước-khi-tạo-job>Chuẩn bị trước khi tạo Job</h2><table><thead><tr><th>Bước</th><th>Hành động</th><th>Chi tiết kỹ thuật</th></tr></thead><tbody><tr><td>1</td><td>Kiểm tra Raw Bucket</td><td>Bucket đang dùng là <code>stock-screener-raw-khanh</code></td></tr><tr><td>2</td><td>Kiểm tra IAM Role</td><td>Role <code>AWSGlueServiceRole-StockScreener</code> phải có quyền ghi vào <code>raw_us_market/*</code></td></tr><tr><td>3</td><td>Kiểm tra Internet access</td><td>Job cần gọi Wikipedia, Yahoo Finance và PyPI để cài package bổ sung</td></tr><tr><td>4</td><td>Chuẩn bị source code</td><td>Copy toàn bộ code <code>daily_ingestion.py</code> ở cuối bài</td></tr><tr><td>5</td><td>Không hard-code credential</td><td><code>boto3.client("s3")</code> tự dùng temporary credential của Glue Role</td></tr></tbody></table><blockquote><p><strong>Tư duy kiến trúc sư – direct editor.</strong> Glue Studio cho phép tạo Python Shell script mới và viết code trực tiếp trong Script editor. Bạn không cần tự upload file script lên S3. AWS Glue vẫn quản lý Script Location cho Job ở tầng dịch vụ, nhưng không cần thao tác thủ công với một thư mục <code>glue-scripts/</code>.</p></blockquote><h2 id=tạo-glue-python-shell-job-và-dán-code-trực-tiếp>Tạo Glue Python Shell Job và dán code trực tiếp</h2><table><thead><tr><th>Bước</th><th>Hành động</th><th>Chi tiết kỹ thuật</th></tr></thead><tbody><tr><td>1</td><td>Mở AWS Console → <code>AWS Glue</code></td><td>Vào trang quản trị AWS Glue</td></tr><tr><td>2</td><td>Chọn <code>ETL jobs</code> hoặc <code>Jobs</code></td><td>Mở danh sách Glue Job</td></tr><tr><td>3</td><td>Trong khu vực Create job, chọn <code>Script editor</code></td><td>Không chọn Visual ETL hoặc Notebook</td></tr><tr><td>4</td><td>Chọn Engine <code>Python shell</code> Chọn <code>Start fresh</code></td><td>Không chọn Upload and edit an existing script</td></tr><tr><td>5</td><td>Chọn <code>Create Script</code></td><td>Glue Studio mở Script editor với boilerplate code</td></tr><tr><td>6</td><td>Trong tab <code>Script</code></td><td>Xóa toàn bộ boilerplate code</td></tr><tr><td>7</td><td>Dán source <code>daily_ingestion.py</code></td><td>Dán nguyên file ở cuối bài</td></tr><tr><td>8</td><td>Mở tab <code>Job details</code></td><td>Cấu hình runtime, Role và package dependencies</td></tr><tr><td>9</td><td>Đặt Job name</td><td>Dùng <code>us-stock-daily-ingestion</code></td></tr><tr><td>10</td><td>Chọn IAM Role</td><td>Chọn <code>AWSGlueServiceRole-StockScreener</code></td></tr><tr><td>11</td><td>Kiểm tra Job type</td><td>Phải là <code>Python shell</code></td></tr><tr><td>12</td><td>Chọn Python Shell runtime</td><td>Chọn runtime đã test tương thích với dependencies của bạn</td></tr></tbody></table><p><img src="/aws-project/images/stock-screener/2-ingestion-layer/create-shell-1.png?featherlight=false&amp;width=90pc" alt="Tạo Glue Python Shell bằng Script editor">
+<img src="/aws-project/images/stock-screener/2-ingestion-layer/create-shell-2.png?featherlight=false&amp;width=90pc" alt="Tạo Glue Python Shell bằng Script editor"></p><h2 id=thêm-python-package-dependencies>Thêm Python package dependencies</h2><p>Code sử dụng <code>yfinance</code>, <code>pandas</code>, <code>requests</code>, <code>pyarrow</code> và <code>lxml</code>. Thêm các package này bằng Job parameters.</p><table><thead><tr><th>Bước</th><th>Hành động</th><th>Chi tiết kỹ thuật</th></tr></thead><tbody><tr><td>1</td><td>Mở Glue Job <code>us-stock-daily-ingestion</code></td><td>Vào tab <code>Job details</code></td></tr><tr><td>2</td><td>Tìm mục <code>Job parameters</code></td><td>Có thể nằm trong <code>Advanced properties</code> tùy giao diện Console</td></tr><tr><td>3</td><td>Chọn <code>Add new parameter</code></td><td>Tạo một parameter mới</td></tr><tr><td>4</td><td>Nhập Key</td><td><code>--additional-python-modules</code></td></tr><tr><td>5</td><td>Nhập Value</td><td><code>yfinance,pandas,requests,pyarrow,lxml</code></td></tr><tr><td>6</td><td>Chọn <code>Save</code></td><td>Glue dùng <code>pip</code> để cài packages khi Job khởi động</td></tr><tr><td>7</td><td>Chọn <code>Run</code></td><td>Xem CloudWatch Logs để xác nhận package cài thành công</td></tr></tbody></table><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-text data-lang=text><span style=display:flex><span>Key:   --additional-python-modules
+</span></span><span style=display:flex><span>Value: yfinance,pandas,requests,pyarrow,lxml
+</span></span></code></pre></div><h2 id=kiểm-tra-cấu-hình-job-trước-khi-run>Kiểm tra cấu hình Job trước khi Run</h2><table><thead><tr><th>Thuộc tính</th><th>Giá trị cần kiểm tra</th></tr></thead><tbody><tr><td>Job name</td><td><code>us-stock-daily-ingestion</code></td></tr><tr><td>Job type</td><td><code>Python shell</code></td></tr><tr><td>IAM Role</td><td><code>AWSGlueServiceRole-StockScreener</code></td></tr><tr><td>Raw Bucket</td><td><code>stock-screener-raw-khanh</code></td></tr><tr><td>Raw Prefix</td><td><code>raw_us_market</code></td></tr><tr><td>Python modules</td><td><code>yfinance,pandas,requests,pyarrow,lxml</code></td></tr><tr><td>Test limit</td><td><code>LIMIT_TICKERS_FOR_TEST = None</code> để chạy toàn bộ S&amp;P 500</td></tr><tr><td>AWS credential</td><td>Không có Access Key hoặc Secret Key trong code</td></tr></tbody></table><p><img src="/aws-project/images/stock-screener/2-ingestion-layer/daily-raw-1.png?featherlight=false&amp;width=90pc" alt="Setting Daily Ingestion">
+<img src="/aws-project/images/stock-screener/2-ingestion-layer/daily-raw-2.png?featherlight=false&amp;width=90pc" alt="Setting Daily Ingestion">
+<img src="/aws-project/images/stock-screener/2-ingestion-layer/daily-raw-3.png?featherlight=false&amp;width=90pc" alt="Setting Daily Ingestion"></p><h2 id=quy-tắc-partition-và-dedupe-của-source-code>Quy tắc partition và dedupe của source code</h2><table><thead><tr><th>Dataset</th><th>Dedupe key</th><th>Partition path</th><th>Ý nghĩa</th></tr></thead><tbody><tr><td>Prices</td><td><code>ticker + price_date</code></td><td><code>raw_us_market/YYYY/MM/DD/us_prices_raw.parquet</code></td><td>Lưu theo ngày giao dịch mới nhất thực tế</td></tr><tr><td>Company Info</td><td><code>ticker + snapshot_date</code></td><td><code>raw_us_market/YYYY/MM/DD/us_company_info.parquet</code></td><td>Lưu theo ngày Glue Job chạy</td></tr><tr><td>Financials</td><td><code>ticker+report_date+period_type+snapshot_date</code></td><td><code>raw_us_market/YYYY/MM/DD/us_financials_raw.parquet</code></td><td>Lưu theo ngày Glue Job chạy</td></tr></tbody></table><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-text data-lang=text><span style=display:flex><span># Ví dụ Job chạy vào Chủ nhật 2026-07-06.
+</span></span><span style=display:flex><span># Phiên giao dịch mới nhất được yfinance trả về là Thứ sáu 2026-07-03.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>raw_us_market/2026/07/03/us_prices_raw.parquet
+</span></span><span style=display:flex><span>raw_us_market/2026/07/06/us_company_info.parquet
+</span></span><span style=display:flex><span>raw_us_market/2026/07/06/us_financials_raw.parquet
+</span></span></code></pre></div><h2 id=kiểm-tra-kết-quả-trên-amazon-s3>Kiểm tra kết quả trên Amazon S3</h2><table><thead><tr><th>Bước</th><th>Hành động</th><th>Chi tiết kỹ thuật</th></tr></thead><tbody><tr><td>1</td><td>Amazon S3 → <code>stock-screener-raw-khanh</code></td><td>Mở Raw Bucket</td></tr><tr><td>2</td><td>Mở <code>raw_us_market/</code></td><td>Xem các partition theo năm/tháng/ngày</td></tr><tr><td>3</td><td>Tìm <code>us_prices_raw.parquet</code></td><td>Partition dùng ngày giao dịch mới nhất</td></tr><tr><td>4</td><td>Tìm <code>us_company_info.parquet</code></td><td>Partition dùng ngày Job chạy</td></tr><tr><td>5</td><td>Tìm <code>us_financials_raw.parquet</code></td><td>Partition dùng ngày Job chạy</td></tr><tr><td>6</td><td>Mở CloudWatch Logs của Job</td><td>Đối chiếu log <code>Đã lưu S3</code> với object thực tế</td></tr></tbody></table><blockquote><p><strong>Tư duy kiến trúc sư – schema parity.</strong> Daily Ingestion ép toàn bộ metric về <code>float64</code> và các trường ngày về <code>string</code> trước khi ghi Parquet. Backfill cũng áp dụng cùng quy tắc. Đây là lớp bảo vệ chính chống schema drift, đặc biệt khi <code>yfinance</code> thay đổi kiểu cột hoặc thiếu <code>Adj Close</code>, <code>Dividends</code> hay <code>Stock Splits</code>.</p></blockquote><h2 id=full-source-daily_ingestionpy>Full source: <code>daily_ingestion.py</code></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> io
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> time
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> traceback
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> boto3
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> pandas <span style=color:#66d9ef>as</span> pd
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> yfinance <span style=color:#66d9ef>as</span> yf
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># ==========================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># CẤU HÌNH CƠ BẢN</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># ==========================================</span>
+</span></span><span style=display:flex><span>BUCKET_NAME <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;stock-screener-raw-khanh&#34;</span>
+</span></span><span style=display:flex><span>RAW_PREFIX <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;raw_us_market&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Đổi thành None khi muốn chạy thật toàn bộ S&amp;P 500</span>
+</span></span><span style=display:flex><span>LIMIT_TICKERS_FOR_TEST <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>s3 <span style=color:#f92672>=</span> boto3<span style=color:#f92672>.</span>client(<span style=color:#e6db74>&#34;s3&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># ==========================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># HÀM LẤY TICKER (GIỐNG BACKFILL)</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># ==========================================</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_sp500_tickers</span>():
+</span></span><span style=display:flex><span>    url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://en.wikipedia.org/wiki/List_of_S%26P_500_companies&#34;</span>
+</span></span><span style=display:flex><span>    headers <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;User-Agent&#34;</span>: (
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) &#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;AppleWebKit/537.36 Chrome/120.0 Safari/537.36&#34;</span>
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    response <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(url, headers<span style=color:#f92672>=</span>headers, timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>30</span>)
+</span></span><span style=display:flex><span>    response<span style=color:#f92672>.</span>raise_for_status()
+</span></span><span style=display:flex><span>    df_sp500 <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_html(response<span style=color:#f92672>.</span>text)[<span style=color:#ae81ff>0</span>]
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> [ticker<span style=color:#f92672>.</span>replace(<span style=color:#e6db74>&#34;.&#34;</span>, <span style=color:#e6db74>&#34;-&#34;</span>) <span style=color:#66d9ef>for</span> ticker <span style=color:#f92672>in</span> df_sp500[<span style=color:#e6db74>&#34;Symbol&#34;</span>]<span style=color:#f92672>.</span>tolist()]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># ==========================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># HÀM XỬ LÝ PARQUET (GIỐNG BACKFILL 100%)</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># ==========================================</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>to_parquet_bytes</span>(df: pd<span style=color:#f92672>.</span>DataFrame) <span style=color:#f92672>-&gt;</span> bytes:
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Chuyển DataFrame thành Parquet tương thích AWS Glue.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    output_df <span style=color:#f92672>=</span> df<span style=color:#f92672>.</span>copy()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> column_name <span style=color:#f92672>in</span> output_df<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> pd<span style=color:#f92672>.</span>api<span style=color:#f92672>.</span>types<span style=color:#f92672>.</span>is_datetime64_any_dtype(output_df[column_name]):
+</span></span><span style=display:flex><span>            date_series <span style=color:#f92672>=</span> output_df[column_name]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> isinstance(date_series<span style=color:#f92672>.</span>dtype, pd<span style=color:#f92672>.</span>DatetimeTZDtype):
+</span></span><span style=display:flex><span>                date_series <span style=color:#f92672>=</span> date_series<span style=color:#f92672>.</span>dt<span style=color:#f92672>.</span>tz_localize(<span style=color:#66d9ef>None</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># Phân tách format theo tên cột giống backfill</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> column_name <span style=color:#f92672>in</span> [<span style=color:#e6db74>&#34;price_date&#34;</span>, <span style=color:#e6db74>&#34;report_date&#34;</span>, <span style=color:#e6db74>&#34;snapshot_date&#34;</span>]:
+</span></span><span style=display:flex><span>                output_df[column_name] <span style=color:#f92672>=</span> date_series<span style=color:#f92672>.</span>dt<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>                output_df[column_name] <span style=color:#f92672>=</span> date_series<span style=color:#f92672>.</span>dt<span style=color:#f92672>.</span>strftime(
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74> %H:%M:%S&#34;</span>
+</span></span><span style=display:flex><span>                )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    buf <span style=color:#f92672>=</span> io<span style=color:#f92672>.</span>BytesIO()
+</span></span><span style=display:flex><span>    output_df<span style=color:#f92672>.</span>to_parquet(
+</span></span><span style=display:flex><span>        buf,
+</span></span><span style=display:flex><span>        index<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>,
+</span></span><span style=display:flex><span>        compression<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;snappy&#34;</span>,
+</span></span><span style=display:flex><span>        engine<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;pyarrow&#34;</span>,
+</span></span><span style=display:flex><span>        version<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;1.0&#34;</span>
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> buf<span style=color:#f92672>.</span>getvalue()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>put_df</span>(df: pd<span style=color:#f92672>.</span>DataFrame, key: str) <span style=color:#f92672>-&gt;</span> tuple:
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;Chuẩn hóa kiểu dữ liệu rồi đẩy Parquet lên S3.&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> df<span style=color:#f92672>.</span>empty:
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;⚠️ Bỏ qua file rỗng: </span><span style=color:#e6db74>{</span>key<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    output_df <span style=color:#f92672>=</span> df<span style=color:#f92672>.</span>copy()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Ép Float64 cho metric để tránh lỗi Integer vs Double trong Spark.</span>
+</span></span><span style=display:flex><span>    numeric_columns <span style=color:#f92672>=</span> []
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#e6db74>&#34;us_prices_raw&#34;</span> <span style=color:#f92672>in</span> key:
+</span></span><span style=display:flex><span>        numeric_columns <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;open&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;high&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;low&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;close&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;adj_close&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;volume&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;dividends&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;stock_splits&#34;</span>
+</span></span><span style=display:flex><span>        ]
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>elif</span> <span style=color:#e6db74>&#34;us_company_info&#34;</span> <span style=color:#f92672>in</span> key:
+</span></span><span style=display:flex><span>        numeric_columns <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;current_market_cap&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;shares_outstanding&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;enterprise_value&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;float_shares&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;beta&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;trailing_pe&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;return_on_equity&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;debt_to_equity&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;earnings_growth&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;revenue_growth&#34;</span>
+</span></span><span style=display:flex><span>        ]
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>elif</span> <span style=color:#e6db74>&#34;us_financials_raw&#34;</span> <span style=color:#f92672>in</span> key:
+</span></span><span style=display:flex><span>        numeric_columns <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;revenue&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;net_income&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;shareholders_equity&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;total_assets&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;total_debt&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;operating_cash_flow&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;capital_expenditure&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;free_cash_flow&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;stock_repurchased&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;stock_issued&#34;</span>
+</span></span><span style=display:flex><span>        ]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> col <span style=color:#f92672>in</span> numeric_columns:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> col <span style=color:#f92672>in</span> output_df<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>            output_df[col] <span style=color:#f92672>=</span> (
+</span></span><span style=display:flex><span>                pd<span style=color:#f92672>.</span>to_numeric(output_df[col], errors<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;coerce&#34;</span>)
+</span></span><span style=display:flex><span>                <span style=color:#f92672>.</span>astype(<span style=color:#e6db74>&#34;float64&#34;</span>)
+</span></span><span style=display:flex><span>            )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Ép trường ngày thành string để Spark/Glue đọc schema ổn định.</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> date_col <span style=color:#f92672>in</span> [
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;price_date&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;report_date&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;snapshot_date&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;ingested_at&#34;</span>
+</span></span><span style=display:flex><span>    ]:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> date_col <span style=color:#f92672>in</span> output_df<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>            output_df[date_col] <span style=color:#f92672>=</span> output_df[date_col]<span style=color:#f92672>.</span>astype(<span style=color:#e6db74>&#34;string&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    s3<span style=color:#f92672>.</span>put_object(
+</span></span><span style=display:flex><span>        Bucket<span style=color:#f92672>=</span>BUCKET_NAME,
+</span></span><span style=display:flex><span>        Key<span style=color:#f92672>=</span>key,
+</span></span><span style=display:flex><span>        Body<span style=color:#f92672>=</span>to_parquet_bytes(output_df),
+</span></span><span style=display:flex><span>        ContentType<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;application/octet-stream&#34;</span>
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;✅ Đã lưu S3: </span><span style=color:#e6db74>{</span>key<span style=color:#e6db74>}</span><span style=color:#e6db74> | Số dòng: </span><span style=color:#e6db74>{</span>len(output_df)<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> len(output_df), len(output_df<span style=color:#f92672>.</span>columns)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># ==========================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># HÀM CRAWL DỮ LIỆU MỖI NGÀY</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># ==========================================</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>run_yfinance_full_ingestion</span>():
+</span></span><span style=display:flex><span>    now <span style=color:#f92672>=</span> datetime<span style=color:#f92672>.</span>now()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Company Info và Financials lưu theo ngày pipeline chạy.</span>
+</span></span><span style=display:flex><span>    yyyy <span style=color:#f92672>=</span> now<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y&#34;</span>)
+</span></span><span style=display:flex><span>    mm <span style=color:#f92672>=</span> now<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%m&#34;</span>)
+</span></span><span style=display:flex><span>    dd <span style=color:#f92672>=</span> now<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>    current_snapshot_date <span style=color:#f92672>=</span> now<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>    ingested_at <span style=color:#f92672>=</span> now<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74> %H:%M:%S&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    raw_prefix_today <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>RAW_PREFIX<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>yyyy<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>mm<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>dd<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;=== BẮT ĐẦU DAILY STOCK INGESTION ===&#34;</span>)
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Snapshot date: </span><span style=color:#e6db74>{</span>current_snapshot_date<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    all_tickers <span style=color:#f92672>=</span> get_sp500_tickers()
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> LIMIT_TICKERS_FOR_TEST <span style=color:#f92672>is</span> <span style=color:#f92672>not</span> <span style=color:#66d9ef>None</span>:
+</span></span><span style=display:flex><span>        all_tickers <span style=color:#f92672>=</span> all_tickers[:LIMIT_TICKERS_FOR_TEST]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    all_prices, all_financials, all_info <span style=color:#f92672>=</span> [], [], []
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_val</span>(df, possible_rows, report_date):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> df <span style=color:#f92672>is</span> <span style=color:#66d9ef>None</span> <span style=color:#f92672>or</span> df<span style=color:#f92672>.</span>empty:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>None</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> row_name <span style=color:#f92672>in</span> possible_rows:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> row_name <span style=color:#f92672>in</span> df<span style=color:#f92672>.</span>index:
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> df<span style=color:#f92672>.</span>loc[row_name, report_date]
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span>:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>None</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>None</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> i, t <span style=color:#f92672>in</span> enumerate(all_tickers, <span style=color:#ae81ff>1</span>):
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>🔄 Đang xử lý mã: </span><span style=color:#e6db74>{</span>t<span style=color:#e6db74>}</span><span style=color:#e6db74> (</span><span style=color:#e6db74>{</span>i<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>len(all_tickers)<span style=color:#e6db74>}</span><span style=color:#e6db74>)&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            stock <span style=color:#f92672>=</span> yf<span style=color:#f92672>.</span>Ticker(t)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># ---------------------------------------------------------</span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 1. LẤY GIÁ PHIÊN MỚI NHẤT</span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># ---------------------------------------------------------</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>                <span style=color:#75715e># Lấy 5 ngày để vẫn có phiên gần nhất khi chạy cuối tuần.</span>
+</span></span><span style=display:flex><span>                df_price <span style=color:#f92672>=</span> stock<span style=color:#f92672>.</span>history(period<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;5d&#34;</span>, auto_adjust<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> df_price<span style=color:#f92672>.</span>empty:
+</span></span><span style=display:flex><span>                    df_price <span style=color:#f92672>=</span> df_price<span style=color:#f92672>.</span>reset_index()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>if</span> <span style=color:#e6db74>&#34;Date&#34;</span> <span style=color:#f92672>in</span> df_price<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>                        df_price <span style=color:#f92672>=</span> df_price<span style=color:#f92672>.</span>rename(
+</span></span><span style=display:flex><span>                            columns<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;Date&#34;</span>: <span style=color:#e6db74>&#34;price_date&#34;</span>}
+</span></span><span style=display:flex><span>                        )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>if</span> <span style=color:#e6db74>&#34;Datetime&#34;</span> <span style=color:#f92672>in</span> df_price<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>                        df_price <span style=color:#f92672>=</span> df_price<span style=color:#f92672>.</span>rename(
+</span></span><span style=display:flex><span>                            columns<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;Datetime&#34;</span>: <span style=color:#e6db74>&#34;price_date&#34;</span>}
+</span></span><span style=display:flex><span>                        )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                    df_price[<span style=color:#e6db74>&#34;price_date&#34;</span>] <span style=color:#f92672>=</span> (
+</span></span><span style=display:flex><span>                        pd<span style=color:#f92672>.</span>to_datetime(df_price[<span style=color:#e6db74>&#34;price_date&#34;</span>])
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>.</span>dt<span style=color:#f92672>.</span>tz_localize(<span style=color:#66d9ef>None</span>)
+</span></span><span style=display:flex><span>                    )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                    rename_map <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;Open&#34;</span>: <span style=color:#e6db74>&#34;open&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;High&#34;</span>: <span style=color:#e6db74>&#34;high&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;Low&#34;</span>: <span style=color:#e6db74>&#34;low&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;Close&#34;</span>: <span style=color:#e6db74>&#34;close&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;Adj Close&#34;</span>: <span style=color:#e6db74>&#34;adj_close&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;Volume&#34;</span>: <span style=color:#e6db74>&#34;volume&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;Dividends&#34;</span>: <span style=color:#e6db74>&#34;dividends&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;Stock Splits&#34;</span>: <span style=color:#e6db74>&#34;stock_splits&#34;</span>
+</span></span><span style=display:flex><span>                    }
+</span></span><span style=display:flex><span>                    df_price <span style=color:#f92672>=</span> df_price<span style=color:#f92672>.</span>rename(columns<span style=color:#f92672>=</span>rename_map)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                    <span style=color:#75715e># Khi yfinance không trả Adj Close, dùng Close làm fallback.</span>
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>if</span> (
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;adj_close&#34;</span> <span style=color:#f92672>not</span> <span style=color:#f92672>in</span> df_price<span style=color:#f92672>.</span>columns
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>and</span> <span style=color:#e6db74>&#34;close&#34;</span> <span style=color:#f92672>in</span> df_price<span style=color:#f92672>.</span>columns
+</span></span><span style=display:flex><span>                    ):
+</span></span><span style=display:flex><span>                        df_price[<span style=color:#e6db74>&#34;adj_close&#34;</span>] <span style=color:#f92672>=</span> df_price[<span style=color:#e6db74>&#34;close&#34;</span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                    df_price[<span style=color:#e6db74>&#34;ticker&#34;</span>] <span style=color:#f92672>=</span> t
+</span></span><span style=display:flex><span>                    df_price[<span style=color:#e6db74>&#34;snapshot_date&#34;</span>] <span style=color:#f92672>=</span> current_snapshot_date
+</span></span><span style=display:flex><span>                    df_price[<span style=color:#e6db74>&#34;ingested_at&#34;</span>] <span style=color:#f92672>=</span> ingested_at
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                    <span style=color:#75715e># Chỉ lưu phiên giao dịch mới nhất của ticker.</span>
+</span></span><span style=display:flex><span>                    latest_date <span style=color:#f92672>=</span> df_price[<span style=color:#e6db74>&#34;price_date&#34;</span>]<span style=color:#f92672>.</span>max()
+</span></span><span style=display:flex><span>                    df_price_latest <span style=color:#f92672>=</span> df_price[
+</span></span><span style=display:flex><span>                        df_price[<span style=color:#e6db74>&#34;price_date&#34;</span>] <span style=color:#f92672>==</span> latest_date
+</span></span><span style=display:flex><span>                    ]<span style=color:#f92672>.</span>copy()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                    expected_cols <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;price_date&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;ticker&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;open&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;high&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;low&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;close&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;adj_close&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;volume&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;dividends&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;stock_splits&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;snapshot_date&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;ingested_at&#34;</span>
+</span></span><span style=display:flex><span>                    ]
+</span></span><span style=display:flex><span>                    final_cols <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>                        c <span style=color:#66d9ef>for</span> c <span style=color:#f92672>in</span> expected_cols
+</span></span><span style=display:flex><span>                        <span style=color:#66d9ef>if</span> c <span style=color:#f92672>in</span> df_price_latest<span style=color:#f92672>.</span>columns
+</span></span><span style=display:flex><span>                    ]
+</span></span><span style=display:flex><span>                    df_price_latest <span style=color:#f92672>=</span> df_price_latest[final_cols]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> df_price_latest<span style=color:#f92672>.</span>empty:
+</span></span><span style=display:flex><span>                        all_prices<span style=color:#f92672>.</span>append(df_price_latest)
+</span></span><span style=display:flex><span>                        print(
+</span></span><span style=display:flex><span>                            <span style=color:#e6db74>&#34;  ✅ Giá mới nhất: &#34;</span>
+</span></span><span style=display:flex><span>                            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>latest_date<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#39;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#39;</span>)<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>                        )
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>                    print(<span style=color:#e6db74>&#34;  ⚠️ Price data rỗng.&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;  ⚠️ Lỗi Prices: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># ---------------------------------------------------------</span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 2. LẤY COMPANY INFO</span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># ---------------------------------------------------------</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>                info <span style=color:#f92672>=</span> stock<span style=color:#f92672>.</span>info <span style=color:#f92672>or</span> {}
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span>:
+</span></span><span style=display:flex><span>                info <span style=color:#f92672>=</span> {}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>                fast_info <span style=color:#f92672>=</span> stock<span style=color:#f92672>.</span>fast_info <span style=color:#f92672>or</span> {}
+</span></span><span style=display:flex><span>                market_cap <span style=color:#f92672>=</span> (
+</span></span><span style=display:flex><span>                    fast_info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;marketCap&#34;</span>)
+</span></span><span style=display:flex><span>                    <span style=color:#f92672>or</span> info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;marketCap&#34;</span>, <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>                )
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span>:
+</span></span><span style=display:flex><span>                fast_info <span style=color:#f92672>=</span> {}
+</span></span><span style=display:flex><span>                market_cap <span style=color:#f92672>=</span> info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;marketCap&#34;</span>, <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> market_cap:
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>                    info_dict <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;ticker&#34;</span>: t,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;snapshot_date&#34;</span>: current_snapshot_date,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;company_name&#34;</span>: (
+</span></span><span style=display:flex><span>                            info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;shortName&#34;</span>)
+</span></span><span style=display:flex><span>                            <span style=color:#f92672>or</span> info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;longName&#34;</span>)
+</span></span><span style=display:flex><span>                            <span style=color:#f92672>or</span> t
+</span></span><span style=display:flex><span>                        ),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;exchange&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;exchange&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;sector&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;sector&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;industry&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;industry&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;country&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;country&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;currency&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;currency&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;website&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;website&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;current_market_cap&#34;</span>: market_cap,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;shares_outstanding&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;sharesOutstanding&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;enterprise_value&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;enterpriseValue&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;float_shares&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;floatShares&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;beta&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;beta&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;trailing_pe&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;trailingPE&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;return_on_equity&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;returnOnEquity&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;debt_to_equity&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;debtToEquity&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;earnings_growth&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;earningsGrowth&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;revenue_growth&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;revenueGrowth&#34;</span>),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;ingested_at&#34;</span>: ingested_at
+</span></span><span style=display:flex><span>                    }
+</span></span><span style=display:flex><span>                    all_info<span style=color:#f92672>.</span>append(info_dict)
+</span></span><span style=display:flex><span>                    print(<span style=color:#e6db74>&#34;  ✅ Company info&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>                    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;  ⚠️ Lỗi Company Info: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># ---------------------------------------------------------</span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 3. LẤY FINANCIALS</span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># ---------------------------------------------------------</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>                income <span style=color:#f92672>=</span> stock<span style=color:#f92672>.</span>quarterly_income_stmt
+</span></span><span style=display:flex><span>                balance <span style=color:#f92672>=</span> stock<span style=color:#f92672>.</span>quarterly_balance_sheet
+</span></span><span style=display:flex><span>                cashflow <span style=color:#f92672>=</span> stock<span style=color:#f92672>.</span>quarterly_cashflow
+</span></span><span style=display:flex><span>                period_type <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;quarterly&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                <span style=color:#75715e># Fallback sang annual nếu quarterly không có dữ liệu.</span>
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> income<span style=color:#f92672>.</span>empty <span style=color:#f92672>and</span> balance<span style=color:#f92672>.</span>empty <span style=color:#f92672>and</span> cashflow<span style=color:#f92672>.</span>empty:
+</span></span><span style=display:flex><span>                    income <span style=color:#f92672>=</span> stock<span style=color:#f92672>.</span>income_stmt
+</span></span><span style=display:flex><span>                    balance <span style=color:#f92672>=</span> stock<span style=color:#f92672>.</span>balance_sheet
+</span></span><span style=display:flex><span>                    cashflow <span style=color:#f92672>=</span> stock<span style=color:#f92672>.</span>cashflow
+</span></span><span style=display:flex><span>                    period_type <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;annual&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                report_dates <span style=color:#f92672>=</span> set()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>for</span> statement <span style=color:#f92672>in</span> [income, balance, cashflow]:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>if</span> statement <span style=color:#f92672>is</span> <span style=color:#f92672>not</span> <span style=color:#66d9ef>None</span> <span style=color:#f92672>and</span> <span style=color:#f92672>not</span> statement<span style=color:#f92672>.</span>empty:
+</span></span><span style=display:flex><span>                        report_dates<span style=color:#f92672>.</span>update(statement<span style=color:#f92672>.</span>columns<span style=color:#f92672>.</span>tolist())
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>for</span> report_date <span style=color:#f92672>in</span> report_dates:
+</span></span><span style=display:flex><span>                    report_date_str <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>Timestamp(
+</span></span><span style=display:flex><span>                        report_date
+</span></span><span style=display:flex><span>                    )<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                    financial_dict <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;ticker&#34;</span>: t,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;report_date&#34;</span>: report_date_str,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;snapshot_date&#34;</span>: current_snapshot_date,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;period_type&#34;</span>: period_type,
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;revenue&#34;</span>: get_val(
+</span></span><span style=display:flex><span>                            income,
+</span></span><span style=display:flex><span>                            [<span style=color:#e6db74>&#34;Total Revenue&#34;</span>, <span style=color:#e6db74>&#34;Operating Revenue&#34;</span>],
+</span></span><span style=display:flex><span>                            report_date
+</span></span><span style=display:flex><span>                        ),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;net_income&#34;</span>: get_val(
+</span></span><span style=display:flex><span>                            income,
+</span></span><span style=display:flex><span>                            [
+</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#34;Net Income&#34;</span>,
+</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#34;Net Income Common Stockholders&#34;</span>
+</span></span><span style=display:flex><span>                            ],
+</span></span><span style=display:flex><span>                            report_date
+</span></span><span style=display:flex><span>                        ),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;shareholders_equity&#34;</span>: get_val(
+</span></span><span style=display:flex><span>                            balance,
+</span></span><span style=display:flex><span>                            [
+</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#34;Stockholders Equity&#34;</span>,
+</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#34;Stockholders&#39; Equity&#34;</span>,
+</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#34;Common Stock Equity&#34;</span>
+</span></span><span style=display:flex><span>                            ],
+</span></span><span style=display:flex><span>                            report_date
+</span></span><span style=display:flex><span>                        ),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;total_assets&#34;</span>: get_val(
+</span></span><span style=display:flex><span>                            balance,
+</span></span><span style=display:flex><span>                            [<span style=color:#e6db74>&#34;Total Assets&#34;</span>],
+</span></span><span style=display:flex><span>                            report_date
+</span></span><span style=display:flex><span>                        ),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;total_debt&#34;</span>: get_val(
+</span></span><span style=display:flex><span>                            balance,
+</span></span><span style=display:flex><span>                            [
+</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#34;Total Debt&#34;</span>,
+</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#34;Total Debt And Capital Lease Obligation&#34;</span>
+</span></span><span style=display:flex><span>                            ],
+</span></span><span style=display:flex><span>                            report_date
+</span></span><span style=display:flex><span>                        ),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;operating_cash_flow&#34;</span>: get_val(
+</span></span><span style=display:flex><span>                            cashflow,
+</span></span><span style=display:flex><span>                            [<span style=color:#e6db74>&#34;Operating Cash Flow&#34;</span>],
+</span></span><span style=display:flex><span>                            report_date
+</span></span><span style=display:flex><span>                        ),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;capital_expenditure&#34;</span>: get_val(
+</span></span><span style=display:flex><span>                            cashflow,
+</span></span><span style=display:flex><span>                            [<span style=color:#e6db74>&#34;Capital Expenditure&#34;</span>, <span style=color:#e6db74>&#34;Purchase Of PPE&#34;</span>],
+</span></span><span style=display:flex><span>                            report_date
+</span></span><span style=display:flex><span>                        ),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;free_cash_flow&#34;</span>: get_val(
+</span></span><span style=display:flex><span>                            cashflow,
+</span></span><span style=display:flex><span>                            [<span style=color:#e6db74>&#34;Free Cash Flow&#34;</span>],
+</span></span><span style=display:flex><span>                            report_date
+</span></span><span style=display:flex><span>                        ),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;stock_repurchased&#34;</span>: get_val(
+</span></span><span style=display:flex><span>                            cashflow,
+</span></span><span style=display:flex><span>                            [
+</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#34;Repurchase Of Capital Stock&#34;</span>,
+</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#34;Repurchase Of Stock&#34;</span>
+</span></span><span style=display:flex><span>                            ],
+</span></span><span style=display:flex><span>                            report_date
+</span></span><span style=display:flex><span>                        ),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;stock_issued&#34;</span>: get_val(
+</span></span><span style=display:flex><span>                            cashflow,
+</span></span><span style=display:flex><span>                            [
+</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#34;Issuance Of Capital Stock&#34;</span>,
+</span></span><span style=display:flex><span>                                <span style=color:#e6db74>&#34;Issuance Of Stock&#34;</span>
+</span></span><span style=display:flex><span>                            ],
+</span></span><span style=display:flex><span>                            report_date
+</span></span><span style=display:flex><span>                        ),
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;ingested_at&#34;</span>: ingested_at
+</span></span><span style=display:flex><span>                    }
+</span></span><span style=display:flex><span>                    all_financials<span style=color:#f92672>.</span>append(financial_dict)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> report_dates:
+</span></span><span style=display:flex><span>                    print(
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>&#34;  ✅ Financials: &#34;</span>
+</span></span><span style=display:flex><span>                        <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>len(report_dates)<span style=color:#e6db74>}</span><span style=color:#e6db74> kỳ báo cáo&#34;</span>
+</span></span><span style=display:flex><span>                    )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;  ⚠️ Lỗi Financials: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;⚠️ Lỗi nghiêm trọng khi xử lý mã </span><span style=color:#e6db74>{</span>t<span style=color:#e6db74>}</span><span style=color:#e6db74>: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>0.5</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>=== ĐANG GỘP DỮ LIỆU VÀ LƯU LÊN S3 ===&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 1. PRICES: Partition theo ngày giao dịch thực tế.</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> all_prices:
+</span></span><span style=display:flex><span>        df_prices <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>concat(all_prices, ignore_index<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        df_prices[<span style=color:#e6db74>&#34;price_date_dt&#34;</span>] <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>to_datetime(
+</span></span><span style=display:flex><span>            df_prices[<span style=color:#e6db74>&#34;price_date&#34;</span>],
+</span></span><span style=display:flex><span>            errors<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;coerce&#34;</span>
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>        df_prices <span style=color:#f92672>=</span> df_prices<span style=color:#f92672>.</span>dropna(subset<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#34;price_date_dt&#34;</span>])
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        df_prices <span style=color:#f92672>=</span> df_prices<span style=color:#f92672>.</span>drop_duplicates(
+</span></span><span style=display:flex><span>            subset<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#34;ticker&#34;</span>, <span style=color:#e6db74>&#34;price_date&#34;</span>],
+</span></span><span style=display:flex><span>            keep<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;last&#34;</span>
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> trade_date, df_one_day <span style=color:#f92672>in</span> df_prices<span style=color:#f92672>.</span>groupby(
+</span></span><span style=display:flex><span>            df_prices[<span style=color:#e6db74>&#34;price_date_dt&#34;</span>]<span style=color:#f92672>.</span>dt<span style=color:#f92672>.</span>normalize()
+</span></span><span style=display:flex><span>        ):
+</span></span><span style=display:flex><span>            p_yyyy <span style=color:#f92672>=</span> trade_date<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y&#34;</span>)
+</span></span><span style=display:flex><span>            p_mm <span style=color:#f92672>=</span> trade_date<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%m&#34;</span>)
+</span></span><span style=display:flex><span>            p_dd <span style=color:#f92672>=</span> trade_date<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            price_prefix <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>RAW_PREFIX<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>p_yyyy<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>p_mm<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>p_dd<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            df_save <span style=color:#f92672>=</span> df_one_day<span style=color:#f92672>.</span>drop(columns<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#34;price_date_dt&#34;</span>])
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            put_df(
+</span></span><span style=display:flex><span>                df_save,
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>price_prefix<span style=color:#e6db74>}</span><span style=color:#e6db74>/us_prices_raw.parquet&#34;</span>
+</span></span><span style=display:flex><span>            )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 2. COMPANY INFO: Partition theo ngày Glue Job chạy.</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> all_info:
+</span></span><span style=display:flex><span>        df_info <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>DataFrame(all_info)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        df_info <span style=color:#f92672>=</span> df_info<span style=color:#f92672>.</span>drop_duplicates(
+</span></span><span style=display:flex><span>            subset<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#34;ticker&#34;</span>, <span style=color:#e6db74>&#34;snapshot_date&#34;</span>],
+</span></span><span style=display:flex><span>            keep<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;last&#34;</span>
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        put_df(
+</span></span><span style=display:flex><span>            df_info,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>raw_prefix_today<span style=color:#e6db74>}</span><span style=color:#e6db74>/us_company_info.parquet&#34;</span>
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 3. FINANCIALS: Partition theo ngày Glue Job chạy.</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> all_financials:
+</span></span><span style=display:flex><span>        df_financials <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>DataFrame(all_financials)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        df_financials <span style=color:#f92672>=</span> df_financials<span style=color:#f92672>.</span>drop_duplicates(
+</span></span><span style=display:flex><span>            subset<span style=color:#f92672>=</span>[
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;ticker&#34;</span>,
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;report_date&#34;</span>,
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;period_type&#34;</span>,
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;snapshot_date&#34;</span>
+</span></span><span style=display:flex><span>            ],
+</span></span><span style=display:flex><span>            keep<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;last&#34;</span>
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        put_df(
+</span></span><span style=display:flex><span>            df_financials,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>raw_prefix_today<span style=color:#e6db74>}</span><span style=color:#e6db74>/us_financials_raw.parquet&#34;</span>
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>🎉 Daily Data Ingestion hoàn tất!&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;__main__&#34;</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>        run_yfinance_full_ingestion()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#34;[CRITICAL ERROR]&#34;</span>, str(e))
+</span></span><span style=display:flex><span>        print(traceback<span style=color:#f92672>.</span>format_exc())
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>raise</span>
+</span></span></code></pre></div><footer class=footline></footer></div></div><div id=navigation><a class="nav nav-prev" href=/aws-project/2-workshop/2.5-stock-screener/2-tang-thu-thap/2.1-local-backfill-history/ title="Chạy Local Backfill lịch sử giá"><i class="fa fa-chevron-left"></i></a>
+<a class="nav nav-next" href=/aws-project/2-workshop/2.5-stock-screener/3-processing-layer/ title="Processing Layer – QMJ Transform" style=margin-right:0><i class="fa fa-chevron-right"></i></a></div></section><div style=left:-1e3px;overflow:scroll;position:absolute;top:-1e3px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px><div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div></div><script src=/aws-project/js/clipboard.min.js?1786168075></script><script src=/aws-project/js/perfect-scrollbar.min.js?1786168075></script><script src=/aws-project/js/perfect-scrollbar.jquery.min.js?1786168075></script><script src=/aws-project/js/jquery.sticky.js?1786168075></script><script src=/aws-project/js/featherlight.min.js?1786168075></script><script src=/aws-project/js/highlight.pack.js?1786168075></script><script>hljs.initHighlightingOnLoad()</script><script src=/aws-project/js/modernizr.custom-3.6.0.js?1786168075></script><script src=/aws-project/js/learn.js?1786168075></script><script src=/aws-project/js/hugo-learn.js?1786168075></script><script src=/aws-project/mermaid/mermaid.js?1786168075></script><script>mermaid.initialize({startOnLoad:!0})</script><script>(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)})(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-158079754-2","auto"),ga("send","pageview")</script></body></html>

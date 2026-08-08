@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Testing and Results on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title>
+		<link>http://localhost:1313/aws-project/en/2-workshop/2.2-iotsentinel/3-kiem-tra/</link>
+		<description>Recent content in Testing and Results on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Wed, 13 May 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/en/2-workshop/2.2-iotsentinel/3-kiem-tra/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Run Truck Simulator</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.2-iotsentinel/3-kiem-tra/1-chay-gia-lap/</link>
+				<pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.2-iotsentinel/3-kiem-tra/1-chay-gia-lap/</guid>
+				<description>&lt;h4 id=&#34;1-update-python-source-code&#34;&gt;1. Update Python Source Code&lt;/h4&gt;&#xA;&lt;p&gt;Go back to your project directory on your computer, open the &lt;code&gt;truck_simulator.py&lt;/code&gt; file (created in Chapter 1), and update the two most critical pieces of information we retrieved from AWS IoT Core in Section 2.3:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;IOT_ENDPOINT&lt;/strong&gt;: Paste your endpoint address.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Security Certificates&lt;/strong&gt;: Ensure the paths to the 3 certificate files (&lt;code&gt;Root CA&lt;/code&gt;, &lt;code&gt;Certificate&lt;/code&gt;, &lt;code&gt;Private Key&lt;/code&gt;) are correct.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ==========================================&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#  CONFIGURATION PARAMETERS &lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ==========================================&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IOT_ENDPOINT &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;afjy7...-ats.iot.ap-southeast-1.amazonaws.com&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# Replace with yours&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PATH_TO_ROOT_CA &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;certs/AmazonRootCA1.pem&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PATH_TO_CERT &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;certs/128eb8547f...-certificate.pem.crt&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# Rename to match your exact file&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PATH_TO_PRIVATE_KEY &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;certs/128eb8547f...-private.pem.key&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# Rename to match your exact file&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Save the file.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Verify Results</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.2-iotsentinel/3-kiem-tra/2-xac-minh/</link>
+				<pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.2-iotsentinel/3-kiem-tra/2-xac-minh/</guid>
+				<description>&lt;h4 id=&#34;1-check-dynamodb-storage&#34;&gt;1. Check DynamoDB Storage&lt;/h4&gt;&#xA;&lt;p&gt;As the Python script runs, data is streamed through IoT Core, buffered in SQS, and written directly to the database by Lambda.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Go back to the AWS Console and open &lt;strong&gt;DynamoDB&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;Select &lt;strong&gt;Explore items&lt;/strong&gt; in the left navigation menu.&lt;/li&gt;&#xA;&lt;li&gt;Select your &lt;code&gt;IoT_Fleet_Data&lt;/code&gt; table.&lt;/li&gt;&#xA;&lt;li&gt;Click the &lt;strong&gt;Run&lt;/strong&gt; button (or Scan). You will see a list of records (Items) appearing with complete information: &lt;code&gt;truck_id&lt;/code&gt;, &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;latitude&lt;/code&gt;, &lt;code&gt;longitude&lt;/code&gt;, and &lt;code&gt;timestamp_ms&lt;/code&gt;.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/aws-project/images/IoTSentinel/3-kiem-tra/dynamo_data.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;DynamoDB Data&#34;&gt;&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

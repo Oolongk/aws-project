@@ -1,0 +1,2510 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head><script src="/aws-project/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=aws-project/livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.164.0">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/aws-project/images/favicon.png" type="image/png">
+
+    <title>Data Serving :: AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title>
+
+    
+    <link href="/aws-project/css/nucleus.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/fontawesome-all.min.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/hybrid.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/featherlight.min.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/perfect-scrollbar.min.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/auto-complete.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/atom-one-dark-reasonable.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/theme.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/tabs.css?1786107730" rel="stylesheet">
+    <link href="/aws-project/css/hugo-theme.css?1786107730" rel="stylesheet">
+    
+    <link href="/aws-project/css/theme-workshop.css?1786107730" rel="stylesheet">
+    
+    <link href="/aws-project/css/custom.css?1786107730" rel="stylesheet">
+
+    <script src="/aws-project/js/jquery-3.3.1.min.js?1786107730"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-data-serving/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/aws-project/js/lunr.min.js?1786107730"></script>
+<script type="text/javascript" src="/aws-project/js/auto-complete.js?1786107730"></script>
+<script type="text/javascript">
+    
+        var baseurl = "http:\/\/localhost:1313\/aws-project\/\/en";
+    
+</script>
+<script type="text/javascript" src="/aws-project/js/search.js?1786107730"></script>
+
+    
+  </div>
+  
+    
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/1-introduction/" title="Introduction" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/1-introduction/">
+          <b>1. </b>Introduction
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/" title="Workshop" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/">
+          <b>2. </b>Workshop
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/" title="Social Media Sentiment Sentinel" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/">
+          <b>2.1. </b>Social Media Sentiment Sentinel
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/1-overview/" title="Overview" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/1-overview/">
+          <b>2.1.1 </b>Overview
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/2-prerequisites/" title="Prerequisites" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/2-prerequisites/">
+          <b>2.1.2 </b>Prerequisites
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/3-data-ingestion/" title="Data Ingestion" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/3-data-ingestion/">
+          <b>2.1.3 </b>Data Ingestion
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/4-data-processing/" title="Data Processing" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/4-data-processing/">
+          <b>2.1.4 </b>Data Processing
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/5-data-serving/" title="Data Serving" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/5-data-serving/">
+          <b>2.1.5 </b>Data Serving
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.1-sentiment-sentinel/6-resource-cleanup/" title="Resource Cleanup" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.1-sentiment-sentinel/6-resource-cleanup/">
+          <b>2.1.6 </b>Resource Cleanup
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/" title="IoT Fleet Monitoring System" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/">
+          <b>2.2. </b>IoT Fleet Monitoring System
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/1-overview/" title="Overview" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/1-overview/">
+          <b>2.2.1 </b>Overview
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/2-prerequisites/" title="Prerequisites" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/2-prerequisites/">
+          <b>2.2.2 </b>Prerequisites
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/3-data-ingestion/" title="Data Ingestion" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/3-data-ingestion/">
+          <b>2.2.3 </b>Data Ingestion
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/4-data-processing/" title="Data Processing" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/4-data-processing/">
+          <b>2.2.4 </b>Data Processing
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/5-data-serving/" title="Data Serving" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/5-data-serving/">
+          <b>2.2.5 </b>Data Serving
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.2-iotsentinel/6-resource-cleanup/" title="Resource Cleanup" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.2-iotsentinel/6-resource-cleanup/">
+          <b>2.2.6 </b>Resource Cleanup
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/" title="Clickstream Analytics &amp; AI Recommender" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/">
+          <b>2.3. </b>Clickstream Analytics &amp; AI Recommender
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/1-overview/" title="Overview" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/1-overview/">
+          <b>2.3.1 </b>Overview
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/2-prerequisites/" title="Prerequisites" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/2-prerequisites/">
+          <b>2.3.2 </b>Prerequisites
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/3-data-ingestion/" title="Data Ingestion" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/3-data-ingestion/">
+          <b>2.3.3 </b>Data Ingestion
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/4-data-processing/" title="Data Processing" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/4-data-processing/">
+          <b>2.3.4 </b>Data Processing
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/5-data-serving/" title="Data Serving" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/5-data-serving/">
+          <b>2.3.5 </b>Data Serving
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.3-clickstream/6-resource-cleanup/" title="Resource Cleanup" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.3-clickstream/6-resource-cleanup/">
+          <b>2.3.6 </b>Resource Cleanup
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/" title="Dota 2 Meta Analytics Data Lakehouse" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/">
+          <b>2.4. </b>Dota 2 Meta Analytics Data Lakehouse
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-overview/" title="Overview" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-overview/">
+          <b>2.4.1 </b>Overview
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-prerequisites/" title="Prerequisites" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-prerequisites/">
+          <b>2.4.2 </b>Prerequisites
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-data-ingestion/" title="Data Ingestion" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-data-ingestion/">
+          <b>2.4.3 </b>Data Ingestion
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-data-processing/" title="Data Processing" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-data-processing/">
+          <b>2.4.4 </b>Data Processing
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-data-serving/" title="Data Serving" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-data-serving/">
+          <b>2.4.5 </b>Data Serving
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.4-dota2-lakehouse/6-resource-cleanup/" title="Resource Cleanup" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/6-resource-cleanup/">
+          <b>2.4.6 </b>Resource Cleanup
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/" title="Quantamental Stock Screener Time-Series Pipeline" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/">
+          <b>2.5. </b>Quantamental Stock Screener Time-Series Pipeline
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/1-overview/" title="Overview" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/1-overview/">
+          <b>2.5.1 </b>Overview
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/2-prerequisites/" title="Prerequisites" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/2-prerequisites/">
+          <b>2.5.2 </b>Prerequisites
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/3-data-ingestion/" title="Data Ingestion" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/3-data-ingestion/">
+          <b>2.5.3 </b>Data Ingestion
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/4-data-processing/" title="Data Processing" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/4-data-processing/">
+          <b>2.5.4 </b>Data Processing
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/5-data-serving/" title="Data Serving" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/5-data-serving/">
+          <b>2.5.5 </b>Data Serving
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/en/2-workshop/2.5-stock-screener/6-resource-cleanup/" title="Resource Cleanup" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/en/2-workshop/2.5-stock-screener/6-resource-cleanup/">
+          <b>2.5.6 </b>Resource Cleanup
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+              
+                  
+                    
+                    
+                      <option id="en" value="http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-data-serving/" selected>English</option>
+                    
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> Clear History</a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    <b>Last Updated</b> <br>
+    <i><span id="lastUpdated" style="color: #fd9827;"></span></i>
+    <script>
+        const today = new Date();
+        const formattedDate = today.toLocaleDateString("en-GB");
+        document.getElementById("lastUpdated").textContent = formattedDate;
+    </script>
+</left>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/aws-project/en/'>Final Report</a> > <a href='/aws-project/en/2-workshop/'>Workshop</a> > <a href='/aws-project/en/2-workshop/2.4-dota2-lakehouse/'>Dota 2 Meta Analytics Data Lakehouse</a> > Data Serving
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents"></nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Data Serving
+            </h1>
+          
+
+        
+
+
+
+	<p>Initialize the storage table on Amazon DynamoDB to contain the Meta data of the Heroes.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Access DynamoDB</td>
+					<td>In the AWS Console search bar, type <strong>DynamoDB</strong> &gt; Select <strong>Tables</strong> in the left menu &gt; Click <strong>Create table</strong>.</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Configure Table Name</td>
+					<td>Table name: <code>dota2_hero_metrics</code>.</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Configure Primary Key</td>
+					<td>Partition key: Type <code>hero_id</code> and select data type as <strong>String (S)</strong>. Sort key: Type <code>match_date</code> and select data type as <strong>String (S)</strong>.</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Configure Settings</td>
+					<td>Under <em>Table settings</em>, check <strong>Customize settings</strong> to configure cost optimization.</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Optimize Capacity Mode</td>
+					<td>Under <em>Read/write capacity mode</em>, select <strong>On-demand</strong> (Pay-per-request).</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Complete</td>
+					<td>Scroll to the bottom of the page and click the orange <strong>Create table</strong> button.</td>
+			</tr>
+	</tbody>
+</table>
+<p><img src="/aws-project/images/dota2/4-serving-layer/dynamodb-create-table-1.png?featherlight=false&amp;width=90pc" alt="DynamoDB Table Initialization UI">
+<img src="/aws-project/images/dota2/4-serving-layer/dynamodb-create-table-2.png?featherlight=false&amp;width=90pc" alt="DynamoDB Table Initialization UI">
+<img src="/aws-project/images/dota2/4-serving-layer/dynamodb-create-table-3.png?featherlight=false&amp;width=90pc" alt="DynamoDB Table Initialization UI"></p>
+<hr>
+<p>In Chapter 2, the AWS Glue IAM Role only had permission to work with S3. Now, because the Glue Job needs to write data directly to DynamoDB, you must grant it this additional permission.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Access IAM Role</td>
+					<td>Open the <strong>IAM</strong> service &gt; Select <strong>Roles</strong> &gt; Search for and click the <code>Glue_Dota2_Processing_Role</code> role you created earlier.</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Add Permissions</td>
+					<td>In the <em>Permissions</em> tab, click the <strong>Add permissions</strong> button &gt; Select <strong>Create inline policy</strong>.</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Configure JSON</td>
+					<td>Switch to the <strong>JSON</strong> tab and paste the DynamoDB write permission code block below. (Remember to replace <code>YOUR_ACCOUNT_ID</code> with your AWS Account ID).</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Name Policy</td>
+					<td>Click <strong>Next</strong>. Name this policy: <code>DynamoDB_Write_Dota2_Metrics</code>.</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Complete</td>
+					<td>Click <strong>Create policy</strong> to apply the new permission to AWS Glue.</td>
+			</tr>
+	</tbody>
+</table>
+<p>JSON Inline Policy code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Statement&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Action&#34;</span>: [
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;dynamodb:PutItem&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;dynamodb:BatchWriteItem&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;dynamodb:UpdateItem&#34;</span>
+</span></span><span style="display:flex;"><span>            ],
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Resource&#34;</span>: <span style="color:#e6db74">&#34;arn:aws:dynamodb:ap-southeast-1:YOUR_ACCOUNT_ID:table/dota2_hero_metrics&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<p>Upgrade the PySpark source code of the AWS Glue Job. In addition to saving the Parquet file to S3, Glue will directly calculate the win rate (Winrate) and pick rate (Pickrate), and use the <code>boto3</code> library to ingest the results directly into DynamoDB.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Open Glue Studio</td>
+					<td>Go to AWS Console &gt; Search for <strong>AWS Glue</strong> &gt; <strong>ETL Jobs</strong> &gt; Select <strong>Visual ETL</strong> or directly open the source code of the <code>dota2_etl_job</code> Job created in section 2.3.</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Update Script</td>
+					<td>Select the <strong>Script</strong> tab, delete all the old source code, and replace it with the upgraded PySpark code below.</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Configure Parameters</td>
+					<td>Ensure that the <code>RAW_PATH</code>, <code>PROCESSED_PATH</code> variables, and the DynamoDB table name match your system settings.</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Save and Run</td>
+					<td>Click <strong>Save</strong> &gt; Click <strong>Run</strong> to trigger the aggregation pipeline.</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Verify Results</td>
+					<td>Access <strong>DynamoDB Console</strong> &gt; <strong>Tables</strong> &gt; Click the <code>dota2_hero_metrics</code> table &gt; Click the <strong>Explore table items</strong> button to check if the Hero metrics records have been successfully loaded.</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>Upgraded PySpark source code (<code>dota2_etl_job_v2.py</code>):</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> boto3
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pyspark.context <span style="color:#f92672">import</span> SparkContext
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> awsglue.context <span style="color:#f92672">import</span> GlueContext
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pyspark.sql.functions <span style="color:#f92672">import</span> explode, col, from_unixtime, to_date, count, sum <span style="color:#66d9ef">as</span> _sum, when, lit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sc <span style="color:#f92672">=</span> SparkContext<span style="color:#f92672">.</span>getOrCreate()
+</span></span><span style="display:flex;"><span>glueContext <span style="color:#f92672">=</span> GlueContext(sc)
+</span></span><span style="display:flex;"><span>spark <span style="color:#f92672">=</span> glueContext<span style="color:#f92672">.</span>spark_session
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>RAW_PATH <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;s3://dota2-raw-zone-yourname/raw_matches/&#34;</span>
+</span></span><span style="display:flex;"><span>PROCESSED_PATH <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;s3://dota2-processed-zone-yourname/matches_parquet/&#34;</span>
+</span></span><span style="display:flex;"><span>DYNAMODB_TABLE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;dota2_hero_metrics&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. Read raw data and Flattening</span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> spark<span style="color:#f92672">.</span>read<span style="color:#f92672">.</span>json(RAW_PATH)
+</span></span><span style="display:flex;"><span>df_exploded <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>select(
+</span></span><span style="display:flex;"><span>    col(<span style="color:#e6db74">&#34;match_id&#34;</span>),
+</span></span><span style="display:flex;"><span>    to_date(from_unixtime(col(<span style="color:#e6db74">&#34;start_time&#34;</span>)))<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">&#34;match_date&#34;</span>),
+</span></span><span style="display:flex;"><span>    explode(col(<span style="color:#e6db74">&#34;players&#34;</span>))<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">&#34;player&#34;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>df_final <span style="color:#f92672">=</span> df_exploded<span style="color:#f92672">.</span>select(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;match_id&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;match_date&#34;</span>,
+</span></span><span style="display:flex;"><span>    col(<span style="color:#e6db74">&#34;player.hero_id&#34;</span>)<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">&#34;hero_id&#34;</span>),
+</span></span><span style="display:flex;"><span>    col(<span style="color:#e6db74">&#34;player.win&#34;</span>)<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">&#34;is_win&#34;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># [Chapter 2 Optimization]: Write clean long-term historical data as Parquet Snappy to S3</span>
+</span></span><span style="display:flex;"><span>df_final<span style="color:#f92672">.</span>write<span style="color:#f92672">.</span>mode(<span style="color:#e6db74">&#34;append&#34;</span>)<span style="color:#f92672">.</span>partitionBy(<span style="color:#e6db74">&#34;match_date&#34;</span>)<span style="color:#f92672">.</span>parquet(PROCESSED_PATH, compression<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;snappy&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. [Chapter 4 Upgrade]: Calculate Aggregation Metrics using Spark DataFrame API</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Calculating aggregated Winrate and Pickrate for Heroes...&#34;</span>)
+</span></span><span style="display:flex;"><span>total_matches <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>count()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df_metrics <span style="color:#f92672">=</span> df_final<span style="color:#f92672">.</span>groupBy(<span style="color:#e6db74">&#34;hero_id&#34;</span>)<span style="color:#f92672">.</span>agg(
+</span></span><span style="display:flex;"><span>    count(<span style="color:#e6db74">&#34;match_id&#34;</span>)<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">&#34;total_picks&#34;</span>),
+</span></span><span style="display:flex;"><span>    _sum(when(col(<span style="color:#e6db74">&#34;is_win&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#66d9ef">True</span>, <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>otherwise(<span style="color:#ae81ff">0</span>))<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">&#34;total_wins&#34;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Calculate data percentages</span>
+</span></span><span style="display:flex;"><span>df_metrics <span style="color:#f92672">=</span> df_metrics<span style="color:#f92672">.</span>withColumn(<span style="color:#e6db74">&#34;win_rate&#34;</span>, (col(<span style="color:#e6db74">&#34;total_wins&#34;</span>) <span style="color:#f92672">/</span> col(<span style="color:#e6db74">&#34;total_picks&#34;</span>)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>) \
+</span></span><span style="display:flex;"><span>                       <span style="color:#f92672">.</span>withColumn(<span style="color:#e6db74">&#34;pick_rate&#34;</span>, (col(<span style="color:#e6db74">&#34;total_picks&#34;</span>) <span style="color:#f92672">/</span> lit(total_matches)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. Load data into DynamoDB using boto3 within Spark&#39;s distributed partitions</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">upload_row_to_dynamodb</span>(row):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Initialize boto3 client inside each Spark Cluster Worker Node</span>
+</span></span><span style="display:flex;"><span>    dynamodb <span style="color:#f92672">=</span> boto3<span style="color:#f92672">.</span>resource(<span style="color:#e6db74">&#39;dynamodb&#39;</span>, region_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ap-southeast-1&#39;</span>)
+</span></span><span style="display:flex;"><span>    table <span style="color:#f92672">=</span> dynamodb<span style="color:#f92672">.</span>Table(DYNAMODB_TABLE)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Perform Upsert action (Write new or update if hero_id exists)</span>
+</span></span><span style="display:flex;"><span>    table<span style="color:#f92672">.</span>put_item(
+</span></span><span style="display:flex;"><span>        Item<span style="color:#f92672">=</span>{
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;hero_id&#39;</span>: int(row[<span style="color:#e6db74">&#39;hero_id&#39;</span>]),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;total_picks&#39;</span>: int(row[<span style="color:#e6db74">&#39;total_picks&#39;</span>]),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;total_wins&#39;</span>: int(row[<span style="color:#e6db74">&#39;total_wins&#39;</span>]),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;win_rate&#39;</span>: str(round(row[<span style="color:#e6db74">&#39;win_rate&#39;</span>], <span style="color:#ae81ff">2</span>)), <span style="color:#75715e"># Cast to string to prevent Float format errors in DynamoDB</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;pick_rate&#39;</span>: str(round(row[<span style="color:#e6db74">&#39;pick_rate&#39;</span>], <span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Execute distributed function across all rows of the DataFrame</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Starting distributed data load into Amazon DynamoDB...&#34;</span>)
+</span></span><span style="display:flex;"><span>df_metrics<span style="color:#f92672">.</span>rdd<span style="color:#f92672">.</span>foreach(upload_row_to_dynamodb)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Data load completed!&#34;</span>)
+</span></span></code></pre></div><hr>
+<p>No matter how useful the analyzed data is, it loses value if the system takes several minutes to display it to the user.</p>
+<p>In this chapter, you will build the <strong>Speed Layer</strong> for the system using the NoSQL database <strong>Amazon DynamoDB</strong>. After processing the clean data, AWS Glue PySpark will directly pre-calculate the Meta metrics (Aggregated Metrics) and load them into DynamoDB, ensuring that the Frontend application can retrieve information with a latency of less than 100ms.</p>
+
+
+
+
+
+
+
+<ul class="children children-li">
+	
+
+	
+		
+	
+
+	
+
+	
+		
+	
+
+	
+</ul>
+
+
+<p>You will build a Lambda function that acts as the API Backend. It will receive the <code>hero_id</code> parameter sent from the browser, query DynamoDB, and return the JSON result.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Access AWS Console</td>
+					<td>Search for the <strong>Lambda</strong> service in the search bar.</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Initialize Function</td>
+					<td>Select <strong>Functions</strong> in the left menu &gt; Click the orange <strong>Create function</strong> button.</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Basic Configuration</td>
+					<td>Select <em>Author from scratch</em>. Function name: <code>dota2-backend-api</code>. Runtime: Select <strong>Python 3.9</strong> (or newer).</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Configure Permissions</td>
+					<td>Expand the <em>Change default execution role</em> section &gt; Select <strong>Create a new role with basic Lambda permissions</strong> (AWS will automatically create a secure basic role). Click <strong>Create function</strong>.</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Attach DynamoDB Read Permission</td>
+					<td>Go to the <em>Configuration</em> tab &gt; <em>Permissions</em> &gt; Select the blue <em>Role name</em> link. The system will open the IAM console in a new tab.</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Add Inline Policy</td>
+					<td>Click <strong>Add permissions</strong> &gt; <strong>Create inline policy</strong> &gt; Select the <strong>JSON</strong> tab and paste the code below (Remember to replace <code>YOUR_ACCOUNT_ID</code> with your AWS Account ID) &gt; Name the policy: <code>DynamoDB_Read_Dota2_Metrics</code> &gt; Click <strong>Create policy</strong>.</td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td>Write API Source Code</td>
+					<td>Return to the Lambda Function tab &gt; Scroll down to the Code editor, delete all default code and paste the Python Backend code below &gt; Click the orange <strong>Deploy</strong> button.</td>
+			</tr>
+	</tbody>
+</table>
+<p>JSON Policy granting read permissions to Lambda:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Statement&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Action&#34;</span>: [
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;dynamodb:GetItem&#34;</span>
+</span></span><span style="display:flex;"><span>            ],
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Resource&#34;</span>: <span style="color:#e6db74">&#34;arn:aws:dynamodb:ap-southeast-1:YOUR_ACCOUNT_ID:table/dota2_hero_metrics&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Python source code for Lambda:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> boto3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>DYNAMODB_TABLE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;dota2_hero_metrics&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lambda_handler</span>(event, context):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Received event:&#34;</span>, json<span style="color:#f92672">.</span>dumps(event))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 1. Extract hero_id parameter from API Gateway path (Query String or Path Parameter)</span>
+</span></span><span style="display:flex;"><span>    query_params <span style="color:#f92672">=</span> event<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;queryStringParameters&#39;</span>) <span style="color:#f92672">or</span> {}
+</span></span><span style="display:flex;"><span>    hero_id <span style="color:#f92672">=</span> query_params<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;hero_id&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> hero_id:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;statusCode&#39;</span>: <span style="color:#ae81ff">400</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;headers&#39;</span>: {
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#39;Access-Control-Allow-Origin&#39;</span>: <span style="color:#e6db74">&#39;*&#39;</span>, <span style="color:#75715e"># Enable CORS to prevent browser blocking errors</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#39;Content-Type&#39;</span>: <span style="color:#e6db74">&#39;application/json&#39;</span>
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;body&#39;</span>: json<span style="color:#f92672">.</span>dumps({<span style="color:#e6db74">&#39;error&#39;</span>: <span style="color:#e6db74">&#39;Parameter hero_id is required!&#39;</span>})
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 2. Query data directly from Amazon DynamoDB using Key Lookups</span>
+</span></span><span style="display:flex;"><span>    dynamodb <span style="color:#f92672">=</span> boto3<span style="color:#f92672">.</span>resource(<span style="color:#e6db74">&#39;dynamodb&#39;</span>, region_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ap-southeast-1&#39;</span>)
+</span></span><span style="display:flex;"><span>    table <span style="color:#f92672">=</span> dynamodb<span style="color:#f92672">.</span>Table(DYNAMODB_TABLE)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span>get_item(Key<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;hero_id&#39;</span>: int(hero_id)})
+</span></span><span style="display:flex;"><span>    item <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;Item&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> item:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;statusCode&#39;</span>: <span style="color:#ae81ff">404</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;headers&#39;</span>: {<span style="color:#e6db74">&#39;Access-Control-Allow-Origin&#39;</span>: <span style="color:#e6db74">&#39;*&#39;</span>, <span style="color:#e6db74">&#39;Content-Type&#39;</span>: <span style="color:#e6db74">&#39;application/json&#39;</span>},
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;body&#39;</span>: json<span style="color:#f92672">.</span>dumps({<span style="color:#e6db74">&#39;message&#39;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Data not found for Hero ID </span><span style="color:#e6db74">{</span>hero_id<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>})
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 3. Return clean JSON results to Frontend</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;statusCode&#39;</span>: <span style="color:#ae81ff">200</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;headers&#39;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;Access-Control-Allow-Origin&#39;</span>: <span style="color:#e6db74">&#39;*&#39;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;Content-Type&#39;</span>: <span style="color:#e6db74">&#39;application/json&#39;</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;body&#39;</span>: json<span style="color:#f92672">.</span>dumps(item)
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><hr>
+<p>Configure an API Gateway to expose the Backend Lambda function as a public URL (Endpoint) on the Internet.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Open API Gateway</td>
+					<td>Search for the <strong>API Gateway</strong> service in the AWS Console.</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Select API Type</td>
+					<td>Find <strong>HTTP API</strong> &gt; Click the orange <strong>Build</strong> button (HTTP API is much cheaper and faster than REST API).</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Configure Integrations</td>
+					<td>Click <em>Add integration</em> &gt; Select <strong>Lambda</strong>. Select Region <code>ap-southeast-1</code> &gt; In the <em>Lambda function</em> field, select <code>dota2-backend-api</code> &gt; Enter API name: <code>dota2-public-api</code> &gt; Click <strong>Next</strong>.</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Configure Routes</td>
+					<td>Configure routes: For Method, select <strong>GET</strong>. For Path, enter <code>/metrics</code>. Keep Target as the Lambda function. Click <strong>Next</strong>.</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Keep Default Stage</td>
+					<td>Keep the default Stage as <code>$default</code> (with Auto-deploy enabled). Click <strong>Next</strong>.</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Complete</td>
+					<td>Click <strong>Create</strong>. The system will provide you with a URL string in the <strong>Invoke URL</strong> field in the format <code>https://xxxx.execute-api.ap-southeast-1.amazonaws.com</code>.</td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td>Test API</td>
+					<td>Copy the Invoke URL, paste it into the browser, and append: <code>/metrics?hero_id=74</code>. If the screen returns the JSON data like <code>{&quot;hero_id&quot;: 74, &quot;win_rate&quot;: &quot;52.4&quot;}</code>, you have succeeded!</td>
+			</tr>
+	</tbody>
+</table>
+<p><img src="/aws-project/images/dota2/5-api-and-ui/api-gateway-endpoint-1.png?featherlight=false&amp;width=90pc" alt="Get Invoke URL on API Gateway">
+<img src="/aws-project/images/dota2/5-api-and-ui/api-gateway-endpoint-2.png?featherlight=false&amp;width=90pc" alt="Get Invoke URL on API Gateway">
+<img src="/aws-project/images/dota2/5-api-and-ui/api-gateway-endpoint-3.png?featherlight=false&amp;width=90pc" alt="Get Invoke URL on API Gateway">
+<img src="/aws-project/images/dota2/5-api-and-ui/api-gateway-endpoint-4.png?featherlight=false&amp;width=90pc" alt="Get Invoke URL on API Gateway">
+<img src="/aws-project/images/dota2/5-api-and-ui/api-gateway-endpoint-5.png?featherlight=false&amp;width=90pc" alt="Get Invoke URL on API Gateway"></p>
+<hr>
+<p>You will upload the static website user interface source code (HTML/JS) to a special S3 Bucket enabled with Static Website Hosting.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Step</th>
+					<th>Action</th>
+					<th>Technical Details</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Create Interface Bucket</td>
+					<td>Go to <strong>S3 Console</strong>, create a new bucket named: <code>dota2-frontend-site-yourname</code>.</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Disable Block Public Access</td>
+					<td>Since this is a public website for everyone to view, under <em>Block Public Access</em>, <strong>UNCHECK</strong> the <em>Block all public access</em> box. Click create Bucket.</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Configure Web Hosting</td>
+					<td>Open the newly created Bucket &gt; Select the <strong>Properties</strong> tab &gt; Scroll to the very bottom to find the <strong>Static website hosting</strong> section &gt; Select <strong>Edit</strong> &gt; Select <strong>Enable</strong>.</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Fill Default File</td>
+					<td>In the <em>Index document</em> field, enter <code>index.html</code>. Click <strong>Save changes</strong>. The system will provide a website URL at the bottom of this section.</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Create Local Source Code</td>
+					<td>On your computer, create a file named <code>index.html</code> and paste the HTML/JS source code in the block below. (Remember to replace the <code>API_GATEWAY_URL</code> variable with the Invoke URL you obtained in section 5.2).</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Upload File to S3</td>
+					<td>Return to the S3 Console &gt; Go to <strong>Objects</strong> tab &gt; Click <strong>Upload</strong> and upload the <code>index.html</code> file.</td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td>Configure Bucket Policy</td>
+					<td>Switch to the <strong>Permissions</strong> tab &gt; <strong>Bucket policy</strong> section &gt; Click <strong>Edit</strong> and paste the JSON configuration below to grant read access &gt; Click <strong>Save</strong>.</td>
+			</tr>
+	</tbody>
+</table>
+<p>JSON code for Bucket Policy (Remember to replace <code>dota2-frontend-site-tencuaban</code> with your bucket name):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Statement&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Sid&#34;</span>: <span style="color:#e6db74">&#34;PublicReadGetObject&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Principal&#34;</span>: <span style="color:#e6db74">&#34;*&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Action&#34;</span>: <span style="color:#e6db74">&#34;s3:GetObject&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Resource&#34;</span>: <span style="color:#e6db74">&#34;arn:aws:s3:::dota2-frontend-site-yourname/*&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<p>Once the aggregated metrics have been safely loaded into Amazon DynamoDB in Chapter 4, the final step is to build an API gateway and a user interface for lookup.</p>
+<p>In this chapter, you will set up a complete Serverless API architecture: using <strong>AWS Lambda</strong> as the backend to retrieve data from DynamoDB, positioned behind the <strong>Amazon API Gateway</strong> gatekeeper to handle HTTP requests from the <strong>Website Frontend</strong> hosted on S3.</p>
+
+
+
+
+
+
+
+<ul class="children children-li">
+	
+
+	
+		
+	
+
+	
+
+	
+		
+	
+
+	
+</ul>
+
+
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-data-processing/" title="Data Processing"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/aws-project/en/2-workshop/2.4-dota2-lakehouse/6-resource-cleanup/" title="Resource Cleanup" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/aws-project/js/clipboard.min.js?1786107730"></script>
+    <script src="/aws-project/js/perfect-scrollbar.min.js?1786107730"></script>
+    <script src="/aws-project/js/perfect-scrollbar.jquery.min.js?1786107730"></script>
+    <script src="/aws-project/js/jquery.sticky.js?1786107730"></script>
+    <script src="/aws-project/js/featherlight.min.js?1786107730"></script>
+    <script src="/aws-project/js/highlight.pack.js?1786107730"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/aws-project/js/modernizr.custom-3.6.0.js?1786107730"></script>
+    <script src="/aws-project/js/learn.js?1786107730"></script>
+    <script src="/aws-project/js/hugo-learn.js?1786107730"></script>
+    
+        
+            <script src="/aws-project/mermaid/mermaid.js?1786107730"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

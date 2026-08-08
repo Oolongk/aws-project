@@ -1,11 +1,31 @@
 baseURL = 'https://Oolongk.github.io/aws-project/'
-locale = 'vi'
 defaultContentLanguage = 'vi'
-title = 'AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh'
 theme = 'learn'
 
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
 [params]
-  themeVariant = 'blue'
+  themeVariant = 'workshop'
   showVisitedLinks = true
   disableSearch = false
-  disableLanguageSwitching = true
+  disableLanguageSwitching = false
+  custom_css = ["css/custom.css"]
+
+[languages]
+  [languages.vi]
+    contentDir = 'content/vi'
+    title = 'AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh'
+    weight = 1
+    label = 'Tiếng Việt'
+
+  [languages.en]
+    contentDir = 'content/en'
+    title = 'AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh'
+    weight = 2
+    label = 'English'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

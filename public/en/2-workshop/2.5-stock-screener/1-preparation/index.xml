@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Architecture, Storage &amp; IAM Preparation on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/</link><description>Recent content in Architecture, Storage &amp; IAM Preparation on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/index.xml" rel="self" type="application/rss+xml"/><item><title>Architecture &amp; Data Contract</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/1.1-current-architecture-and-data-contract/</link><pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/1.1-current-architecture-and-data-contract/</guid><description>&lt;p&gt;The architecture is divided into a Data Lake path and a Serving path. The bridge between them is Lambda QMJ Loader: S3 creates new Parquet files, S3 sends an &lt;code&gt;ObjectCreated&lt;/code&gt; event, and Lambda reads the file and writes items to DynamoDB.&lt;/p&gt;
+&lt;h2 id="data-flow"&gt;Data Flow&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Data Lake path
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Sources → Backfill/Daily Ingestion → S3 Raw → Glue PySpark QMJ → S3 Processed
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Serving path
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;S3 Processed -- ObjectCreated (*.parquet) --&amp;gt; Lambda QMJ Loader --&amp;gt; DynamoDB
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;DynamoDB --&amp;gt; Lambda Reader --&amp;gt; API Gateway --&amp;gt; Browser
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Automation path
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;EventBridge Scheduler - - -→ Glue Python Shell Daily Ingestion
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="data-contract"&gt;Data Contract&lt;/h2&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Dataset&lt;/th&gt;
+					&lt;th&gt;Grain&lt;/th&gt;
+					&lt;th&gt;Output location&lt;/th&gt;
+					&lt;th&gt;Consumer&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;us_prices_raw.parquet&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;&lt;code&gt;ticker + price_date&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;&lt;code&gt;raw_us_market/YYYY/MM/DD/&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;Glue PySpark QMJ&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;us_company_info.parquet&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;&lt;code&gt;ticker + snapshot_date&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;&lt;code&gt;raw_us_market/YYYY/MM/DD/&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;Glue PySpark QMJ&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;us_financials_raw.parquet&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;&lt;code&gt;ticker + report_date + period_type + snapshot_date&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;&lt;code&gt;raw_us_market/YYYY/MM/DD/&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;Glue PySpark QMJ&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;QMJ output Parquet&lt;/td&gt;
+					&lt;td&gt;One row per &lt;code&gt;ticker&lt;/code&gt; at &lt;code&gt;AS_OF_DATE&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;&lt;code&gt;processed_qmj/as_of_date=.../&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;Lambda QMJ Loader&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;DynamoDB item&lt;/td&gt;
+					&lt;td&gt;&lt;code&gt;ticker + snapshot_date&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;Table &lt;code&gt;qmj_screener&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;Lambda Reader&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Architectural Principle – Event-Driven Serving.&lt;/strong&gt; &lt;code&gt;qmj_transform.py&lt;/code&gt; does not have &lt;code&gt;PutItem&lt;/code&gt; or &lt;code&gt;BatchWriteItem&lt;/code&gt;. The transform completes at S3 Processed; Lambda Loader is responsible for loading DynamoDB after detecting new Parquet files.&lt;/p&gt;</description></item><item><title>Create S3 Data Zones</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/1.2-create-s3-data-zones/</link><pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/1.2-create-s3-data-zones/</guid><description>&lt;p&gt;Create three separate S3 buckets: Raw, Processed, and Static Website. Raw and Processed buckets remain non-public; the Website bucket is publicly exposed via CloudFront/S3 website hosting.&lt;/p&gt;
+&lt;h2 id="create-buckets"&gt;Create Buckets&lt;/h2&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Step&lt;/th&gt;
+					&lt;th&gt;Action&lt;/th&gt;
+					&lt;th&gt;Technical Details&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;1&lt;/td&gt;
+					&lt;td&gt;Amazon S3 → &lt;strong&gt;Create bucket&lt;/strong&gt;&lt;/td&gt;
+					&lt;td&gt;Create Raw Bucket&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;2&lt;/td&gt;
+					&lt;td&gt;Enter name&lt;/td&gt;
+					&lt;td&gt;&lt;code&gt;stock-screener-raw-your-name&lt;/code&gt;&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;3&lt;/td&gt;
+					&lt;td&gt;Select Region&lt;/td&gt;
+					&lt;td&gt;&lt;code&gt;ap-southeast-1&lt;/code&gt; or the Region you use for Glue&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;4&lt;/td&gt;
+					&lt;td&gt;Retain Block Public Access&lt;/td&gt;
+					&lt;td&gt;Raw data remains non-public&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;5&lt;/td&gt;
+					&lt;td&gt;Repeat&lt;/td&gt;
+					&lt;td&gt;Create &lt;code&gt;stock-screener-processed-your-name&lt;/code&gt;&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;6&lt;/td&gt;
+					&lt;td&gt;Repeat&lt;/td&gt;
+					&lt;td&gt;Create &lt;code&gt;stock-screener-web-your-name&lt;/code&gt; for frontend&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="prefix-contract"&gt;Prefix Contract&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Raw
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;raw_us_market/YYYY/MM/DD/us_prices_raw.parquet
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;raw_us_market/YYYY/MM/DD/us_company_info.parquet
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;raw_us_market/YYYY/MM/DD/us_financials_raw.parquet
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Processed
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;processed_qmj/as_of_date=YYYY-MM-DD/part-*.snappy.parquet
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Static frontend
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index.html
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;assets/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src="https://Oolongk.github.io/aws-project/images/stock-screener/1-preparation/create-s3-1.png?featherlight=false&amp;amp;width=90pc" alt="Create S3 data zones"&gt;
+&lt;img src="https://Oolongk.github.io/aws-project/images/stock-screener/1-preparation/create-s3-2.png?featherlight=false&amp;amp;width=90pc" alt="Create S3 data zones"&gt;
+&lt;img src="https://Oolongk.github.io/aws-project/images/stock-screener/1-preparation/create-s3-3.png?featherlight=false&amp;amp;width=90pc" alt="Create S3 data zones"&gt;&lt;/p&gt;</description></item><item><title>Create IAM Roles by Least Privilege</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/1.3-create-iam-roles/</link><pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/1.3-create-iam-roles/</guid><description>&lt;p&gt;Create dedicated IAM Roles for AWS Glue, Lambda Loader, Lambda Reader, and EventBridge Scheduler. Do not hardcode Access Keys in Python scripts.&lt;/p&gt;
+&lt;h2 id="role-matrix"&gt;Role Matrix&lt;/h2&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Role&lt;/th&gt;
+					&lt;th&gt;Used By&lt;/th&gt;
+					&lt;th&gt;Least Privilege&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;AWSGlueServiceRole-StockScreener&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;Daily Ingestion and QMJ Transformation&lt;/td&gt;
+					&lt;td&gt;Read/Write Raw, Read/Write Processed&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;LambdaQMJLoaderRole&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;Lambda S3 trigger&lt;/td&gt;
+					&lt;td&gt;List/Get QMJ Parquet, &lt;code&gt;dynamodb:BatchWriteItem&lt;/code&gt;, CloudWatch Logs&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;LambdaStockScreenerReaderRole&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;Lambda Reader&lt;/td&gt;
+					&lt;td&gt;&lt;code&gt;dynamodb:Query&lt;/code&gt;, CloudWatch Logs&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;code&gt;EventBridgeSchedulerStockScreenerRole&lt;/code&gt;&lt;/td&gt;
+					&lt;td&gt;EventBridge Scheduler&lt;/td&gt;
+					&lt;td&gt;&lt;code&gt;glue:StartJobRun&lt;/code&gt; for Daily Ingestion Job&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Architectural Principle – Strict boundary per IAM role.&lt;/strong&gt; QMJ Transform does not require DynamoDB permissions because the source code only writes Processed Parquet. Lambda Loader is the only service with batch write permissions to &lt;code&gt;qmj_screener&lt;/code&gt;.&lt;/p&gt;</description></item></channel></rss>

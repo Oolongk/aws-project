@@ -1,0 +1,2510 @@
+<!DOCTYPE html>
+<html lang="vi" class="js csstransforms3d">
+  <head><script src="/aws-project/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=aws-project/livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.164.0">
+    <meta name="description" content="">
+
+
+    <link rel="icon" href="/aws-project/images/favicon.png" type="image/png">
+
+    <title>Phục vụ dữ liệu :: AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title>
+
+    
+    <link href="/aws-project/css/nucleus.css?1786107725" rel="stylesheet">
+    <link href="/aws-project/css/fontawesome-all.min.css?1786107725" rel="stylesheet">
+    <link href="/aws-project/css/hybrid.css?1786107725" rel="stylesheet">
+    <link href="/aws-project/css/featherlight.min.css?1786107725" rel="stylesheet">
+    <link href="/aws-project/css/perfect-scrollbar.min.css?1786107725" rel="stylesheet">
+    <link href="/aws-project/css/auto-complete.css?1786107725" rel="stylesheet">
+    <link href="/aws-project/css/atom-one-dark-reasonable.css?1786107725" rel="stylesheet">
+    <link href="/aws-project/css/theme.css?1786107725" rel="stylesheet">
+    <link href="/aws-project/css/tabs.css?1786107725" rel="stylesheet">
+    <link href="/aws-project/css/hugo-theme.css?1786107725" rel="stylesheet">
+    
+    <link href="/aws-project/css/theme-workshop.css?1786107725" rel="stylesheet">
+    
+    <link href="/aws-project/css/custom.css?1786107725" rel="stylesheet">
+
+    <script src="/aws-project/js/jquery-3.3.1.min.js?1786107725"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/aws-project/2-workshop/2.4-dota2-lakehouse/5-phuc-vu-du-lieu/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="/">
+
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg>
+
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/aws-project/js/lunr.min.js?1786107725"></script>
+<script type="text/javascript" src="/aws-project/js/auto-complete.js?1786107725"></script>
+<script type="text/javascript">
+    
+        var baseurl = "http:\/\/localhost:1313\/aws-project\/";
+    
+</script>
+<script type="text/javascript" src="/aws-project/js/search.js?1786107725"></script>
+
+    
+  </div>
+  
+    
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/1-gioi-thieu/" title="1. Giới thiệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/1-gioi-thieu/">
+          <b>1. </b>1. Giới thiệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/" title="Workshop" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/">
+          <b>2. </b>Workshop
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.1-sentiment-sentinel/" title="Social Media Sentiment Sentinel" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.1-sentiment-sentinel/">
+          <b>2.1. </b>Social Media Sentiment Sentinel
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.1-sentiment-sentinel/1-tong-quan/" title="Tổng quan" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.1-sentiment-sentinel/1-tong-quan/">
+          <b>2.1.1 </b>Tổng quan
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.1-sentiment-sentinel/2-chuan-bi/" title="Chuẩn bị" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.1-sentiment-sentinel/2-chuan-bi/">
+          <b>2.1.2 </b>Chuẩn bị
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.1-sentiment-sentinel/3-thu-thap-du-lieu/" title="Thu thập dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.1-sentiment-sentinel/3-thu-thap-du-lieu/">
+          <b>2.1.3 </b>Thu thập dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.1-sentiment-sentinel/4-xu-ly-du-lieu/" title="Xử lý dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.1-sentiment-sentinel/4-xu-ly-du-lieu/">
+          <b>2.1.4 </b>Xử lý dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.1-sentiment-sentinel/5-phuc-vu-du-lieu/" title="Phục vụ dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.1-sentiment-sentinel/5-phuc-vu-du-lieu/">
+          <b>2.1.5 </b>Phục vụ dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.1-sentiment-sentinel/6-don-dep-tai-nguyen/" title="Dọn dẹp tài nguyên" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.1-sentiment-sentinel/6-don-dep-tai-nguyen/">
+          <b>2.1.6 </b>Dọn dẹp tài nguyên
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.2-iotsentinel/" title="IoT Fleet Monitoring System" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.2-iotsentinel/">
+          <b>2.2. </b>IoT Fleet Monitoring System
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.2-iotsentinel/1-tong-quan/" title="Tổng quan" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.2-iotsentinel/1-tong-quan/">
+          <b>2.2.1 </b>Tổng quan
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.2-iotsentinel/2-chuan-bi/" title="Chuẩn bị" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.2-iotsentinel/2-chuan-bi/">
+          <b>2.2.2 </b>Chuẩn bị
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.2-iotsentinel/3-thu-thap-du-lieu/" title="Thu thập dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.2-iotsentinel/3-thu-thap-du-lieu/">
+          <b>2.2.3 </b>Thu thập dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.2-iotsentinel/4-xu-ly-du-lieu/" title="Xử lý dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.2-iotsentinel/4-xu-ly-du-lieu/">
+          <b>2.2.4 </b>Xử lý dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.2-iotsentinel/5-phuc-vu-du-lieu/" title="Phục vụ dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.2-iotsentinel/5-phuc-vu-du-lieu/">
+          <b>2.2.5 </b>Phục vụ dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.2-iotsentinel/6-don-dep-tai-nguyen/" title="Dọn dẹp tài nguyên" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.2-iotsentinel/6-don-dep-tai-nguyen/">
+          <b>2.2.6 </b>Dọn dẹp tài nguyên
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.3-clickstream/" title="Clickstream Analytics &amp; AI Recommender" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.3-clickstream/">
+          <b>2.3. </b>Clickstream Analytics &amp; AI Recommender
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.3-clickstream/1-tong-quan/" title="Tổng quan" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.3-clickstream/1-tong-quan/">
+          <b>2.3.1 </b>Tổng quan
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.3-clickstream/2-chuan-bi/" title="Chuẩn bị" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.3-clickstream/2-chuan-bi/">
+          <b>2.3.2 </b>Chuẩn bị
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.3-clickstream/3-thu-thap-du-lieu/" title="Thu thập dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.3-clickstream/3-thu-thap-du-lieu/">
+          <b>2.3.3 </b>Thu thập dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.3-clickstream/4-xu-ly-du-lieu/" title="Xử lý dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.3-clickstream/4-xu-ly-du-lieu/">
+          <b>2.3.4 </b>Xử lý dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.3-clickstream/5-phuc-vu-du-lieu/" title="Phục vụ dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.3-clickstream/5-phuc-vu-du-lieu/">
+          <b>2.3.5 </b>Phục vụ dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.3-clickstream/6-don-dep-tai-nguyen/" title="Dọn dẹp tài nguyên" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.3-clickstream/6-don-dep-tai-nguyen/">
+          <b>2.3.6 </b>Dọn dẹp tài nguyên
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.4-dota2-lakehouse/" title="Dota 2 Meta Analytics Data Lakehouse" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.4-dota2-lakehouse/">
+          <b>2.4. </b>Dota 2 Meta Analytics Data Lakehouse
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.4-dota2-lakehouse/1-tong-quan/" title="Tổng quan" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.4-dota2-lakehouse/1-tong-quan/">
+          <b>2.4.1 </b>Tổng quan
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.4-dota2-lakehouse/2-chuan-bi/" title="Chuẩn bị" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.4-dota2-lakehouse/2-chuan-bi/">
+          <b>2.4.2 </b>Chuẩn bị
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.4-dota2-lakehouse/3-thu-thap-du-lieu/" title="Thu thập dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.4-dota2-lakehouse/3-thu-thap-du-lieu/">
+          <b>2.4.3 </b>Thu thập dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.4-dota2-lakehouse/4-xu-ly-du-lieu/" title="Xử lý dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.4-dota2-lakehouse/4-xu-ly-du-lieu/">
+          <b>2.4.4 </b>Xử lý dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.4-dota2-lakehouse/5-phuc-vu-du-lieu/" title="Phục vụ dữ liệu" class="dd-item
+        
+        active
+        
+        ">
+      <a href="/aws-project/2-workshop/2.4-dota2-lakehouse/5-phuc-vu-du-lieu/">
+          <b>2.4.5 </b>Phục vụ dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.4-dota2-lakehouse/6-don-dep-tai-nguyen/" title="Dọn dẹp tài nguyên" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.4-dota2-lakehouse/6-don-dep-tai-nguyen/">
+          <b>2.4.6 </b>Dọn dẹp tài nguyên
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.5-stock-screener/" title="Quantamental Stock Screener Time-Series Pipeline" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.5-stock-screener/">
+          <b>2.5. </b>Quantamental Stock Screener Time-Series Pipeline
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.5-stock-screener/1-tong-quan/" title="Tổng quan" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.5-stock-screener/1-tong-quan/">
+          <b>2.5.1 </b>Tổng quan
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.5-stock-screener/2-chuan-bi/" title="Chuẩn bị" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.5-stock-screener/2-chuan-bi/">
+          <b>2.5.2 </b>Chuẩn bị
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.5-stock-screener/3-thu-thap-du-lieu/" title="Thu thập dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.5-stock-screener/3-thu-thap-du-lieu/">
+          <b>2.5.3 </b>Thu thập dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.5-stock-screener/4-xu-ly-du-lieu/" title="Xử lý dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.5-stock-screener/4-xu-ly-du-lieu/">
+          <b>2.5.4 </b>Xử lý dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.5-stock-screener/5-phuc-vu-du-lieu/" title="Phục vụ dữ liệu" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.5-stock-screener/5-phuc-vu-du-lieu/">
+          <b>2.5.5 </b>Phục vụ dữ liệu
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/aws-project/2-workshop/2.5-stock-screener/6-don-dep-tai-nguyen/" title="Dọn dẹp tài nguyên" class="dd-item
+        
+        
+        
+        ">
+      <a href="/aws-project/2-workshop/2.5-stock-screener/6-don-dep-tai-nguyen/">
+          <b>2.5.6 </b>Dọn dẹp tài nguyên
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+          <div class="select-style">
+            <select id="select-language" onchange="location = this.value;">
+          
+          
+          
+              
+              
+                  
+                    
+                    
+                      <option id="vi" value="http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/5-phuc-vu-du-lieu/" selected>Tiếng Việt</option>
+                    
+                  
+              
+                  
+              
+          
+        </select>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+        </div>
+        </a>
+        </li>
+      
+
+      
+        <li><a class="padding" href="#" data-clear-history-toggle=""><i class="fas fa-history fa-fw"></i> </a></li>
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+    <b>Last Updated</b> <br>
+    <i><span id="lastUpdated" style="color: #fd9827;"></span></i>
+    <script>
+        const today = new Date();
+        const formattedDate = today.toLocaleDateString("en-GB");
+        document.getElementById("lastUpdated").textContent = formattedDate;
+    </script>
+</left>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/aws-project/'>Báo cáo cuối khóa</a> > <a href='/aws-project/2-workshop/'>Workshop</a> > <a href='/aws-project/2-workshop/2.4-dota2-lakehouse/'>Dota 2 Meta Analytics Data Lakehouse</a> > Phục vụ dữ liệu
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents"></nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Phục vụ dữ liệu
+            </h1>
+          
+
+        
+
+
+
+	<p>Thực hiện khởi tạo bảng lưu trữ trên Amazon DynamoDB để chứa dữ liệu Meta của các vị Tướng.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Bước</th>
+					<th>Hành động</th>
+					<th>Chi tiết kỹ thuật</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Truy cập DynamoDB</td>
+					<td>Trên thanh tìm kiếm AWS Console, gõ <strong>DynamoDB</strong> &gt; Chọn <strong>Tables</strong> ở menu trái &gt; Nhấn <strong>Create table</strong>.</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Cấu hình Table Name</td>
+					<td>Table name: <code>dota2_hero_metrics</code>.</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Cấu hình Khóa chính</td>
+					<td>Partition key (Khóa phân vùng): Gõ <code>hero_id</code> và chọn kiểu dữ liệu là <strong>String (S)</strong>. Sort key là <code>match_date</code> và chọn kiểu dữ liệu <strong>String (S)</strong>.</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Cấu hình Settings</td>
+					<td>Tại mục <em>Table settings</em>, tích chọn <strong>Customize settings</strong> để cấu hình tối ưu chi phí.</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Tối ưu Capacity Mode</td>
+					<td>Tại mục <em>Read/write capacity mode</em>, tích chọn <strong>On-demand</strong> (Pay-per-request).</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Hoàn tất</td>
+					<td>Cuộn xuống cuối trang và nhấn nút <strong>Create table</strong> màu cam.</td>
+			</tr>
+	</tbody>
+</table>
+<p><img src="/aws-project/images/dota2/4-serving-layer/dynamodb-create-table-1.png?featherlight=false&amp;width=90pc" alt="Giao diện khởi tạo bảng DynamoDB">
+<img src="/aws-project/images/dota2/4-serving-layer/dynamodb-create-table-2.png?featherlight=false&amp;width=90pc" alt="Giao diện khởi tạo bảng DynamoDB">
+<img src="/aws-project/images/dota2/4-serving-layer/dynamodb-create-table-3.png?featherlight=false&amp;width=90pc" alt="Giao diện khởi tạo bảng DynamoDB"></p>
+<hr>
+<p>Ở Chương 2, IAM Role của AWS Glue chỉ mới có quyền làm việc với S3. Bây giờ, vì Glue Job sẽ phải ghi dữ liệu trực tiếp vào DynamoDB, em cần cấp thêm quyền hạn này cho nó.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Bước</th>
+					<th>Hành động</th>
+					<th>Chi tiết kỹ thuật</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Truy cập IAM Role</td>
+					<td>Mở dịch vụ <strong>IAM</strong> &gt; Chọn <strong>Roles</strong> &gt; Tìm kiếm và click vào role <code>Glue_Dota2_Processing_Role</code> em đã tạo trước đó.</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Thêm Permissions</td>
+					<td>Tại tab <em>Permissions</em>, nhấn vào nút <strong>Add permissions</strong> &gt; Chọn <strong>Create inline policy</strong>.</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Cấu hình JSON</td>
+					<td>Chuyển sang tab <strong>JSON</strong> và dán đoạn mã phân quyền ghi dữ liệu DynamoDB bên dưới vào. (Nhớ thay đổi vùng <code>YOUR_ACCOUNT_ID</code> thành ID tài khoản AWS của em).</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Đặt tên Policy</td>
+					<td>Nhấn <strong>Next</strong>. Đặt tên cho Policy này là: <code>DynamoDB_Write_Dota2_Metrics</code>.</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Hoàn tất</td>
+					<td>Nhấn <strong>Create policy</strong> để áp dụng quyền mới cho AWS Glue.</td>
+			</tr>
+	</tbody>
+</table>
+<p>Mã JSON Inline Policy:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Statement&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Action&#34;</span>: [
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;dynamodb:PutItem&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;dynamodb:BatchWriteItem&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;dynamodb:UpdateItem&#34;</span>
+</span></span><span style="display:flex;"><span>            ],
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Resource&#34;</span>: <span style="color:#e6db74">&#34;arn:aws:dynamodb:ap-southeast-1:YOUR_ACCOUNT_ID:table/dota2_hero_metrics&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<p>Em tiến hành nâng cấp mã nguồn PySpark của AWS Glue Job. Ngoài nhiệm vụ lưu trữ file Parquet xuống S3, Glue sẽ tính toán trực tiếp tỷ lệ thắng (Winrate), tỷ lệ chọn (Pickrate) và dùng thư viện <code>boto3</code> để đẩy thẳng kết quả vào DynamoDB.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Bước</th>
+					<th>Hành động</th>
+					<th>Chi tiết kỹ thuật</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Mở Glue Studio</td>
+					<td>Vào AWS Console &gt; Tìm dịch vụ <strong>AWS Glue</strong> &gt; Mục <strong>ETL Jobs</strong> &gt; Chọn <strong>Visual ETL</strong> hoặc mở trực tiếp mã nguồn của Job <code>dota2_etl_job</code> đã tạo ở bài 2.3.</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Cập nhật Script</td>
+					<td>Chọn tab <strong>Script</strong>, xóa toàn bộ mã nguồn cũ đi và thay thế bằng đoạn code PySpark nâng cấp ở bên dưới.</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Cấu hình tham số</td>
+					<td>Đảm bảo các biến <code>RAW_PATH</code>, <code>PROCESSED_PATH</code> và tên bảng DynamoDB đã khớp với hệ thống của em.</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Lưu và Chạy</td>
+					<td>Nhấn <strong>Save</strong> &gt; Nhấn <strong>Run</strong> để khởi chạy pipeline tính toán tổng hợp.</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Kiểm duyệt kết quả</td>
+					<td>Truy cập <strong>DynamoDB Console</strong> &gt; Mục <strong>Tables</strong> &gt; Chọn bảng <code>dota2_hero_metrics</code> &gt; Nhấn nút <strong>Explore table items</strong> để kiểm tra các bản ghi metrics của các Hero đã được nạp thành công.</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>Mã nguồn PySpark nâng cấp (<code>dota2_etl_job_v2.py</code>):</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> boto3
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pyspark.context <span style="color:#f92672">import</span> SparkContext
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> awsglue.context <span style="color:#f92672">import</span> GlueContext
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pyspark.sql.functions <span style="color:#f92672">import</span> explode, col, from_unixtime, to_date, count, sum <span style="color:#66d9ef">as</span> _sum, when, lit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sc <span style="color:#f92672">=</span> SparkContext<span style="color:#f92672">.</span>getOrCreate()
+</span></span><span style="display:flex;"><span>glueContext <span style="color:#f92672">=</span> GlueContext(sc)
+</span></span><span style="display:flex;"><span>spark <span style="color:#f92672">=</span> glueContext<span style="color:#f92672">.</span>spark_session
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>RAW_PATH <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;s3://dota2-raw-zone-tencuaban/raw_matches/&#34;</span>
+</span></span><span style="display:flex;"><span>PROCESSED_PATH <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;s3://dota2-processed-zone-tencuaban/matches_parquet/&#34;</span>
+</span></span><span style="display:flex;"><span>DYNAMODB_TABLE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;dota2_hero_metrics&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. Đọc dữ liệu thô và Flattening</span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> spark<span style="color:#f92672">.</span>read<span style="color:#f92672">.</span>json(RAW_PATH)
+</span></span><span style="display:flex;"><span>df_exploded <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>select(
+</span></span><span style="display:flex;"><span>    col(<span style="color:#e6db74">&#34;match_id&#34;</span>),
+</span></span><span style="display:flex;"><span>    to_date(from_unixtime(col(<span style="color:#e6db74">&#34;start_time&#34;</span>)))<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">&#34;match_date&#34;</span>),
+</span></span><span style="display:flex;"><span>    explode(col(<span style="color:#e6db74">&#34;players&#34;</span>))<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">&#34;player&#34;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>df_final <span style="color:#f92672">=</span> df_exploded<span style="color:#f92672">.</span>select(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;match_id&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;match_date&#34;</span>,
+</span></span><span style="display:flex;"><span>    col(<span style="color:#e6db74">&#34;player.hero_id&#34;</span>)<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">&#34;hero_id&#34;</span>),
+</span></span><span style="display:flex;"><span>    col(<span style="color:#e6db74">&#34;player.win&#34;</span>)<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">&#34;is_win&#34;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># [Tối ưu Chương 2]: Ghi dữ liệu sạch lưu vết dài hạn dưới dạng Parquet Snappy xuống S3</span>
+</span></span><span style="display:flex;"><span>df_final<span style="color:#f92672">.</span>write<span style="color:#f92672">.</span>mode(<span style="color:#e6db74">&#34;append&#34;</span>)<span style="color:#f92672">.</span>partitionBy(<span style="color:#e6db74">&#34;match_date&#34;</span>)<span style="color:#f92672">.</span>parquet(PROCESSED_PATH, compression<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;snappy&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. [Nâng cấp Chương 4]: Tính toán Aggregation Metrics bằng Spark DataFrame API</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Đang tính toán tổng hợp tỷ lệ Winrate và Pickrate của các Hero...&#34;</span>)
+</span></span><span style="display:flex;"><span>total_matches <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>count()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df_metrics <span style="color:#f92672">=</span> df_final<span style="color:#f92672">.</span>groupBy(<span style="color:#e6db74">&#34;hero_id&#34;</span>)<span style="color:#f92672">.</span>agg(
+</span></span><span style="display:flex;"><span>    count(<span style="color:#e6db74">&#34;match_id&#34;</span>)<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">&#34;total_picks&#34;</span>),
+</span></span><span style="display:flex;"><span>    _sum(when(col(<span style="color:#e6db74">&#34;is_win&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#66d9ef">True</span>, <span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>otherwise(<span style="color:#ae81ff">0</span>))<span style="color:#f92672">.</span>alias(<span style="color:#e6db74">&#34;total_wins&#34;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Tính toán tỷ lệ phần trăm dữ liệu</span>
+</span></span><span style="display:flex;"><span>df_metrics <span style="color:#f92672">=</span> df_metrics<span style="color:#f92672">.</span>withColumn(<span style="color:#e6db74">&#34;win_rate&#34;</span>, (col(<span style="color:#e6db74">&#34;total_wins&#34;</span>) <span style="color:#f92672">/</span> col(<span style="color:#e6db74">&#34;total_picks&#34;</span>)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>) \
+</span></span><span style="display:flex;"><span>                       <span style="color:#f92672">.</span>withColumn(<span style="color:#e6db74">&#34;pick_rate&#34;</span>, (col(<span style="color:#e6db74">&#34;total_picks&#34;</span>) <span style="color:#f92672">/</span> lit(total_matches)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. Đẩy dữ liệu sang DynamoDB sử dụng boto3 kết hợp với phân vùng tính toán của Spark</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">upload_row_to_dynamodb</span>(row):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Khởi tạo boto3 client bên trong từng Worker Node của Spark Cluster</span>
+</span></span><span style="display:flex;"><span>    dynamodb <span style="color:#f92672">=</span> boto3<span style="color:#f92672">.</span>resource(<span style="color:#e6db74">&#39;dynamodb&#39;</span>, region_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ap-southeast-1&#39;</span>)
+</span></span><span style="display:flex;"><span>    table <span style="color:#f92672">=</span> dynamodb<span style="color:#f92672">.</span>Table(DYNAMODB_TABLE)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Thực hiện hành động Upsert dữ liệu (Ghi mới hoặc cập nhật nếu trùng hero_id)</span>
+</span></span><span style="display:flex;"><span>    table<span style="color:#f92672">.</span>put_item(
+</span></span><span style="display:flex;"><span>        Item<span style="color:#f92672">=</span>{
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;hero_id&#39;</span>: int(row[<span style="color:#e6db74">&#39;hero_id&#39;</span>]),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;total_picks&#39;</span>: int(row[<span style="color:#e6db74">&#39;total_picks&#39;</span>]),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;total_wins&#39;</span>: int(row[<span style="color:#e6db74">&#39;total_wins&#39;</span>]),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;win_rate&#39;</span>: str(round(row[<span style="color:#e6db74">&#39;win_rate&#39;</span>], <span style="color:#ae81ff">2</span>)), <span style="color:#75715e"># Ép sang chuỗi để tránh lỗi định dạng Float trong DynamoDB</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;pick_rate&#39;</span>: str(round(row[<span style="color:#e6db74">&#39;pick_rate&#39;</span>], <span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Gọi hàm thực thi phân tán trên toàn bộ các dòng của DataFrame</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Bắt đầu nạp dữ liệu phân tán vào Amazon DynamoDB...&#34;</span>)
+</span></span><span style="display:flex;"><span>df_metrics<span style="color:#f92672">.</span>rdd<span style="color:#f92672">.</span>foreach(upload_row_to_dynamodb)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Nạp dữ liệu hoàn tất!&#34;</span>)
+</span></span></code></pre></div><hr>
+<p>Dữ liệu phân tích dù có hữu ích đến mấy cũng sẽ mất đi giá trị nếu hệ thống mất tới vài phút để hiển thị cho người dùng.</p>
+<p>Trong chương này, em sẽ xây dựng <strong>Speed Layer</strong> cho hệ thống bằng cách sử dụng cơ sở dữ liệu NoSQL <strong>Amazon DynamoDB</strong>. AWS Glue PySpark sau khi xử lý dữ liệu sạch sẽ trực tiếp tính toán sẵn các chỉ số Meta (Aggregated Metrics) và nạp thẳng vào DynamoDB, đảm bảo ứng dụng Frontend có thể truy xuất thông tin với độ trễ dưới 100ms.</p>
+
+
+
+
+
+
+
+<ul class="children children-li">
+	
+
+	
+		
+	
+
+	
+
+	
+		
+	
+
+	
+</ul>
+
+
+<p>Em sẽ xây dựng một hàm Lambda đóng vai trò là API Backend chịu trách nhiệm tiếp nhận tham số <code>hero_id</code> gửi lên từ trình duyệt, truy vấn vào DynamoDB và trả về kết quả JSON.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Bước</th>
+					<th>Hành động</th>
+					<th>Chi tiết kỹ thuật</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Truy cập AWS Console</td>
+					<td>Tìm kiếm dịch vụ <strong>Lambda</strong> trên thanh công cụ.</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Khởi tạo Hàm</td>
+					<td>Chọn <strong>Functions</strong> ở menu trái &gt; Nhấn nút <strong>Create function</strong> màu cam.</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Cấu hình cơ bản</td>
+					<td>Chọn <em>Author from scratch</em>. Function name: <code>dota2-backend-api</code>. Runtime: Chọn <strong>Python 3.9</strong> (hoặc bản mới hơn).</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Cấu hình Permissions</td>
+					<td>Mở rộng mục <em>Change default execution role</em> &gt; Chọn <strong>Create a new role with basic Lambda permissions</strong> (AWS sẽ tự tạo một Role cơ bản bảo mật). Nhấn <strong>Create function</strong>.</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Gắn quyền đọc DynamoDB</td>
+					<td>Sang tab <em>Configuration</em> &gt; Mục <em>Permissions</em> &gt; Chọn đường link <em>Role name</em> màu xanh. Hệ thống sẽ chuyển sang tab IAM.</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Thêm Inline Policy</td>
+					<td>Nhấn <strong>Add permissions</strong> &gt; <strong>Create inline policy</strong> &gt; Chọn tab <strong>JSON</strong> và dán đoạn mã bên dưới vào (Nhớ sửa <code>YOUR_ACCOUNT_ID</code> thành ID tài khoản AWS của em) &gt; Đặt tên policy: <code>DynamoDB_Read_Dota2_Metrics</code> &gt; Nhấn <strong>Create policy</strong>.</td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td>Viết mã nguồn API</td>
+					<td>Quay lại tab Lambda Function &gt; Kéo xuống phần Code editor, xóa sạch code mặc định và dán đoạn mã Backend Python bên dưới vào &gt; Nhấn nút <strong>Deploy</strong> màu cam.</td>
+			</tr>
+	</tbody>
+</table>
+<p>Mã JSON Policy cấp quyền đọc cho Lambda:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Statement&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Action&#34;</span>: [
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;dynamodb:GetItem&#34;</span>
+</span></span><span style="display:flex;"><span>            ],
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Resource&#34;</span>: <span style="color:#e6db74">&#34;arn:aws:dynamodb:ap-southeast-1:YOUR_ACCOUNT_ID:table/dota2_hero_metrics&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Mã nguồn Python của Lambda:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> boto3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>DYNAMODB_TABLE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;dota2_hero_metrics&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lambda_handler</span>(event, context):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Received event:&#34;</span>, json<span style="color:#f92672">.</span>dumps(event))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 1. Trích xuất tham số hero_id từ đường dẫn API Gateway (Query String hoặc Path Parameter)</span>
+</span></span><span style="display:flex;"><span>    query_params <span style="color:#f92672">=</span> event<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;queryStringParameters&#39;</span>) <span style="color:#f92672">or</span> {}
+</span></span><span style="display:flex;"><span>    hero_id <span style="color:#f92672">=</span> query_params<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;hero_id&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> hero_id:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;statusCode&#39;</span>: <span style="color:#ae81ff">400</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;headers&#39;</span>: {
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#39;Access-Control-Allow-Origin&#39;</span>: <span style="color:#e6db74">&#39;*&#39;</span>, <span style="color:#75715e"># Bật CORS chống lỗi chặn Browser</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#39;Content-Type&#39;</span>: <span style="color:#e6db74">&#39;application/json&#39;</span>
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;body&#39;</span>: json<span style="color:#f92672">.</span>dumps({<span style="color:#e6db74">&#39;error&#39;</span>: <span style="color:#e6db74">&#39;Tham số hero_id là bắt buộc!&#39;</span>})
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 2. Truy vấn dữ liệu trực tiếp từ Amazon DynamoDB theo Key Lookups</span>
+</span></span><span style="display:flex;"><span>    dynamodb <span style="color:#f92672">=</span> boto3<span style="color:#f92672">.</span>resource(<span style="color:#e6db74">&#39;dynamodb&#39;</span>, region_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ap-southeast-1&#39;</span>)
+</span></span><span style="display:flex;"><span>    table <span style="color:#f92672">=</span> dynamodb<span style="color:#f92672">.</span>Table(DYNAMODB_TABLE)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> table<span style="color:#f92672">.</span>get_item(Key<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;hero_id&#39;</span>: int(hero_id)})
+</span></span><span style="display:flex;"><span>    item <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;Item&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> item:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;statusCode&#39;</span>: <span style="color:#ae81ff">404</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;headers&#39;</span>: {<span style="color:#e6db74">&#39;Access-Control-Allow-Origin&#39;</span>: <span style="color:#e6db74">&#39;*&#39;</span>, <span style="color:#e6db74">&#39;Content-Type&#39;</span>: <span style="color:#e6db74">&#39;application/json&#39;</span>},
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;body&#39;</span>: json<span style="color:#f92672">.</span>dumps({<span style="color:#e6db74">&#39;message&#39;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Không tìm thấy dữ liệu cho Hero ID </span><span style="color:#e6db74">{</span>hero_id<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>})
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 3. Trả kết quả JSON sạch về cho Frontend</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;statusCode&#39;</span>: <span style="color:#ae81ff">200</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;headers&#39;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;Access-Control-Allow-Origin&#39;</span>: <span style="color:#e6db74">&#39;*&#39;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;Content-Type&#39;</span>: <span style="color:#e6db74">&#39;application/json&#39;</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;body&#39;</span>: json<span style="color:#f92672">.</span>dumps(item)
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><hr>
+<p>Em tiến hành thiết lập một cổng API Gateway để chuyển đổi hàm Lambda Backend thành một địa chỉ URL công khai (Endpoint) trên Internet.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Bước</th>
+					<th>Hành động</th>
+					<th>Chi tiết kỹ thuật</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Mở API Gateway</td>
+					<td>Tìm kiếm dịch vụ <strong>API Gateway</strong> trên AWS Console.</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Chọn loại API</td>
+					<td>Tìm đến mục <strong>HTTP API</strong> &gt; Nhấn nút <strong>Build</strong> màu cam (HTTP API rẻ và nhanh hơn REST API gấp nhiều lần).</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Cấu hình Integrations</td>
+					<td>Nhấn <em>Add integration</em> &gt; Chọn <strong>Lambda</strong>. Chọn Region <code>ap-southeast-1</code> &gt; Ô <em>Lambda function</em>, chọn <code>dota2-backend-api</code> &gt; API name điền: <code>dota2-public-api</code> &gt; Nhấn <strong>Next</strong>.</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Định tuyến Routes</td>
+					<td>Configure routes: Method chọn <strong>GET</strong>. Path điền: <code>/metrics</code>. Target giữ nguyên hàm Lambda. Nhấn <strong>Next</strong>.</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Giữ nguyên Stage</td>
+					<td>Mục Stages giữ mặc định là <code>$default</code> (bật tính năng Auto-deploy). Nhấn <strong>Next</strong>.</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Hoàn tất</td>
+					<td>Nhấn <strong>Create</strong>. Hệ thống sẽ cấp cho em một chuỗi đường dẫn nằm ở ô <strong>Invoke URL</strong> dạng <code>https://xxxx.execute-api.ap-southeast-1.amazonaws.com</code>.</td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td>Thử nghiệm API</td>
+					<td>Copy đường link Invoke URL dán lên trình duyệt và gõ thêm đuôi: <code>/metrics?hero_id=74</code>. Nếu màn hình hiển thị dữ liệu JSON dạng <code>{&quot;hero_id&quot;: 74, &quot;win_rate&quot;: &quot;52.4&quot;}</code> nghĩa là em đã thành công!</td>
+			</tr>
+	</tbody>
+</table>
+<p><img src="/aws-project/images/dota2/5-api-and-ui/api-gateway-endpoint-1.png?featherlight=false&amp;width=90pc" alt="Lấy Invoke URL trên API Gateway">
+<img src="/aws-project/images/dota2/5-api-and-ui/api-gateway-endpoint-2.png?featherlight=false&amp;width=90pc" alt="Lấy Invoke URL trên API Gateway">
+<img src="/aws-project/images/dota2/5-api-and-ui/api-gateway-endpoint-3.png?featherlight=false&amp;width=90pc" alt="Lấy Invoke URL trên API Gateway">
+<img src="/aws-project/images/dota2/5-api-and-ui/api-gateway-endpoint-4.png?featherlight=false&amp;width=90pc" alt="Lấy Invoke URL trên API Gateway">
+<img src="/aws-project/images/dota2/5-api-and-ui/api-gateway-endpoint-5.png?featherlight=false&amp;width=90pc" alt="Lấy Invoke URL trên API Gateway"></p>
+<hr>
+<p>Em sẽ đưa mã nguồn giao diện Website tĩnh (HTML/JS) lên một S3 Bucket đặc biệt được kích hoạt tính năng Static Website Hosting.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Bước</th>
+					<th>Hành động</th>
+					<th>Chi tiết kỹ thuật</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1</td>
+					<td>Tạo Bucket giao diện</td>
+					<td>Vào <strong>S3 Console</strong>, tạo một bucket mới tên: <code>dota2-frontend-site-tencuaban</code>.</td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td>Tắt Block Public Access</td>
+					<td>Vì đây là trang web công khai cho mọi người vào xem, tại mục <em>Block Public Access</em>, em <strong>BỎ TÍCH</strong> ô <em>Block all public access</em>. Nhấn tạo Bucket.</td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td>Cấu hình Web Hosting</td>
+					<td>Mở Bucket vừa tạo &gt; Chọn tab <strong>Properties</strong> &gt; Cuộn xuống cuối cùng tìm mục <strong>Static website hosting</strong> &gt; Chọn <strong>Edit</strong> &gt; Chọn <strong>Enable</strong>.</td>
+			</tr>
+			<tr>
+					<td>4</td>
+					<td>Điền file mặc định</td>
+					<td>Mục <em>Index document</em>, nhập <code>index.html</code>. Nhấn <strong>Save changes</strong>. Hệ thống hiển thị một đường link trang web ở dưới cùng mục này.</td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td>Tạo mã nguồn cục bộ</td>
+					<td>Tại máy tính của em, tạo một file tên là <code>index.html</code> và dán đoạn mã nguồn HTML/JS ở khung bên dưới vào. (Nhớ thay thế biến <code>API_GATEWAY_URL</code> bằng đường link Invoke URL em vừa lấy ở bài 5.2).</td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td>Đẩy file lên S3</td>
+					<td>Quay lại S3 Console &gt; Tab <strong>Objects</strong> &gt; Nhấn <strong>Upload</strong> và tải file <code>index.html</code> lên.</td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td>Mở quyền Bucket Policy</td>
+					<td>Chuyển sang tab <strong>Permissions</strong> &gt; Mục <strong>Bucket policy</strong> &gt; Nhấn <strong>Edit</strong> và dán đoạn mã cấu hình JSON mở quyền đọc ở bên dưới vào &gt; Nhấn <strong>Save</strong>.</td>
+			</tr>
+	</tbody>
+</table>
+<p>Mã JSON cho Bucket Policy (Nhớ thay <code>dota2-frontend-site-tencuaban</code> bằng tên bucket của em):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Statement&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Sid&#34;</span>: <span style="color:#e6db74">&#34;PublicReadGetObject&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Principal&#34;</span>: <span style="color:#e6db74">&#34;*&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Action&#34;</span>: <span style="color:#e6db74">&#34;s3:GetObject&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Resource&#34;</span>: <span style="color:#e6db74">&#34;arn:aws:s3:::dota2-frontend-site-tencuaban/*&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<p>Khi dữ liệu tổng hợp (Metrics) đã được nạp an toàn vào Amazon DynamoDB ở Chương 4, khâu cuối cùng là xây dựng một cổng giao tiếp API và giao diện để người dùng có thể tra cứu.</p>
+<p>Trong chương này, em sẽ thiết lập một kiến trúc API Serverless hoàn chỉnh: sử dụng <strong>AWS Lambda</strong> làm Backend bóc tách dữ liệu từ DynamoDB, đứng sau cổng kiểm soát <strong>Amazon API Gateway</strong> để tiếp nhận các yêu cầu HTTP request từ phía <strong>Website Frontend</strong> lưu trữ trên S3.</p>
+
+
+
+
+
+
+
+<ul class="children children-li">
+	
+
+	
+		
+	
+
+	
+
+	
+		
+	
+
+	
+</ul>
+
+
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/aws-project/2-workshop/2.4-dota2-lakehouse/4-xu-ly-du-lieu/" title="Xử lý dữ liệu"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/aws-project/2-workshop/2.4-dota2-lakehouse/6-don-dep-tai-nguyen/" title="Dọn dẹp tài nguyên" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/aws-project/js/clipboard.min.js?1786107725"></script>
+    <script src="/aws-project/js/perfect-scrollbar.min.js?1786107725"></script>
+    <script src="/aws-project/js/perfect-scrollbar.jquery.min.js?1786107725"></script>
+    <script src="/aws-project/js/jquery.sticky.js?1786107725"></script>
+    <script src="/aws-project/js/featherlight.min.js?1786107725"></script>
+    <script src="/aws-project/js/highlight.pack.js?1786107725"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/aws-project/js/modernizr.custom-3.6.0.js?1786107725"></script>
+    <script src="/aws-project/js/learn.js?1786107725"></script>
+    <script src="/aws-project/js/hugo-learn.js?1786107725"></script>
+    
+        
+            <script src="/aws-project/mermaid/mermaid.js?1786107725"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-158079754-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

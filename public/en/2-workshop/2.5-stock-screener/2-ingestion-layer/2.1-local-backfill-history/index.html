@@ -1,0 +1,582 @@
+<!doctype html><html lang=en class="js csstransforms3d"><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.164.0"><meta name=description content><link rel=icon href=/aws-project/images/favicon.png type=image/png><title>Run Local Price History Backfill :: AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title><link href=/aws-project/css/nucleus.css?1786168081 rel=stylesheet><link href=/aws-project/css/fontawesome-all.min.css?1786168081 rel=stylesheet><link href=/aws-project/css/hybrid.css?1786168081 rel=stylesheet><link href=/aws-project/css/featherlight.min.css?1786168081 rel=stylesheet><link href=/aws-project/css/perfect-scrollbar.min.css?1786168081 rel=stylesheet><link href=/aws-project/css/auto-complete.css?1786168081 rel=stylesheet><link href=/aws-project/css/atom-one-dark-reasonable.css?1786168081 rel=stylesheet><link href=/aws-project/css/theme.css?1786168081 rel=stylesheet><link href=/aws-project/css/tabs.css?1786168081 rel=stylesheet><link href=/aws-project/css/hugo-theme.css?1786168081 rel=stylesheet><link href=/aws-project/css/theme-workshop.css?1786168081 rel=stylesheet><link href=/aws-project/css/custom.css?1786168081 rel=stylesheet><script src=/aws-project/js/jquery-3.3.1.min.js?1786168081></script><style>:root #header+#content>#left>#rlblock_left{display:none!important}</style></head><body data-url=/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.1-local-backfill-history/><nav id=sidebar class=showVisitedLinks><div id=header-wrapper><div id=header><a id=logo href=/><svg id="Layer_1" data-name="Layer 1" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff}.cls-2{fill:#f90;fill-rule:evenodd}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09 10.85a4.7 4.7.0 00.19 1.48 7.73 7.73.0 00.54 1.19.77.77.0 01.12.38.64.64.0 01-.32.49l-1 .7a.83.83.0 01-.44.15.69.69.0 01-.49-.23 3.8 3.8.0 01-.6-.77q-.25-.42-.51-1a6.14 6.14.0 01-4.89 2.3 4.54 4.54.0 01-3.32-1.19 4.27 4.27.0 01-1.22-3.2 4.28 4.28.0 011.46-3.4A6.06 6.06.0 017.69 6.46a12.47 12.47.0 011.76.13q.92.13 1.91.36V5.73a3.65 3.65.0 00-.79-2.66A3.81 3.81.0 007.86 2.3a7.71 7.71.0 00-1.79.22 12.78 12.78.0 00-1.79.57 4.55 4.55.0 01-.58.22h-.26q-.35.0-.35-.52V2a1.09 1.09.0 01.12-.58 1.2 1.2.0 01.47-.35A10.88 10.88.0 015.77.32 10.19 10.19.0 018.36.0a6 6 0 014.35 1.35 5.49 5.49.0 011.38 4.09zM7.34 13.38a5.36 5.36.0 001.72-.31A3.63 3.63.0 0010.63 12 2.62 2.62.0 0011.19 11a5.63 5.63.0 00.16-1.44v-.7a14.35 14.35.0 00-1.53-.28 12.37 12.37.0 00-1.56-.1 3.84 3.84.0 00-2.47.67A2.34 2.34.0 005 11a2.35 2.35.0 00.61 1.76A2.4 2.4.0 007.34 13.38zm13.35 1.8a1 1 0 01-.64-.16 1.3 1.3.0 01-.35-.65L15.81 1.51a3 3 0 01-.15-.67.36.36.0 01.41-.41H17.7a1 1 0 01.65.16 1.4 1.4.0 01.33.65l2.79 11 2.59-11A1.17 1.17.0 0124.39.6a1.1 1.1.0 01.67-.16H26.4a1.1 1.1.0 01.67.16 1.17 1.17.0 01.32.65L30 12.39 32.88 1.25A1.39 1.39.0 0133.22.6a1 1 0 01.65-.16h1.54a.36.36.0 01.41.41 1.36 1.36.0 010 .26 3.64 3.64.0 01-.12.41l-4 12.86a1.3 1.3.0 01-.35.65 1 1 0 01-.64.16H29.25a1 1 0 01-.67-.17 1.26 1.26.0 01-.32-.67L25.67 3.64l-2.56 10.7a1.26 1.26.0 01-.32.67 1 1 0 01-.67.17zm21.36.44a11.28 11.28.0 01-2.56-.29 7.44 7.44.0 01-1.92-.67 1 1 0 01-.61-.93v-.84q0-.52.38-.52a.9.9.0 01.31.06l.42.17a8.77 8.77.0 001.83.58 9.78 9.78.0 002 .2 4.48 4.48.0 002.43-.55 1.76 1.76.0 00.86-1.57 1.61 1.61.0 00-.45-1.16A4.29 4.29.0 0043 9.22l-2.41-.76A5.15 5.15.0 0138 6.78a3.94 3.94.0 01-.83-2.41 3.7 3.7.0 01.45-1.85 4.47 4.47.0 011.19-1.37 5.27 5.27.0 011.7-.86A7.4 7.4.0 0142.6.0a8.87 8.87.0 011.12.07q.57.07 1.08.19t.95.26a4.27 4.27.0 01.7.29 1.59 1.59.0 01.49.41.94.94.0 01.15.55v.79q0 .52-.38.52a1.76 1.76.0 01-.64-.2 7.74 7.74.0 00-3.2-.64 4.37 4.37.0 00-2.21.47 1.6 1.6.0 00-.79 1.48 1.58 1.58.0 00.49 1.18 4.94 4.94.0 001.83.92L44.55 7a5.08 5.08.0 012.57 1.6A3.76 3.76.0 0147.9 11a4.21 4.21.0 01-.44 1.93 4.4 4.4.0 01-1.21 1.47 5.43 5.43.0 01-1.85.93A8.25 8.25.0 0142.05 15.62z"/><path class="cls-2" d="M45.19 23.81C39.72 27.85 31.78 30 25 30A36.64 36.64.0 01.22 20.57c-.51-.46-.06-1.09.56-.74A49.78 49.78.0 0025.53 26.4 49.23 49.23.0 0044.4 22.53C45.32 22.14 46.1 23.14 45.19 23.81z"/><path class="cls-2" d="M47.47 21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74 3.13-2.2 8.27-1.57 8.86-.83s-.16 5.89-3.09 8.35c-.45.38-.88.18-.68-.32C46.69 25.8 48.17 22.11 47.47 21.21z"/></svg></a></div><div class=searchbox><label for=search-by><i class="fas fa-search"></i></label>
+<input data-search-input id=search-by type=search placeholder=Search...>
+<span data-search-clear><i class="fas fa-times"></i></span></div><script type=text/javascript src=/aws-project/js/lunr.min.js?1786168081></script><script type=text/javascript src=/aws-project/js/auto-complete.js?1786168081></script><script type=text/javascript>var baseurl="https://Oolongk.github.io/aws-project//en"</script><script type=text/javascript src=/aws-project/js/search.js?1786168081></script></div><div class=highlightable><ul class=topics><li data-nav-id=/aws-project/en/1-introduction/ title="1. Introduction" class=dd-item><a href=/aws-project/en/1-introduction/>1. Introduction
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/ title=Workshops class="dd-item
+parent"><a href=/aws-project/en/2-workshop/><b>2. </b>Workshops
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.1-sentiment-sentinel/ title="Social Media Sentiment Analysis Data Pipeline on AWS" class=dd-item><a href=/aws-project/en/2-workshop/2.1-sentiment-sentinel/><b>2.1. </b>Social Media Sentiment Analysis Data Pipeline on AWS
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.1-sentiment-sentinel/1-introduction/ title=Introduction class=dd-item><a href=/aws-project/en/2-workshop/2.1-sentiment-sentinel/1-introduction/><b>2.1.1. </b>Introduction
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.1-sentiment-sentinel/2-preparation/ title=Preparation class=dd-item><a href=/aws-project/en/2-workshop/2.1-sentiment-sentinel/2-preparation/><b>2.1.2. </b>Preparation
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.1-sentiment-sentinel/2-preparation/2.1-youtube-api/ title="Create YouTube API Key" class=dd-item><a href=/aws-project/en/2-workshop/2.1-sentiment-sentinel/2-preparation/2.1-youtube-api/><b>2.1.2.1. </b>Create YouTube API Key
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.1-sentiment-sentinel/2-preparation/2.2-iam-role/ title="Create IAM Role & Enable AI" class=dd-item><a href=/aws-project/en/2-workshop/2.1-sentiment-sentinel/2-preparation/2.2-iam-role/><b>2.1.2.2. </b>Create IAM Role & Enable AI
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.1-sentiment-sentinel/2-preparation/2.3-create-s3-data-lake/ title="Build Data Lake with Amazon S3" class=dd-item><a href=/aws-project/en/2-workshop/2.1-sentiment-sentinel/2-preparation/2.3-create-s3-data-lake/><b>2.1.2.3. </b>Build Data Lake with Amazon S3
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.1-sentiment-sentinel/3-data-ingestion/ title="Data Ingestion Layer with AWS SQS & Lambda" class=dd-item><a href=/aws-project/en/2-workshop/2.1-sentiment-sentinel/3-data-ingestion/><b>2.1.3. </b>Data Ingestion Layer with AWS SQS & Lambda
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.1-sentiment-sentinel/4-ai-processing/ title="Data Processing & LLM Integration with Amazon Bedrock (Transformation Layer)" class=dd-item><a href=/aws-project/en/2-workshop/2.1-sentiment-sentinel/4-ai-processing/><b>2.1.4. </b>Data Processing & LLM Integration with Amazon Bedrock (Transformation Layer)
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.1-sentiment-sentinel/5-bi-analytics/ title="Data Visualization: Amazon Athena and AWS QuickSight" class=dd-item><a href=/aws-project/en/2-workshop/2.1-sentiment-sentinel/5-bi-analytics/><b>2.1.5. </b>Data Visualization: Amazon Athena and AWS QuickSight
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.1-sentiment-sentinel/6-system-automation/ title="Full Automation with Amazon EventBridge" class=dd-item><a href=/aws-project/en/2-workshop/2.1-sentiment-sentinel/6-system-automation/><b>2.1.6. </b>Full Automation with Amazon EventBridge
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.1-sentiment-sentinel/7-cleanup/ title="Resource Cleanup" class=dd-item><a href=/aws-project/en/2-workshop/2.1-sentiment-sentinel/7-cleanup/><b>2.1.7. </b>Resource Cleanup
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.2-iotsentinel/ title="IoT Fleet Monitoring System" class=dd-item><a href=/aws-project/en/2-workshop/2.2-iotsentinel/><b>2.2. </b>IoT Fleet Monitoring System
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.2-iotsentinel/1-preparation/ title="Environment and Simulator Preparation" class=dd-item><a href=/aws-project/en/2-workshop/2.2-iotsentinel/1-preparation/><b>2.2.1. </b>Environment and Simulator Preparation
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.2-iotsentinel/1-preparation/1.1-setup-python/ title="Configure Python Environment" class=dd-item><a href=/aws-project/en/2-workshop/2.2-iotsentinel/1-preparation/1.1-setup-python/><b>2.2.1.1. </b>Configure Python Environment
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.2-iotsentinel/1-preparation/1.2-code/ title="Write IoT Simulator Source Code" class=dd-item><a href=/aws-project/en/2-workshop/2.2-iotsentinel/1-preparation/1.2-code/><b>2.2.1.2. </b>Write IoT Simulator Source Code
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/ title="Cloud Infrastructure Deployment" class=dd-item><a href=/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/><b>2.2.2. </b>Cloud Infrastructure Deployment
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/1-dynamodb-sns/ title="Create DynamoDB & Configure Amazon SNS" class=dd-item><a href=/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/1-dynamodb-sns/><b>2.2.2.1. </b>Create DynamoDB & Configure Amazon SNS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/2-sqs-lambda/ title="Create Amazon SQS & Write AWS Lambda" class=dd-item><a href=/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/2-sqs-lambda/><b>2.2.2.2. </b>Create Amazon SQS & Write AWS Lambda
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/3-iot-core/ title="Configure AWS IoT Core & IoT Rules" class=dd-item><a href=/aws-project/en/2-workshop/2.2-iotsentinel/2-deployment/3-iot-core/><b>2.2.2.3. </b>Configure AWS IoT Core & IoT Rules
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/ title="System Testing & Verification" class=dd-item><a href=/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/><b>2.2.3. </b>System Testing & Verification
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/1-run-simulator/ title="Run IoT Device Simulator" class=dd-item><a href=/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/1-run-simulator/><b>2.2.3.1. </b>Run IoT Device Simulator
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/2-verify-results/ title="Verify Data Flow & Alerts" class=dd-item><a href=/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/2-verify-results/><b>2.2.3.2. </b>Verify Data Flow & Alerts
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.2-iotsentinel/4-cleanup/ title="Resource Cleanup" class=dd-item><a href=/aws-project/en/2-workshop/2.2-iotsentinel/4-cleanup/><b>2.2.4. </b>Resource Cleanup
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/ title="Building an AI-Driven Serverless Data Lakehouse for Clickstream" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/><b>2.3. </b>Building an AI-Driven Serverless Data Lakehouse for Clickstream
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/1-preparation/ title="Resource Preparation" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/1-preparation/><b>2.3.1. </b>Resource Preparation
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/1-preparation/1.1-s3-datalake/ title="Initialize Amazon S3 Data Lake" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/1-preparation/1.1-s3-datalake/><b>2.3.1.1. </b>Initialize Amazon S3 Data Lake
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/1-preparation/1.2-glue-schema/ title="Initialize AWS Glue Catalog" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/1-preparation/1.2-glue-schema/><b>2.3.1.2. </b>Initialize AWS Glue Catalog
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/1-preparation/1.3-sns-nofitication/ title="Set up SNS Notification Channel" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/1-preparation/1.3-sns-nofitication/><b>2.3.1.3. </b>Set up SNS Notification Channel
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/2-ingestion-layer/ title="Ingestion Layer" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/2-ingestion-layer/><b>2.3.2. </b>Ingestion Layer
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/2-ingestion-layer/2.1-kinesis-firehose/ title="Configure Kinesis Data Firehose" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/2-ingestion-layer/2.1-kinesis-firehose/><b>2.3.2.1. </b>Configure Kinesis Data Firehose
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/2-ingestion-layer/2.2-data-simulator/ title="Data Simulator" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/2-ingestion-layer/2.2-data-simulator/><b>2.3.2.2. </b>Data Simulator
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/3-orchestration-etl/ title="Orchestration and ETL Layer" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/3-orchestration-etl/><b>2.3.3. </b>Orchestration and ETL Layer
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/3-orchestration-etl/3.1-step-functions/ title="Design Step Functions Conductor" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/3-orchestration-etl/3.1-step-functions/><b>2.3.3.1. </b>Design Step Functions Conductor
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/3-orchestration-etl/3.2-lambda-athena-etl/ title="ETL Processing with Lambda and Athena" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/3-orchestration-etl/3.2-lambda-athena-etl/><b>2.3.3.2. </b>ETL Processing with Lambda and Athena
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/4-ai-recommender/ title="Artificial Intelligence (AI) Layer" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/4-ai-recommender/><b>2.3.4. </b>Artificial Intelligence (AI) Layer
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/4-ai-recommender/4.1-amazon-personalize/ title="Amazon Personalize and Result Analysis" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/4-ai-recommender/4.1-amazon-personalize/><b>2.3.4.1. </b>Amazon Personalize and Result Analysis
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/5-cleanup/ title="Cleanup and Conclusion" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/5-cleanup/><b>2.3.5. </b>Cleanup and Conclusion
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.3-clickstream/5-cleanup/5.1-clean-up-all-services/ title="Thorough resource cleanup" class=dd-item><a href=/aws-project/en/2-workshop/2.3-clickstream/5-cleanup/5.1-clean-up-all-services/><b>2.3.5.1. </b>Thorough resource cleanup
+<i class="fas fa-check read-icon"></i></a></li></ul></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/ title="Building a Serverless Data Lakehouse: Dota 2 Meta Analytics" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/><b>2.4. </b>Building a Serverless Data Lakehouse: Dota 2 Meta Analytics
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/ title="Ingestion Layer" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/><b>2.4.1. </b>Ingestion Layer
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.1-setup-s3-raw/ title="Create S3 Bucket for Raw Data" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.1-setup-s3-raw/><b>2.4.1.1. </b>Create S3 Bucket for Raw Data
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.2-create-iam-user/ title="Create IAM Policy with Least Privilege" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.2-create-iam-user/><b>2.4.1.2. </b>Create IAM Policy with Least Privilege
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.3-python-data-fetcher/ title="Python Data Fetcher (OpenDota API)" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.3-python-data-fetcher/><b>2.4.1.3. </b>Python Data Fetcher (OpenDota API)
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/ title="Processing Layer" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/><b>2.4.2. </b>Processing Layer
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.1-setup-s3-processed/ title="Create S3 Bucket for Processed Data" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.1-setup-s3-processed/><b>2.4.2.1. </b>Create S3 Bucket for Processed Data
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.2-create-iam-role-glue/ title="Grant Permissions to AWS Glue (IAM Role)" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.2-create-iam-role-glue/><b>2.4.2.2. </b>Grant Permissions to AWS Glue (IAM Role)
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.3-glue-pyspark-etl/ title="Develop PySpark ETL Job" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.3-glue-pyspark-etl/><b>2.4.2.3. </b>Develop PySpark ETL Job
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/ title="Analytics Layer" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/><b>2.4.3. </b>Analytics Layer
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.1-athena-result-location/ title="Setup Athena Query Result Location" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.1-athena-result-location/><b>2.4.3.1. </b>Setup Athena Query Result Location
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.2-athena-partition-projection/ title="Create External Table with Partition Projection" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.2-athena-partition-projection/><b>2.4.3.2. </b>Create External Table with Partition Projection
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-serving-layer/ title="Serving Layer" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-serving-layer/><b>2.4.4. </b>Serving Layer
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-serving-layer/4.1-create-dynamodb-table/ title="Initialize Amazon DynamoDB Table" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-serving-layer/4.1-create-dynamodb-table/><b>2.4.4.1. </b>Initialize Amazon DynamoDB Table
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-serving-layer/4.2-update-glue-role/ title="Update IAM Role for AWS Glue" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-serving-layer/4.2-update-glue-role/><b>2.4.4.2. </b>Update IAM Role for AWS Glue
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-serving-layer/4.3-glue-calculate-metrics/ title="Upgrade Glue Job: Calculate & Load Metrics" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/4-serving-layer/4.3-glue-calculate-metrics/><b>2.4.4.3. </b>Upgrade Glue Job: Calculate & Load Metrics
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-api-and-ui/ title="API & UI Layer" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-api-and-ui/><b>2.4.5. </b>API & UI Layer
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-api-and-ui/5.1-lambda-backend-api/ title="Create Lambda Function for DynamoDB Integration" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-api-and-ui/5.1-lambda-backend-api/><b>2.4.5.1. </b>Create Lambda Function for DynamoDB Integration
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-api-and-ui/5.2-api-gateway-setup/ title="Configure HTTP API Gateway Ingress" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-api-and-ui/5.2-api-gateway-setup/><b>2.4.5.2. </b>Configure HTTP API Gateway Ingress
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-api-and-ui/5.3-s3-static-website/ title="Deploy Frontend UI to S3 Static Hosting" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/5-api-and-ui/5.3-s3-static-website/><b>2.4.5.3. </b>Deploy Frontend UI to S3 Static Hosting
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/6-automation-and-cleanup/ title="Automation & Resource Cleanup" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/6-automation-and-cleanup/><b>2.4.6. </b>Automation & Resource Cleanup
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/6-automation-and-cleanup/6.1-eventbridge-automation/ title="Pipeline Automation with Amazon EventBridge" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/6-automation-and-cleanup/6.1-eventbridge-automation/><b>2.4.6.1. </b>Pipeline Automation with Amazon EventBridge
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.4-dota2-lakehouse/6-automation-and-cleanup/6.2-clean-up-resources/ title="Resource Cleanup" class=dd-item><a href=/aws-project/en/2-workshop/2.4-dota2-lakehouse/6-automation-and-cleanup/6.2-clean-up-resources/><b>2.4.6.2. </b>Resource Cleanup
+<i class="fas fa-check read-icon"></i></a></li></ul></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/ title="US Stock Screener Pipeline" class="dd-item
+parent"><a href=/aws-project/en/2-workshop/2.5-stock-screener/><b>2.5. </b>US Stock Screener Pipeline
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/ title="Architecture, Storage & IAM Preparation" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/><b>2.5.1. </b>Architecture, Storage & IAM Preparation
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/1.1-current-architecture-and-data-contract/ title="Architecture & Data Contract" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/1.1-current-architecture-and-data-contract/><b>2.5.1.1. </b>Architecture & Data Contract
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/1.2-create-s3-data-zones/ title="Create S3 Data Zones" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/1.2-create-s3-data-zones/><b>2.5.1.2. </b>Create S3 Data Zones
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/1.3-create-iam-roles/ title="Create IAM Roles by Least Privilege" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/1-preparation/1.3-create-iam-roles/><b>2.5.1.3. </b>Create IAM Roles by Least Privilege
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/ title="Ingestion Layer" class="dd-item
+parent"><a href=/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/><b>2.5.2. </b>Ingestion Layer
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.1-local-backfill-history/ title="Run Local Price History Backfill" class="dd-item active"><a href=/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.1-local-backfill-history/><b>2.5.2.1. </b>Run Local Price History Backfill
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.2-daily-ingestion-glue-python-shell/ title="Deploy Daily Ingestion via Glue Python Shell" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.2-daily-ingestion-glue-python-shell/><b>2.5.2.2. </b>Deploy Daily Ingestion via Glue Python Shell
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/3-processing-layer/ title="Processing Layer – QMJ Transformation" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/3-processing-layer/><b>2.5.3. </b>Processing Layer – QMJ Transformation
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/3-processing-layer/3.1-create-glue-pyspark-job/ title="Create Glue PySpark Job for QMJ Transformation" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/3-processing-layer/3.1-create-glue-pyspark-job/><b>2.5.3.1. </b>Create Glue PySpark Job for QMJ Transformation
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/3-processing-layer/3.2-qmj-pyspark-transformation/ title="Analyze & Implement QMJ PySpark Transformation" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/3-processing-layer/3.2-qmj-pyspark-transformation/><b>2.5.3.2. </b>Analyze & Implement QMJ PySpark Transformation
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/4-serving-layer/ title="Serving Layer & Web Frontend" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/4-serving-layer/><b>2.5.4. </b>Serving Layer & Web Frontend
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/4-serving-layer/4.1-create-dynamodb-table/ title="Create DynamoDB Table for QMJ Scores" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/4-serving-layer/4.1-create-dynamodb-table/><b>2.5.4.1. </b>Create DynamoDB Table for QMJ Scores
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/4-serving-layer/4.2-create-s3-triggered-lambda-loader/ title="Create Lambda QMJ Loader with S3 Trigger" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/4-serving-layer/4.2-create-s3-triggered-lambda-loader/><b>2.5.4.2. </b>Create Lambda QMJ Loader with S3 Trigger
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/4-serving-layer/4.3-build-lambda-reader-api/ title="Create Lambda Reader API" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/4-serving-layer/4.3-build-lambda-reader-api/><b>2.5.4.3. </b>Create Lambda Reader API
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/4-serving-layer/4.4-create-http-api-cors/ title="Create HTTP API Gateway & CORS" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/4-serving-layer/4.4-create-http-api-cors/><b>2.5.4.4. </b>Create HTTP API Gateway & CORS
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/4-serving-layer/4.5-build-static-frontend/ title="Deploy Static Web Frontend" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/4-serving-layer/4.5-build-static-frontend/><b>2.5.4.5. </b>Deploy Static Web Frontend
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/5-automation-and-observability/ title="Automation & Observability" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/5-automation-and-observability/><b>2.5.5. </b>Automation & Observability
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/5-automation-and-observability/5.1-schedule-daily-ingestion/ title="Create EventBridge Scheduler for Daily Ingestion" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/5-automation-and-observability/5.1-schedule-daily-ingestion/><b>2.5.5.1. </b>Create EventBridge Scheduler for Daily Ingestion
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/6-cleanup/ title="Cleanup & Handover" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/6-cleanup/><b>2.5.6. </b>Cleanup & Handover
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/6-cleanup/6.1-archive-evidence/ title="Archive Evidence Prior to Cleanup" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/6-cleanup/6.1-archive-evidence/><b>2.5.6.1. </b>Archive Evidence Prior to Cleanup
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/aws-project/en/2-workshop/2.5-stock-screener/6-cleanup/6.2-delete-aws-resources/ title="Delete AWS Resources" class=dd-item><a href=/aws-project/en/2-workshop/2.5-stock-screener/6-cleanup/6.2-delete-aws-resources/><b>2.5.6.2. </b>Delete AWS Resources
+<i class="fas fa-check read-icon"></i></a></li></ul></li></ul></li></ul></li></ul><section id=prefooter><hr><ul><li><a class=padding><i class="fas fa-language fa-fw"></i><div class=select-style><select id=select-language onchange="location=this.value"><option id=en value=https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.1-local-backfill-history/ selected>English</option></select>
+<svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" width="255" height="255" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255"><g><g id="arrow-drop-down"><polygon points="0,63.75 127.5,191.25 255,63.75"/></g></g></svg></div></a></li><li><a class=padding href=# data-clear-history-toggle><i class="fas fa-history fa-fw"></i> Clear History</a></li></ul></section><section id=footer><left><b>Last Updated</b><br><i><span id=lastUpdated style=color:#fd9827></span></i>
+<script>const today=new Date,formattedDate=today.toLocaleDateString("en-GB");document.getElementById("lastUpdated").textContent=formattedDate</script></left><script async defer src=https://buttons.github.io/buttons.js></script><script>(function(){function e(){var t,n,s,o,i,e=document.querySelector("#sidebar .highlightable");if(!e)return;t=sessionStorage.getItem("sidebar-scroll-pos"),t!==null?(e.scrollTop=parseInt(t,10),window.jQuery&&jQuery.fn.perfectScrollbar&&jQuery(e).perfectScrollbar("update")):(n=e.querySelector("li.active"),n&&(s=e.getBoundingClientRect(),o=n.getBoundingClientRect(),i=o.top-s.top,e.scrollTop=e.scrollTop+i-s.height/2,window.jQuery&&jQuery.fn.perfectScrollbar&&jQuery(e).perfectScrollbar("update")))}function t(){var t,n,e=document.querySelector("#sidebar .highlightable");if(!e)return;e.addEventListener("scroll",function(){sessionStorage.setItem("sidebar-scroll-pos",e.scrollTop)});for(n=e.querySelectorAll("a"),t=0;t<n.length;t++)n[t].addEventListener("click",function(){sessionStorage.setItem("sidebar-scroll-pos",e.scrollTop)})}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",function(){t(),e()}):(t(),e()),window.addEventListener("load",function(){e()}),setTimeout(e,100),setTimeout(e,300),setTimeout(e,600)})()</script></section></div></nav><section id=body><div id=overlay></div><div class="padding highlightable"><div><div id=top-bar><div id=breadcrumbs itemscope itemtype=http://data-vocabulary.org/Breadcrumb><span id=sidebar-toggle-span><a href=# id=sidebar-toggle data-sidebar-toggle><i class="fas fa-bars"></i>
+</a></span><span id=toc-menu><i class="fas fa-list-alt"></i></span>
+<span class=links><a href=/aws-project/en/>Final Course Report</a> > <a href=/aws-project/en/2-workshop/>Workshops</a> > <a href=/aws-project/en/2-workshop/2.5-stock-screener/>US Stock Screener Pipeline</a> > <a href=/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/>Ingestion Layer</a> > Run Local Price History Backfill</span></div><div class=progress><div class=wrapper><nav id=TableOfContents><ul><li><a href=#install-local-dependencies>Install Local Dependencies</a></li><li><a href=#preparation-and-run-backfill>Preparation and Run Backfill</a></li><li><a href=#full-source-backfill_raw_ingestionpy>Full source: <code>backfill_raw_ingestion.py</code></a></li></ul></nav></div></div></div></div><div id=head-tags></div><div id=body-inner><h1>Run Local Price History Backfill</h1><p>The local backfill script ingests historical price data from <code>2023-01-01</code> to the current date. The code filters S&amp;P 500 by <code>MIN_MARKET_CAP = 10_000_000_000</code>, partitions prices by individual trading date, and writes a company info snapshot on the day the script runs.</p><p>The local backfill script does not write <code>us_financials_raw.parquet</code>. Financials are ingested via the daily ingestion pipeline; the transformation code includes appropriate fallback handlers.</p><h2 id=install-local-dependencies>Install Local Dependencies</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create a dedicated virtual environment for local backfill.</span>
+</span></span><span style=display:flex><span>python -m venv .venv
+</span></span><span style=display:flex><span>.<span style=color:#ae81ff>\.</span>venv<span style=color:#ae81ff>\S</span>cripts<span style=color:#ae81ff>\A</span>ctivate.ps1
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Install packages required by source imports.</span>
+</span></span><span style=display:flex><span>pip install boto3 pandas requests yfinance pyarrow tqdm lxml
+</span></span></code></pre></div><h2 id=preparation-and-run-backfill>Preparation and Run Backfill</h2><table><thead><tr><th>Step</th><th>Action</th><th>Technical Details</th></tr></thead><tbody><tr><td>1</td><td>Create file <code>backfill_raw_ingestion.py</code></td><td>Use the full source code below</td></tr><tr><td>2</td><td>Verify <code>BUCKET_NAME</code></td><td>Must be <code>stock-screener-raw-your-name</code></td></tr><tr><td>3</td><td>Set <code>MAX_TICKERS_FOR_TEST</code></td><td>Test with a small batch first; use <code>None</code> when running full execution</td></tr><tr><td>4</td><td>Keep credentials outside source code</td><td>boto3 uses the AWS CLI profile/credential chain</td></tr><tr><td>5</td><td>Run Python script</td><td>Script calls STS to verify identity before crawling</td></tr></tbody></table><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Run local backfill.</span>
+</span></span><span style=display:flex><span>python backfill_raw_ingestion.py
+</span></span></code></pre></div><p><img src="/aws-project/images/stock-screener/2-ingestion-layer/backfill.png?featherlight=false&amp;width=90pc" alt="Run Local Backfill"></p><h2 id=full-source-backfill_raw_ingestionpy>Full source: <code>backfill_raw_ingestion.py</code></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> io
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> time
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime, timedelta
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> boto3
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> pandas <span style=color:#66d9ef>as</span> pd
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> yfinance <span style=color:#66d9ef>as</span> yf
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> botocore.exceptions <span style=color:#f92672>import</span> ClientError
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> tqdm <span style=color:#f92672>import</span> tqdm
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># AWS S3 CONFIG</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span>BUCKET_NAME <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;stock-screener-raw-your-name&#34;</span>
+</span></span><span style=display:flex><span>RAW_ROOT <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;raw_us_market&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># boto3 retrieves credentials from the AWS CLI profile, environment variables, or IAM Role.</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Do not hardcode Access Key or Secret Key in source code.</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Must match the region of your bucket</span>
+</span></span><span style=display:flex><span>AWS_REGION <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;ap-southeast-1&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># BACKFILL CONFIG</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span>MIN_MARKET_CAP <span style=color:#f92672>=</span> <span style=color:#ae81ff>10_000_000_000</span>  <span style=color:#75715e># 10 billion USD</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Date range for price backfill</span>
+</span></span><span style=display:flex><span>BACKFILL_START_DATE <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;2023-01-01&#34;</span>
+</span></span><span style=display:flex><span>BACKFILL_END_DATE <span style=color:#f92672>=</span> (datetime<span style=color:#f92672>.</span>now() <span style=color:#f92672>+</span> timedelta(days<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>))<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Test with 30 tickers first. Set to None to run the full S&amp;P 500</span>
+</span></span><span style=display:flex><span>MAX_TICKERS_FOR_TEST <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># AWS CLIENTS</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Use the default credential provider chain instead of embedding credentials in the file.</span>
+</span></span><span style=display:flex><span>session <span style=color:#f92672>=</span> boto3<span style=color:#f92672>.</span>Session(region_name<span style=color:#f92672>=</span>AWS_REGION)
+</span></span><span style=display:flex><span>s3 <span style=color:#f92672>=</span> session<span style=color:#f92672>.</span>client(<span style=color:#e6db74>&#34;s3&#34;</span>)
+</span></span><span style=display:flex><span>sts <span style=color:#f92672>=</span> session<span style=color:#f92672>.</span>client(<span style=color:#e6db74>&#34;sts&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># AWS CHECK</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>verify_aws_connection</span>():
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>        identity <span style=color:#f92672>=</span> sts<span style=color:#f92672>.</span>get_caller_identity()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#34;✅ AWS authentication successful&#34;</span>)
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;   Account: </span><span style=color:#e6db74>{</span>identity[<span style=color:#e6db74>&#39;Account&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;   ARN: </span><span style=color:#e6db74>{</span>identity[<span style=color:#e6db74>&#39;Arn&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>except</span> ClientError <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>RuntimeError</span>(
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;❌ AWS credentials error: </span><span style=color:#e6db74>{</span>e<span style=color:#f92672>.</span>response[<span style=color:#e6db74>&#39;Error&#39;</span>][<span style=color:#e6db74>&#39;Code&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>        ) <span style=color:#f92672>from</span> e
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># PARQUET + S3</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>to_parquet_bytes</span>(df: pd<span style=color:#f92672>.</span>DataFrame) <span style=color:#f92672>-&gt;</span> bytes:
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Write Parquet compatible with AWS Glue:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    - Avoid datetime64[ns] / TIMESTAMP(NANOS)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    - Date columns are saved as string YYYY-MM-DD
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    output_df <span style=color:#f92672>=</span> df<span style=color:#f92672>.</span>copy()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> isinstance(output_df<span style=color:#f92672>.</span>index, pd<span style=color:#f92672>.</span>RangeIndex):
+</span></span><span style=display:flex><span>        output_df <span style=color:#f92672>=</span> output_df<span style=color:#f92672>.</span>reset_index()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Rename Date/Datetime from yfinance to price_date</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#e6db74>&#34;Date&#34;</span> <span style=color:#f92672>in</span> output_df<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>        output_df <span style=color:#f92672>=</span> output_df<span style=color:#f92672>.</span>rename(columns<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;Date&#34;</span>: <span style=color:#e6db74>&#34;price_date&#34;</span>})
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#e6db74>&#34;Datetime&#34;</span> <span style=color:#f92672>in</span> output_df<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>        output_df <span style=color:#f92672>=</span> output_df<span style=color:#f92672>.</span>rename(columns<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;Datetime&#34;</span>: <span style=color:#e6db74>&#34;price_date&#34;</span>})
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Convert all datetime columns to string so Glue does not encounter TIMESTAMP(NANOS)</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> column_name <span style=color:#f92672>in</span> output_df<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> pd<span style=color:#f92672>.</span>api<span style=color:#f92672>.</span>types<span style=color:#f92672>.</span>is_datetime64_any_dtype(output_df[column_name]):
+</span></span><span style=display:flex><span>            date_series <span style=color:#f92672>=</span> output_df[column_name]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># Remove timezone but preserve the trading date</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> isinstance(date_series<span style=color:#f92672>.</span>dtype, pd<span style=color:#f92672>.</span>DatetimeTZDtype):
+</span></span><span style=display:flex><span>                date_series <span style=color:#f92672>=</span> date_series<span style=color:#f92672>.</span>dt<span style=color:#f92672>.</span>tz_localize(<span style=color:#66d9ef>None</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># price_date / snapshot_date only need date precision</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> column_name <span style=color:#f92672>in</span> [<span style=color:#e6db74>&#34;price_date&#34;</span>, <span style=color:#e6db74>&#34;snapshot_date&#34;</span>]:
+</span></span><span style=display:flex><span>                output_df[column_name] <span style=color:#f92672>=</span> date_series<span style=color:#f92672>.</span>dt<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>                output_df[column_name] <span style=color:#f92672>=</span> date_series<span style=color:#f92672>.</span>dt<span style=color:#f92672>.</span>strftime(
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74> %H:%M:%S&#34;</span>
+</span></span><span style=display:flex><span>                )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    buffer <span style=color:#f92672>=</span> io<span style=color:#f92672>.</span>BytesIO()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    output_df<span style=color:#f92672>.</span>to_parquet(
+</span></span><span style=display:flex><span>        buffer,
+</span></span><span style=display:flex><span>        index<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>,
+</span></span><span style=display:flex><span>        compression<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;snappy&#34;</span>,
+</span></span><span style=display:flex><span>        engine<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;pyarrow&#34;</span>,
+</span></span><span style=display:flex><span>        version<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;1.0&#34;</span>
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> buffer<span style=color:#f92672>.</span>getvalue()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>put_df</span>(df: pd<span style=color:#f92672>.</span>DataFrame, key: str):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;Upload a DataFrame to S3 as Parquet.&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> df<span style=color:#f92672>.</span>empty:
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;⚠️ Skipping </span><span style=color:#e6db74>{</span>key<span style=color:#e6db74>}</span><span style=color:#e6db74>: empty DataFrame.&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>        s3<span style=color:#f92672>.</span>put_object(
+</span></span><span style=display:flex><span>            Bucket<span style=color:#f92672>=</span>BUCKET_NAME,
+</span></span><span style=display:flex><span>            Key<span style=color:#f92672>=</span>key,
+</span></span><span style=display:flex><span>            Body<span style=color:#f92672>=</span>to_parquet_bytes(df),
+</span></span><span style=display:flex><span>            ContentType<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;application/octet-stream&#34;</span>
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;✅ Uploaded: s3://</span><span style=color:#e6db74>{</span>BUCKET_NAME<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>key<span style=color:#e6db74>}</span><span style=color:#e6db74> | </span><span style=color:#e6db74>{</span>len(df)<span style=color:#e6db74>}</span><span style=color:#e6db74> rows&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>except</span> ClientError <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>RuntimeError</span>(
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;❌ Cannot upload to S3.</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Error: </span><span style=color:#e6db74>{</span>e<span style=color:#f92672>.</span>response[<span style=color:#e6db74>&#39;Error&#39;</span>][<span style=color:#e6db74>&#39;Code&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Key: </span><span style=color:#e6db74>{</span>key<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>        ) <span style=color:#f92672>from</span> e
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># TICKER SOURCE</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_sp500_tickers</span>():
+</span></span><span style=display:flex><span>    url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://en.wikipedia.org/wiki/List_of_S%26P_500_companies&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    headers <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;User-Agent&#34;</span>: (
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) &#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;AppleWebKit/537.36 Chrome/120.0 Safari/537.36&#34;</span>
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    response <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(url, headers<span style=color:#f92672>=</span>headers, timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>30</span>)
+</span></span><span style=display:flex><span>    response<span style=color:#f92672>.</span>raise_for_status()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    df_sp500 <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_html(response<span style=color:#f92672>.</span>text)[<span style=color:#ae81ff>0</span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># yfinance uses BRK-B instead of BRK.B</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> [
+</span></span><span style=display:flex><span>        ticker<span style=color:#f92672>.</span>replace(<span style=color:#e6db74>&#34;.&#34;</span>, <span style=color:#e6db74>&#34;-&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> ticker <span style=color:#f92672>in</span> df_sp500[<span style=color:#e6db74>&#34;Symbol&#34;</span>]<span style=color:#f92672>.</span>tolist()
+</span></span><span style=display:flex><span>    ]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># COMPANY INFO (SCHEMA ERROR FIX — MISSING COLUMNS)</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_company_info</span>(ticker: str, ingestion_date: str):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Company info from yfinance is current data.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Schema is 100</span><span style=color:#e6db74>% s</span><span style=color:#e6db74>ynced with Daily Ingestion code so Spark does not report errors.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    stock <span style=color:#f92672>=</span> yf<span style=color:#f92672>.</span>Ticker(ticker)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>        fast_info <span style=color:#f92672>=</span> stock<span style=color:#f92672>.</span>fast_info <span style=color:#f92672>or</span> {}
+</span></span><span style=display:flex><span>        market_cap <span style=color:#f92672>=</span> fast_info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;marketCap&#34;</span>, <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span>:
+</span></span><span style=display:flex><span>        fast_info <span style=color:#f92672>=</span> {}
+</span></span><span style=display:flex><span>        market_cap <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> market_cap <span style=color:#f92672>or</span> market_cap <span style=color:#f92672>&lt;</span> MIN_MARKET_CAP:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>None</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>        info <span style=color:#f92672>=</span> stock<span style=color:#f92672>.</span>info <span style=color:#f92672>or</span> {}
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span>:
+</span></span><span style=display:flex><span>        info <span style=color:#f92672>=</span> {}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;ticker&#34;</span>: ticker,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;snapshot_date&#34;</span>: ingestion_date,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;company_name&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;shortName&#34;</span>) <span style=color:#f92672>or</span> info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;longName&#34;</span>) <span style=color:#f92672>or</span> ticker,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;exchange&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;exchange&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;sector&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;sector&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;industry&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;industry&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;country&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;country&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;currency&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;currency&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;website&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;website&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;current_market_cap&#34;</span>: market_cap <span style=color:#f92672>or</span> info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;marketCap&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;shares_outstanding&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;sharesOutstanding&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;enterprise_value&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;enterpriseValue&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;float_shares&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;floatShares&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;beta&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;beta&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;trailing_pe&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;trailingPE&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;return_on_equity&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;returnOnEquity&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;debt_to_equity&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;debtToEquity&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;earnings_growth&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;earningsGrowth&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;revenue_growth&#34;</span>: info<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;revenueGrowth&#34;</span>),
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;ingested_at&#34;</span>: datetime<span style=color:#f92672>.</span>now()<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74> %H:%M:%S&#34;</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># PRICE HISTORY (SCHEMA ERROR FIX)</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_price_history</span>(ticker: str, ingestion_date: str):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Fetch price history in the range BACKFILL_START_DATE -&gt; BACKFILL_END_DATE.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Schema is standardized (column names in lowercase) so Spark does not report errors.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    stock <span style=color:#f92672>=</span> yf<span style=color:#f92672>.</span>Ticker(ticker)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    df_price <span style=color:#f92672>=</span> stock<span style=color:#f92672>.</span>history(
+</span></span><span style=display:flex><span>        start<span style=color:#f92672>=</span>BACKFILL_START_DATE,
+</span></span><span style=display:flex><span>        end<span style=color:#f92672>=</span>BACKFILL_END_DATE,
+</span></span><span style=display:flex><span>        auto_adjust<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> df_price<span style=color:#f92672>.</span>empty:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> pd<span style=color:#f92672>.</span>DataFrame()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Promote the Date index to a price_date column</span>
+</span></span><span style=display:flex><span>    df_price <span style=color:#f92672>=</span> df_price<span style=color:#f92672>.</span>reset_index()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Process date columns</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#e6db74>&#34;Date&#34;</span> <span style=color:#f92672>in</span> df_price<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>        df_price <span style=color:#f92672>=</span> df_price<span style=color:#f92672>.</span>rename(columns<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;Date&#34;</span>: <span style=color:#e6db74>&#34;price_date&#34;</span>})
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#e6db74>&#34;Datetime&#34;</span> <span style=color:#f92672>in</span> df_price<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>        df_price <span style=color:#f92672>=</span> df_price<span style=color:#f92672>.</span>rename(columns<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;Datetime&#34;</span>: <span style=color:#e6db74>&#34;price_date&#34;</span>})
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    df_price[<span style=color:#e6db74>&#34;price_date&#34;</span>] <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>to_datetime(df_price[<span style=color:#e6db74>&#34;price_date&#34;</span>])<span style=color:#f92672>.</span>dt<span style=color:#f92672>.</span>tz_localize(<span style=color:#66d9ef>None</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># ---------------------------------------------------------</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># SCHEMA FIX: Rename yfinance column names -&gt; AWS Glue names</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># ---------------------------------------------------------</span>
+</span></span><span style=display:flex><span>    rename_map <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Open&#34;</span>: <span style=color:#e6db74>&#34;open&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;High&#34;</span>: <span style=color:#e6db74>&#34;high&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Low&#34;</span>: <span style=color:#e6db74>&#34;low&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Close&#34;</span>: <span style=color:#e6db74>&#34;close&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Adj Close&#34;</span>: <span style=color:#e6db74>&#34;adj_close&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Volume&#34;</span>: <span style=color:#e6db74>&#34;volume&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Dividends&#34;</span>: <span style=color:#e6db74>&#34;dividends&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;Stock Splits&#34;</span>: <span style=color:#e6db74>&#34;stock_splits&#34;</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Rename existing columns</span>
+</span></span><span style=display:flex><span>    df_price <span style=color:#f92672>=</span> df_price<span style=color:#f92672>.</span>rename(columns<span style=color:#f92672>=</span>rename_map)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># If a newer version of yfinance does not return Adj Close when auto_adjust=False</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#e6db74>&#34;adj_close&#34;</span> <span style=color:#f92672>not</span> <span style=color:#f92672>in</span> df_price<span style=color:#f92672>.</span>columns <span style=color:#f92672>and</span> <span style=color:#e6db74>&#34;close&#34;</span> <span style=color:#f92672>in</span> df_price<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>        df_price[<span style=color:#e6db74>&#34;adj_close&#34;</span>] <span style=color:#f92672>=</span> df_price[<span style=color:#e6db74>&#34;close&#34;</span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Cast data types (Cast type) to float64 to avoid Integer vs Double errors in Spark</span>
+</span></span><span style=display:flex><span>    numeric_columns <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;open&#34;</span>, <span style=color:#e6db74>&#34;high&#34;</span>, <span style=color:#e6db74>&#34;low&#34;</span>, <span style=color:#e6db74>&#34;close&#34;</span>, <span style=color:#e6db74>&#34;adj_close&#34;</span>, <span style=color:#e6db74>&#34;volume&#34;</span>, <span style=color:#e6db74>&#34;dividends&#34;</span>, <span style=color:#e6db74>&#34;stock_splits&#34;</span>]
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> col <span style=color:#f92672>in</span> numeric_columns:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> col <span style=color:#f92672>in</span> df_price<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>            df_price[col] <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>to_numeric(df_price[col], errors<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;coerce&#34;</span>)<span style=color:#f92672>.</span>astype(<span style=color:#e6db74>&#34;float64&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Add metadata</span>
+</span></span><span style=display:flex><span>    df_price[<span style=color:#e6db74>&#34;ticker&#34;</span>] <span style=color:#f92672>=</span> ticker
+</span></span><span style=display:flex><span>    df_price[<span style=color:#e6db74>&#34;snapshot_date&#34;</span>] <span style=color:#f92672>=</span> ingestion_date
+</span></span><span style=display:flex><span>    df_price[<span style=color:#e6db74>&#34;ingested_at&#34;</span>] <span style=color:#f92672>=</span> datetime<span style=color:#f92672>.</span>now()<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74> %H:%M:%S&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Only keep required columns in the correct order</span>
+</span></span><span style=display:flex><span>    expected_cols <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;price_date&#34;</span>, <span style=color:#e6db74>&#34;ticker&#34;</span>, <span style=color:#e6db74>&#34;open&#34;</span>, <span style=color:#e6db74>&#34;high&#34;</span>, <span style=color:#e6db74>&#34;low&#34;</span>, <span style=color:#e6db74>&#34;close&#34;</span>, 
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;adj_close&#34;</span>, <span style=color:#e6db74>&#34;volume&#34;</span>, <span style=color:#e6db74>&#34;dividends&#34;</span>, <span style=color:#e6db74>&#34;stock_splits&#34;</span>, 
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;snapshot_date&#34;</span>, <span style=color:#e6db74>&#34;ingested_at&#34;</span>
+</span></span><span style=display:flex><span>    ]
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Filter to only columns that actually exist (avoid KeyError if yfinance is missing columns)</span>
+</span></span><span style=display:flex><span>    final_cols <span style=color:#f92672>=</span> [c <span style=color:#66d9ef>for</span> c <span style=color:#f92672>in</span> expected_cols <span style=color:#66d9ef>if</span> c <span style=color:#f92672>in</span> df_price<span style=color:#f92672>.</span>columns]
+</span></span><span style=display:flex><span>    df_price <span style=color:#f92672>=</span> df_price[final_cols]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> df_price
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># BACKFILL PARTITION UPLOAD</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>upload_prices_partitioned_by_date</span>(df_prices: pd<span style=color:#f92672>.</span>DataFrame):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Upload by individual trading date.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Example:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    raw_us_market/2023/01/03/us_prices_raw.parquet
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    raw_us_market/2023/01/04/us_prices_raw.parquet
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> df_prices<span style=color:#f92672>.</span>empty:
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#34;⚠️ No price data to partition.&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    df_prices <span style=color:#f92672>=</span> df_prices<span style=color:#f92672>.</span>copy()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    df_prices[<span style=color:#e6db74>&#34;price_date&#34;</span>] <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>to_datetime(
+</span></span><span style=display:flex><span>        df_prices[<span style=color:#e6db74>&#34;price_date&#34;</span>],
+</span></span><span style=display:flex><span>        errors<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;coerce&#34;</span>
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    df_prices <span style=color:#f92672>=</span> df_prices<span style=color:#f92672>.</span>dropna(subset<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#34;price_date&#34;</span>])
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    grouped <span style=color:#f92672>=</span> df_prices<span style=color:#f92672>.</span>groupby(
+</span></span><span style=display:flex><span>        df_prices[<span style=color:#e6db74>&#34;price_date&#34;</span>]<span style=color:#f92672>.</span>dt<span style=color:#f92672>.</span>normalize(),
+</span></span><span style=display:flex><span>        sort<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>☁️ Uploading </span><span style=color:#e6db74>{</span>len(grouped)<span style=color:#e6db74>}</span><span style=color:#e6db74> date partitions...&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> trade_date, df_one_day <span style=color:#f92672>in</span> tqdm(
+</span></span><span style=display:flex><span>        grouped,
+</span></span><span style=display:flex><span>        total<span style=color:#f92672>=</span>len(grouped),
+</span></span><span style=display:flex><span>        desc<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Uploading date partitions&#34;</span>
+</span></span><span style=display:flex><span>    ):
+</span></span><span style=display:flex><span>        yyyy <span style=color:#f92672>=</span> trade_date<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y&#34;</span>)
+</span></span><span style=display:flex><span>        mm <span style=color:#f92672>=</span> trade_date<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%m&#34;</span>)
+</span></span><span style=display:flex><span>        dd <span style=color:#f92672>=</span> trade_date<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        key <span style=color:#f92672>=</span> (
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>RAW_ROOT<span style=color:#e6db74>}</span><span style=color:#e6db74>/&#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>yyyy<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>mm<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>dd<span style=color:#e6db74>}</span><span style=color:#e6db74>/&#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;us_prices_raw.parquet&#34;</span>
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        put_df(df_one_day, key)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>upload_company_info_current_snapshot</span>(
+</span></span><span style=display:flex><span>    df_company_info: pd<span style=color:#f92672>.</span>DataFrame,
+</span></span><span style=display:flex><span>    ingestion_datetime: datetime
+</span></span><span style=display:flex><span>):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Company info is only a current snapshot,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    so it is saved by the date the pipeline runs.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Added float64 casting to prevent INT64 vs DOUBLE errors in Spark.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> df_company_info<span style=color:#f92672>.</span>empty:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    output_df <span style=color:#f92672>=</span> df_company_info<span style=color:#f92672>.</span>copy()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Force cast all metric columns to float64 (Double in Spark)</span>
+</span></span><span style=display:flex><span>    numeric_columns <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;current_market_cap&#34;</span>, <span style=color:#e6db74>&#34;shares_outstanding&#34;</span>, <span style=color:#e6db74>&#34;enterprise_value&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;float_shares&#34;</span>, <span style=color:#e6db74>&#34;beta&#34;</span>, <span style=color:#e6db74>&#34;trailing_pe&#34;</span>, <span style=color:#e6db74>&#34;return_on_equity&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;debt_to_equity&#34;</span>, <span style=color:#e6db74>&#34;earnings_growth&#34;</span>, <span style=color:#e6db74>&#34;revenue_growth&#34;</span>
+</span></span><span style=display:flex><span>    ]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> col <span style=color:#f92672>in</span> numeric_columns:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> col <span style=color:#f92672>in</span> output_df<span style=color:#f92672>.</span>columns:
+</span></span><span style=display:flex><span>            output_df[col] <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>to_numeric(output_df[col], errors<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;coerce&#34;</span>)<span style=color:#f92672>.</span>astype(<span style=color:#e6db74>&#34;float64&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    yyyy <span style=color:#f92672>=</span> ingestion_datetime<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y&#34;</span>)
+</span></span><span style=display:flex><span>    mm <span style=color:#f92672>=</span> ingestion_datetime<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%m&#34;</span>)
+</span></span><span style=display:flex><span>    dd <span style=color:#f92672>=</span> ingestion_datetime<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    key <span style=color:#f92672>=</span> (
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>RAW_ROOT<span style=color:#e6db74>}</span><span style=color:#e6db74>/&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>yyyy<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>mm<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>dd<span style=color:#e6db74>}</span><span style=color:#e6db74>/&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;us_company_info.parquet&#34;</span>
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    put_df(output_df, key)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># MAIN PIPELINE</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># =========================================================</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>main</span>():
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;=&#34;</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>70</span>)
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;🚀 STOCK SCREENER - BACKFILL RAW INGESTION&#34;</span>)
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;=&#34;</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>70</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    verify_aws_connection()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    run_datetime <span style=color:#f92672>=</span> datetime<span style=color:#f92672>.</span>now()
+</span></span><span style=display:flex><span>    ingestion_date <span style=color:#f92672>=</span> run_datetime<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#34;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>📅 Backfill start: </span><span style=color:#e6db74>{</span>BACKFILL_START_DATE<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;📅 Backfill end:   </span><span style=color:#e6db74>{</span>BACKFILL_END_DATE<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># -----------------------------------------------------</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># STEP 1: FETCH TICKERS</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># -----------------------------------------------------</span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>🚀 STEP 1: FETCH S&amp;P 500 TICKER LIST&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    all_tickers <span style=color:#f92672>=</span> get_sp500_tickers()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> MAX_TICKERS_FOR_TEST <span style=color:#f92672>is</span> <span style=color:#f92672>not</span> <span style=color:#66d9ef>None</span>:
+</span></span><span style=display:flex><span>        all_tickers <span style=color:#f92672>=</span> all_tickers[:MAX_TICKERS_FOR_TEST]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;✅ Tickers to process: </span><span style=color:#e6db74>{</span>len(all_tickers)<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># -----------------------------------------------------</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># STEP 2: FILTER BY MARKET CAP</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># -----------------------------------------------------</span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>🚀 STEP 2: FILTER TICKERS BY MARKET CAP&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    valid_tickers <span style=color:#f92672>=</span> []
+</span></span><span style=display:flex><span>    all_company_info <span style=color:#f92672>=</span> []
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> ticker <span style=color:#f92672>in</span> tqdm(all_tickers, desc<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Filtering tickers&#34;</span>):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            company_info <span style=color:#f92672>=</span> get_company_info(
+</span></span><span style=display:flex><span>                ticker<span style=color:#f92672>=</span>ticker,
+</span></span><span style=display:flex><span>                ingestion_date<span style=color:#f92672>=</span>ingestion_date
+</span></span><span style=display:flex><span>            )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> company_info <span style=color:#f92672>is</span> <span style=color:#f92672>not</span> <span style=color:#66d9ef>None</span>:
+</span></span><span style=display:flex><span>                valid_tickers<span style=color:#f92672>.</span>append(ticker)
+</span></span><span style=display:flex><span>                all_company_info<span style=color:#f92672>.</span>append(company_info)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>⚠️ Error fetching company info for </span><span style=color:#e6db74>{</span>ticker<span style=color:#e6db74>}</span><span style=color:#e6db74>: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>0.2</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>🎯 </span><span style=color:#e6db74>{</span>len(valid_tickers)<span style=color:#e6db74>}</span><span style=color:#e6db74> tickers passed the filter.&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># -----------------------------------------------------</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># STEP 3: BACKFILL PRICE HISTORY</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># -----------------------------------------------------</span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>🚀 STEP 3: BACKFILL PRICE HISTORY&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    all_prices <span style=color:#f92672>=</span> []
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> ticker <span style=color:#f92672>in</span> tqdm(valid_tickers, desc<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Fetching price history&#34;</span>):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            df_price <span style=color:#f92672>=</span> get_price_history(
+</span></span><span style=display:flex><span>                ticker<span style=color:#f92672>=</span>ticker,
+</span></span><span style=display:flex><span>                ingestion_date<span style=color:#f92672>=</span>ingestion_date
+</span></span><span style=display:flex><span>            )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> df_price<span style=color:#f92672>.</span>empty:
+</span></span><span style=display:flex><span>                all_prices<span style=color:#f92672>.</span>append(df_price)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>⚠️ Error fetching prices for </span><span style=color:#e6db74>{</span>ticker<span style=color:#e6db74>}</span><span style=color:#e6db74>: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>0.2</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># -----------------------------------------------------</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># STEP 4: UPLOAD TO S3</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># -----------------------------------------------------</span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>☁️ STEP 4: UPLOAD TO S3&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> all_prices:
+</span></span><span style=display:flex><span>        df_prices <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>concat(all_prices, ignore_index<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;✅ Total price rows: </span><span style=color:#e6db74>{</span>len(df_prices)<span style=color:#e6db74>:</span><span style=color:#e6db74>,</span><span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        upload_prices_partitioned_by_date(df_prices)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#34;⚠️ No price data to upload.&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> all_company_info:
+</span></span><span style=display:flex><span>        df_company_info <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>DataFrame(all_company_info)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        upload_company_info_current_snapshot(
+</span></span><span style=display:flex><span>            df_company_info<span style=color:#f92672>=</span>df_company_info,
+</span></span><span style=display:flex><span>            ingestion_datetime<span style=color:#f92672>=</span>run_datetime
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#34;⚠️ No company info to upload.&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>🎉 BACKFILL COMPLETE!&#34;</span>)
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;📁 Bucket: s3://</span><span style=color:#e6db74>{</span>BUCKET_NAME<span style=color:#e6db74>}</span><span style=color:#e6db74>/</span><span style=color:#e6db74>{</span>RAW_ROOT<span style=color:#e6db74>}</span><span style=color:#e6db74>/&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;__main__&#34;</span>:
+</span></span><span style=display:flex><span>    main()
+</span></span></code></pre></div><footer class=footline></footer></div></div><div id=navigation><a class="nav nav-prev" href=/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/ title="Ingestion Layer"><i class="fa fa-chevron-left"></i></a>
+<a class="nav nav-next" href=/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.2-daily-ingestion-glue-python-shell/ title="Deploy Daily Ingestion via Glue Python Shell" style=margin-right:0><i class="fa fa-chevron-right"></i></a></div></section><div style=left:-1e3px;overflow:scroll;position:absolute;top:-1e3px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px><div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div></div><script src=/aws-project/js/clipboard.min.js?1786168082></script><script src=/aws-project/js/perfect-scrollbar.min.js?1786168082></script><script src=/aws-project/js/perfect-scrollbar.jquery.min.js?1786168082></script><script src=/aws-project/js/jquery.sticky.js?1786168082></script><script src=/aws-project/js/featherlight.min.js?1786168082></script><script src=/aws-project/js/highlight.pack.js?1786168082></script><script>hljs.initHighlightingOnLoad()</script><script src=/aws-project/js/modernizr.custom-3.6.0.js?1786168082></script><script src=/aws-project/js/learn.js?1786168082></script><script src=/aws-project/js/hugo-learn.js?1786168082></script><script src=/aws-project/mermaid/mermaid.js?1786168082></script><script>mermaid.initialize({startOnLoad:!0})</script><script>(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)})(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-158079754-2","auto"),ga("send","pageview")</script></body></html>
