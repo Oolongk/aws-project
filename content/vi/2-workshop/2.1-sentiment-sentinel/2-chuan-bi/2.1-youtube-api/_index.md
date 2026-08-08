@@ -1,5 +1,5 @@
 ---
-weight: 2
+weight: 1
 date: 2026-02-25
 title: "Tạo YouTube API Key"
 chapter: false
