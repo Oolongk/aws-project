@@ -1,66 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Analytics Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/</link><description>Recent content in Analytics Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/index.xml" rel="self" type="application/rss+xml"/><item><title>Setup Athena Query Result Location</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.1-athena-result-location/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.1-athena-result-location/</guid><description>&lt;p&gt;A mandatory rule of Amazon Athena is: It needs an S3 Bucket as a &amp;ldquo;buffer zone&amp;rdquo; to store the results of the SQL statements you type.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Step&lt;/th&gt;
-					&lt;th&gt;Action&lt;/th&gt;
-					&lt;th&gt;Technical Details&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Create buffer Bucket&lt;/td&gt;
-					&lt;td&gt;Open &lt;strong&gt;S3 Console&lt;/strong&gt;, create a new bucket named: &lt;code&gt;dota2-athena-results-yourname&lt;/code&gt;. (Remember to block public access).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Open Athena&lt;/td&gt;
-					&lt;td&gt;From the search bar, access the &lt;strong&gt;Athena&lt;/strong&gt; service.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Open Settings&lt;/td&gt;
-					&lt;td&gt;Click the &lt;strong&gt;Settings&lt;/strong&gt; tab in the top right menu bar.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Configure Location&lt;/td&gt;
-					&lt;td&gt;In the &lt;em&gt;Query result location&lt;/em&gt; field, click &lt;strong&gt;Manage&lt;/strong&gt; and point the path to the newly created bucket: &lt;code&gt;s3://dota2-athena-results-yourname/&lt;/code&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Save settings&lt;/td&gt;
-					&lt;td&gt;Click &lt;strong&gt;Save&lt;/strong&gt;. Athena is now ready for you to type commands.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/3-analytics-layer/athena-query-location-1.png?featherlight=false&amp;amp;width=90pc" alt="Configure Athena Query Result Location"&gt;
-&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/3-analytics-layer/athena-query-location-2.png?featherlight=false" alt="Configure Athena Query Result Location"&gt;&lt;/p&gt;</description></item><item><title>Create External Table with Partition Projection</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.2-athena-partition-projection/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.2-athena-partition-projection/</guid><description>&lt;p&gt;Typically, users use &lt;strong&gt;AWS Glue Crawler&lt;/strong&gt; to automatically discover file structure and create tables. However, Crawlers are slow and costly. Instead, we will write a direct DDL (Data Definition Language) statement with embedded &lt;strong&gt;Partition Projection&lt;/strong&gt; technique to create the table. This technique enables Athena to calculate partitions extremely fast without requiring a Crawler.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Step&lt;/th&gt;
-					&lt;th&gt;Action&lt;/th&gt;
-					&lt;th&gt;Technical Details&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Open Query Editor&lt;/td&gt;
-					&lt;td&gt;In the Athena interface, switch to the &lt;strong&gt;Query editor&lt;/strong&gt; tab.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Run DDL&lt;/td&gt;
-					&lt;td&gt;Copy the SQL code below, paste it into the query editor (replace the &lt;code&gt;LOCATION&lt;/code&gt; path with your S3 Processed Bucket) and click &lt;strong&gt;Run&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Test Query&lt;/td&gt;
-					&lt;td&gt;Delete the old command, type a new command: &lt;code&gt;SELECT * FROM dota2_matches LIMIT 10;&lt;/code&gt; and click &lt;strong&gt;Run&lt;/strong&gt; to see the results.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;strong&gt;DDL SQL code with Partition Projection:&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Analytics Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title>
+		<link>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/</link>
+		<description>Recent content in Analytics Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Setup Athena Query Result Location</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.1-athena-result-location/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.1-athena-result-location/</guid>
+				<description>&lt;p&gt;A mandatory rule of Amazon Athena is: It needs an S3 Bucket as a &amp;ldquo;buffer zone&amp;rdquo; to store the results of the SQL statements you type.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Step&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Action&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Technical Details&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Create buffer Bucket&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Open &lt;strong&gt;S3 Console&lt;/strong&gt;, create a new bucket named: &lt;code&gt;dota2-athena-results-yourname&lt;/code&gt;. (Remember to block public access).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Open Athena&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;From the search bar, access the &lt;strong&gt;Athena&lt;/strong&gt; service.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Open Settings&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Click the &lt;strong&gt;Settings&lt;/strong&gt; tab in the top right menu bar.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Configure Location&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;In the &lt;em&gt;Query result location&lt;/em&gt; field, click &lt;strong&gt;Manage&lt;/strong&gt; and point the path to the newly created bucket: &lt;code&gt;s3://dota2-athena-results-yourname/&lt;/code&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Save settings&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Click &lt;strong&gt;Save&lt;/strong&gt;. Athena is now ready for you to type commands.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/3-analytics-layer/athena-query-location-1.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Configure Athena Query Result Location&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/3-analytics-layer/athena-query-location-2.png?featherlight=false&#34; alt=&#34;Configure Athena Query Result Location&#34;&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Create External Table with Partition Projection</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.2-athena-partition-projection/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.2-athena-partition-projection/</guid>
+				<description>&lt;p&gt;Typically, users use &lt;strong&gt;AWS Glue Crawler&lt;/strong&gt; to automatically discover file structure and create tables. However, Crawlers are slow and costly. Instead, we will write a direct DDL (Data Definition Language) statement with embedded &lt;strong&gt;Partition Projection&lt;/strong&gt; technique to create the table. This technique enables Athena to calculate partitions extremely fast without requiring a Crawler.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Step&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Action&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Technical Details&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Open Query Editor&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;In the Athena interface, switch to the &lt;strong&gt;Query editor&lt;/strong&gt; tab.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Run DDL&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Copy the SQL code below, paste it into the query editor (replace the &lt;code&gt;LOCATION&lt;/code&gt; path with your S3 Processed Bucket) and click &lt;strong&gt;Run&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Test Query&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Delete the old command, type a new command: &lt;code&gt;SELECT * FROM dota2_matches LIMIT 10;&lt;/code&gt; and click &lt;strong&gt;Run&lt;/strong&gt; to see the results.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;DDL SQL code with Partition Projection:&lt;/strong&gt;&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

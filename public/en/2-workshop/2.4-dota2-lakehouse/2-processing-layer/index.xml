@@ -1,114 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Processing Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/</link><description>Recent content in Processing Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/index.xml" rel="self" type="application/rss+xml"/><item><title>Create S3 Bucket for Processed Data</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.1-setup-s3-processed/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.1-setup-s3-processed/</guid><description>&lt;p&gt;We need to create a new Bucket that acts as the clean data store (Processed Data Lake).&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Step&lt;/th&gt;
-					&lt;th&gt;Action&lt;/th&gt;
-					&lt;th&gt;Technical Details&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Access the AWS Console&lt;/td&gt;
-					&lt;td&gt;Open the &lt;strong&gt;S3&lt;/strong&gt; service &amp;gt; Select &lt;strong&gt;Create bucket&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Set Bucket name&lt;/td&gt;
-					&lt;td&gt;Enter the name: &lt;code&gt;dota2-processed-zone-yourname&lt;/code&gt; (Remember to select the same Region as the Raw Bucket).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Default security&lt;/td&gt;
-					&lt;td&gt;Ensure &lt;strong&gt;Block all public access&lt;/strong&gt; is enabled.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Complete&lt;/td&gt;
-					&lt;td&gt;Click &lt;strong&gt;Create bucket&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;</description></item><item><title>Grant Permissions to AWS Glue (IAM Role)</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.2-create-iam-role-glue/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.2-create-iam-role-glue/</guid><description>&lt;p&gt;AWS Glue is a computation service — it does not automatically have permission to access your S3 storage buckets. We must create an &amp;ldquo;employee badge&amp;rdquo; (IAM Role) for it with access permissions to both buckets.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Step&lt;/th&gt;
-					&lt;th&gt;Action&lt;/th&gt;
-					&lt;th&gt;Technical Details&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Open IAM Console&lt;/td&gt;
-					&lt;td&gt;Access the &lt;strong&gt;IAM&lt;/strong&gt; service &amp;gt; Select &lt;strong&gt;Roles&lt;/strong&gt; in the left menu &amp;gt; Click &lt;strong&gt;Create role&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Select Trusted Entity&lt;/td&gt;
-					&lt;td&gt;Select &lt;strong&gt;AWS service&lt;/strong&gt; &amp;gt; Find and select &lt;strong&gt;Glue&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Attach Policy&lt;/td&gt;
-					&lt;td&gt;Find and check the policies: &lt;code&gt;AmazonS3FullAccess&lt;/code&gt; (temporarily grant full S3 permissions to Glue for smooth operation) and &lt;code&gt;AWSGlueServiceRole&lt;/code&gt; &amp;gt; Click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Set Role name&lt;/td&gt;
-					&lt;td&gt;Set the name: &lt;code&gt;Glue_Dota2_Processing_Role&lt;/code&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Complete&lt;/td&gt;
-					&lt;td&gt;Scroll down and click &lt;strong&gt;Create role&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/2-processing-layer/glue-iam-role.png?featherlight=false&amp;amp;width=90pc" alt="Attach Role to AWS Glue"&gt;
-&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/2-processing-layer/glue-iam-role-1.png?featherlight=false&amp;amp;width=90pc" alt="Attach Role to AWS Glue"&gt;
-&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/2-processing-layer/glue-iam-role-2.png?featherlight=false&amp;amp;width=90pc" alt="Attach Role to AWS Glue"&gt;
-&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/2-processing-layer/glue-iam-role-3.png?featherlight=false&amp;amp;width=90pc" alt="Attach Role to AWS Glue"&gt;&lt;/p&gt;</description></item><item><title>Develop PySpark ETL Job</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.3-glue-pyspark-etl/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.3-glue-pyspark-etl/</guid><description>&lt;p&gt;This is the soul of the system. We will create an ETL Job on AWS Glue to read JSON files, flatten the player array, and write output as Parquet.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Step&lt;/th&gt;
-					&lt;th&gt;Action&lt;/th&gt;
-					&lt;th&gt;Technical Details&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Open AWS Glue&lt;/td&gt;
-					&lt;td&gt;In the Console, find &lt;strong&gt;AWS Glue&lt;/strong&gt; &amp;gt; Select &lt;strong&gt;ETL jobs&lt;/strong&gt; (left menu).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Initialize Job&lt;/td&gt;
-					&lt;td&gt;Select the &lt;strong&gt;Script editor&lt;/strong&gt; option &amp;gt; Select &lt;strong&gt;Spark&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Create script&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Configure Job Details&lt;/td&gt;
-					&lt;td&gt;Switch to the &lt;strong&gt;Job details&lt;/strong&gt; tab. Set name: &lt;code&gt;dota2_etl_job&lt;/code&gt;. Under IAM Role, select &lt;code&gt;Glue_Dota2_Processing_Role&lt;/code&gt; (created in Step 2.2).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Optimize cost&lt;/td&gt;
-					&lt;td&gt;In the &lt;em&gt;Job bookmark&lt;/em&gt; section, select Enable. In the &lt;em&gt;Number of workers&lt;/em&gt; section, reduce from 10 to &lt;strong&gt;2&lt;/strong&gt; (Since we are using a small dataset, we don&amp;rsquo;t need large machines).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Insert Code&lt;/td&gt;
-					&lt;td&gt;Switch back to the &lt;strong&gt;Script&lt;/strong&gt; tab, paste the PySpark code below. Remember to replace the &lt;code&gt;RAW_PATH&lt;/code&gt; and &lt;code&gt;PROCESSED_PATH&lt;/code&gt; variables with your Bucket names.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;6&lt;/td&gt;
-					&lt;td&gt;Save and Run&lt;/td&gt;
-					&lt;td&gt;Click &lt;strong&gt;Save&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Run&lt;/strong&gt;. Wait about 2-3 minutes, then check the S3 Processed Bucket to see the results.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;strong&gt;Complete PySpark code:&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Processing Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title>
+		<link>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/</link>
+		<description>Recent content in Processing Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Create S3 Bucket for Processed Data</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.1-setup-s3-processed/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.1-setup-s3-processed/</guid>
+				<description>&lt;p&gt;We need to create a new Bucket that acts as the clean data store (Processed Data Lake).&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Step&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Action&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Technical Details&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Access the AWS Console&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Open the &lt;strong&gt;S3&lt;/strong&gt; service &amp;gt; Select &lt;strong&gt;Create bucket&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Set Bucket name&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Enter the name: &lt;code&gt;dota2-processed-zone-yourname&lt;/code&gt; (Remember to select the same Region as the Raw Bucket).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Default security&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Ensure &lt;strong&gt;Block all public access&lt;/strong&gt; is enabled.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Complete&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Click &lt;strong&gt;Create bucket&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;</description>
+			</item>
+			<item>
+				<title>Grant Permissions to AWS Glue (IAM Role)</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.2-create-iam-role-glue/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.2-create-iam-role-glue/</guid>
+				<description>&lt;p&gt;AWS Glue is a computation service — it does not automatically have permission to access your S3 storage buckets. We must create an &amp;ldquo;employee badge&amp;rdquo; (IAM Role) for it with access permissions to both buckets.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Step&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Action&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Technical Details&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Open IAM Console&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Access the &lt;strong&gt;IAM&lt;/strong&gt; service &amp;gt; Select &lt;strong&gt;Roles&lt;/strong&gt; in the left menu &amp;gt; Click &lt;strong&gt;Create role&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Select Trusted Entity&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Select &lt;strong&gt;AWS service&lt;/strong&gt; &amp;gt; Find and select &lt;strong&gt;Glue&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Attach Policy&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Find and check the policies: &lt;code&gt;AmazonS3FullAccess&lt;/code&gt; (temporarily grant full S3 permissions to Glue for smooth operation) and &lt;code&gt;AWSGlueServiceRole&lt;/code&gt; &amp;gt; Click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Set Role name&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Set the name: &lt;code&gt;Glue_Dota2_Processing_Role&lt;/code&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Complete&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Scroll down and click &lt;strong&gt;Create role&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/2-processing-layer/glue-iam-role.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Attach Role to AWS Glue&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/2-processing-layer/glue-iam-role-1.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Attach Role to AWS Glue&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/2-processing-layer/glue-iam-role-2.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Attach Role to AWS Glue&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/2-processing-layer/glue-iam-role-3.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Attach Role to AWS Glue&#34;&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Develop PySpark ETL Job</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.3-glue-pyspark-etl/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.3-glue-pyspark-etl/</guid>
+				<description>&lt;p&gt;This is the soul of the system. We will create an ETL Job on AWS Glue to read JSON files, flatten the player array, and write output as Parquet.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Step&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Action&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Technical Details&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Open AWS Glue&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;In the Console, find &lt;strong&gt;AWS Glue&lt;/strong&gt; &amp;gt; Select &lt;strong&gt;ETL jobs&lt;/strong&gt; (left menu).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Initialize Job&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Select the &lt;strong&gt;Script editor&lt;/strong&gt; option &amp;gt; Select &lt;strong&gt;Spark&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Create script&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Configure Job Details&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Switch to the &lt;strong&gt;Job details&lt;/strong&gt; tab. Set name: &lt;code&gt;dota2_etl_job&lt;/code&gt;. Under IAM Role, select &lt;code&gt;Glue_Dota2_Processing_Role&lt;/code&gt; (created in Step 2.2).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Optimize cost&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;In the &lt;em&gt;Job bookmark&lt;/em&gt; section, select Enable. In the &lt;em&gt;Number of workers&lt;/em&gt; section, reduce from 10 to &lt;strong&gt;2&lt;/strong&gt; (Since we are using a small dataset, we don&amp;rsquo;t need large machines).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Insert Code&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Switch back to the &lt;strong&gt;Script&lt;/strong&gt; tab, paste the PySpark code below. Remember to replace the &lt;code&gt;RAW_PATH&lt;/code&gt; and &lt;code&gt;PROCESSED_PATH&lt;/code&gt; variables with your Bucket names.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;6&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Save and Run&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Click &lt;strong&gt;Save&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Run&lt;/strong&gt;. Wait about 2-3 minutes, then check the S3 Processed Bucket to see the results.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;Complete PySpark code:&lt;/strong&gt;&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

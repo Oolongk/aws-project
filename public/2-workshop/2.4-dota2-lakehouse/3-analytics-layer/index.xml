@@ -1,66 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tầng Phân Tích Dữ Liệu (Analytics Layer) on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/</link><description>Recent content in Tầng Phân Tích Dữ Liệu (Analytics Layer) on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description><generator>Hugo</generator><language>vi</language><lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/index.xml" rel="self" type="application/rss+xml"/><item><title>Thiết lập Vùng đệm cho Athena (Query Result)</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.1-athena-result-location/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.1-athena-result-location/</guid><description>&lt;p&gt;Một nguyên tắc bắt buộc của Amazon Athena là: Nó cần một S3 Bucket làm &amp;ldquo;vùng đệm&amp;rdquo; để lưu trữ kết quả của các câu lệnh SQL mà bạn gõ.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Bước&lt;/th&gt;
-					&lt;th&gt;Hành động&lt;/th&gt;
-					&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Tạo Bucket vùng đệm&lt;/td&gt;
-					&lt;td&gt;Mở &lt;strong&gt;S3 Console&lt;/strong&gt;, tạo một bucket mới với tên: &lt;code&gt;dota2-athena-results-tencuaban&lt;/code&gt;. (Nhớ block public access).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Mở Athena&lt;/td&gt;
-					&lt;td&gt;Từ thanh tìm kiếm, truy cập dịch vụ &lt;strong&gt;Athena&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Mở Settings&lt;/td&gt;
-					&lt;td&gt;Nhấn vào tab &lt;strong&gt;Settings&lt;/strong&gt; ở thanh menu trên cùng bên phải.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Cấu hình Location&lt;/td&gt;
-					&lt;td&gt;Tại mục &lt;em&gt;Query result location&lt;/em&gt;, nhấn &lt;strong&gt;Manage&lt;/strong&gt; và trỏ đường dẫn tới bucket vừa tạo: &lt;code&gt;s3://dota2-athena-results-tencuaban/&lt;/code&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Lưu thiết lập&lt;/td&gt;
-					&lt;td&gt;Nhấn &lt;strong&gt;Save&lt;/strong&gt;. Lúc này, Athena đã sẵn sàng để bạn gõ lệnh.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/3-analytics-layer/athena-query-location-1.png?featherlight=false&amp;amp;width=90pc" alt="Thiết lập Athena Query Result Location"&gt;
-&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/3-analytics-layer/athena-query-location-2.png?featherlight=false" alt="Thiết lập Athena Query Result Location"&gt;&lt;/p&gt;</description></item><item><title>Tạo External Table với Partition Projection</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.2-athena-partition-projection/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.2-athena-partition-projection/</guid><description>&lt;p&gt;Thông thường, mọi người dùng &lt;strong&gt;AWS Glue Crawler&lt;/strong&gt; để tự động dò tìm cấu trúc file và tạo bảng. Nhưng Crawler chạy chậm và tốn tiền. Thay vào đó, chúng ta sẽ viết thẳng một câu lệnh DDL (Data Definition Language) có nhúng kỹ thuật &lt;strong&gt;Partition Projection&lt;/strong&gt; để tạo bảng. Kỹ thuật này giúp Athena tính toán phân vùng siêu nhanh mà không cần Crawler.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Bước&lt;/th&gt;
-					&lt;th&gt;Hành động&lt;/th&gt;
-					&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Mở Query Editor&lt;/td&gt;
-					&lt;td&gt;Trong giao diện Athena, chuyển sang tab &lt;strong&gt;Query editor&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Chạy DDL&lt;/td&gt;
-					&lt;td&gt;Copy đoạn mã SQL bên dưới, dán vào khung truy vấn (thay đường dẫn &lt;code&gt;LOCATION&lt;/code&gt; bằng S3 Processed Bucket của bạn) và nhấn &lt;strong&gt;Run&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Truy vấn thử&lt;/td&gt;
-					&lt;td&gt;Xóa lệnh cũ đi, gõ lệnh mới: &lt;code&gt;SELECT * FROM dota2_matches LIMIT 10;&lt;/code&gt; và nhấn &lt;strong&gt;Run&lt;/strong&gt; để chiêm ngưỡng thành quả.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;strong&gt;Đoạn mã DDL SQL tích hợp Partition Projection:&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Tầng Phân Tích Dữ Liệu (Analytics Layer) on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title>
+		<link>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/</link>
+		<description>Recent content in Tầng Phân Tích Dữ Liệu (Analytics Layer) on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description>
+		<generator>Hugo</generator>
+		<language>vi</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Thiết lập Vùng đệm cho Athena (Query Result)</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.1-athena-result-location/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.1-athena-result-location/</guid>
+				<description>&lt;p&gt;Một nguyên tắc bắt buộc của Amazon Athena là: Nó cần một S3 Bucket làm &amp;ldquo;vùng đệm&amp;rdquo; để lưu trữ kết quả của các câu lệnh SQL mà bạn gõ.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Bước&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Hành động&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tạo Bucket vùng đệm&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Mở &lt;strong&gt;S3 Console&lt;/strong&gt;, tạo một bucket mới với tên: &lt;code&gt;dota2-athena-results-tencuaban&lt;/code&gt;. (Nhớ block public access).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Mở Athena&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Từ thanh tìm kiếm, truy cập dịch vụ &lt;strong&gt;Athena&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Mở Settings&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Nhấn vào tab &lt;strong&gt;Settings&lt;/strong&gt; ở thanh menu trên cùng bên phải.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cấu hình Location&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tại mục &lt;em&gt;Query result location&lt;/em&gt;, nhấn &lt;strong&gt;Manage&lt;/strong&gt; và trỏ đường dẫn tới bucket vừa tạo: &lt;code&gt;s3://dota2-athena-results-tencuaban/&lt;/code&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Lưu thiết lập&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Nhấn &lt;strong&gt;Save&lt;/strong&gt;. Lúc này, Athena đã sẵn sàng để bạn gõ lệnh.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/3-analytics-layer/athena-query-location-1.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Thiết lập Athena Query Result Location&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/3-analytics-layer/athena-query-location-2.png?featherlight=false&#34; alt=&#34;Thiết lập Athena Query Result Location&#34;&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Tạo External Table với Partition Projection</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.2-athena-partition-projection/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/3-analytics-layer/3.2-athena-partition-projection/</guid>
+				<description>&lt;p&gt;Thông thường, mọi người dùng &lt;strong&gt;AWS Glue Crawler&lt;/strong&gt; để tự động dò tìm cấu trúc file và tạo bảng. Nhưng Crawler chạy chậm và tốn tiền. Thay vào đó, chúng ta sẽ viết thẳng một câu lệnh DDL (Data Definition Language) có nhúng kỹ thuật &lt;strong&gt;Partition Projection&lt;/strong&gt; để tạo bảng. Kỹ thuật này giúp Athena tính toán phân vùng siêu nhanh mà không cần Crawler.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Bước&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Hành động&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Mở Query Editor&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Trong giao diện Athena, chuyển sang tab &lt;strong&gt;Query editor&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chạy DDL&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Copy đoạn mã SQL bên dưới, dán vào khung truy vấn (thay đường dẫn &lt;code&gt;LOCATION&lt;/code&gt; bằng S3 Processed Bucket của bạn) và nhấn &lt;strong&gt;Run&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Truy vấn thử&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Xóa lệnh cũ đi, gõ lệnh mới: &lt;code&gt;SELECT * FROM dota2_matches LIMIT 10;&lt;/code&gt; và nhấn &lt;strong&gt;Run&lt;/strong&gt; để chiêm ngưỡng thành quả.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;Đoạn mã DDL SQL tích hợp Partition Projection:&lt;/strong&gt;&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

@@ -1,92 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ingestion Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/</link><description>Recent content in Ingestion Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/index.xml" rel="self" type="application/rss+xml"/><item><title>Run Local Price History Backfill</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.1-local-backfill-history/</link><pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.1-local-backfill-history/</guid><description>&lt;p&gt;The local backfill script ingests historical price data from &lt;code&gt;2023-01-01&lt;/code&gt; to the current date. The code filters S&amp;amp;P 500 by &lt;code&gt;MIN_MARKET_CAP = 10_000_000_000&lt;/code&gt;, partitions prices by individual trading date, and writes a company info snapshot on the day the script runs.&lt;/p&gt;
-&lt;p&gt;The local backfill script does not write &lt;code&gt;us_financials_raw.parquet&lt;/code&gt;. Financials are ingested via the daily ingestion pipeline; the transformation code includes appropriate fallback handlers.&lt;/p&gt;
-&lt;h2 id="install-local-dependencies"&gt;Install Local Dependencies&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Create a dedicated virtual environment for local backfill.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;python -m venv .venv
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;.&lt;span style="color:#ae81ff"&gt;\.&lt;/span&gt;venv&lt;span style="color:#ae81ff"&gt;\S&lt;/span&gt;cripts&lt;span style="color:#ae81ff"&gt;\A&lt;/span&gt;ctivate.ps1
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Install packages required by source imports.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install boto3 pandas requests yfinance pyarrow tqdm lxml
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="preparation-and-run-backfill"&gt;Preparation and Run Backfill&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Step&lt;/th&gt;
-					&lt;th&gt;Action&lt;/th&gt;
-					&lt;th&gt;Technical Details&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Create file &lt;code&gt;backfill_raw_ingestion.py&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;Use the full source code below&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Verify &lt;code&gt;BUCKET_NAME&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;Must be &lt;code&gt;stock-screener-raw-your-name&lt;/code&gt;&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Set &lt;code&gt;MAX_TICKERS_FOR_TEST&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;Test with a small batch first; use &lt;code&gt;None&lt;/code&gt; when running full execution&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Keep credentials outside source code&lt;/td&gt;
-					&lt;td&gt;boto3 uses the AWS CLI profile/credential chain&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Run Python script&lt;/td&gt;
-					&lt;td&gt;Script calls STS to verify identity before crawling&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Run local backfill.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;python backfill_raw_ingestion.py
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src="https://Oolongk.github.io/aws-project/images/stock-screener/2-ingestion-layer/backfill.png?featherlight=false&amp;amp;width=90pc" alt="Run Local Backfill"&gt;&lt;/p&gt;</description></item><item><title>Deploy Daily Ingestion via Glue Python Shell</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.2-daily-ingestion-glue-python-shell/</link><pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.2-daily-ingestion-glue-python-shell/</guid><description>&lt;p&gt;Daily Ingestion fetches the S&amp;amp;P 500 ticker list from Wikipedia, pulls market data from Yahoo Finance via &lt;code&gt;yfinance&lt;/code&gt;, and writes three Raw datasets.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;us_prices_raw.parquet
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;us_company_info.parquet
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;us_financials_raw.parquet
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Unlike local backfill execution, this step creates an AWS Glue Python Shell Job and pastes source code directly into the Glue Script editor.&lt;/p&gt;
-&lt;h2 id="prerequisites-before-job-creation"&gt;Prerequisites Before Job Creation&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Step&lt;/th&gt;
-					&lt;th&gt;Action&lt;/th&gt;
-					&lt;th&gt;Technical Details&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Verify Raw Bucket&lt;/td&gt;
-					&lt;td&gt;The active S3 bucket is &lt;code&gt;stock-screener-raw-khanh&lt;/code&gt;&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Verify IAM Role&lt;/td&gt;
-					&lt;td&gt;Role &lt;code&gt;AWSGlueServiceRole-StockScreener&lt;/code&gt; must have write permissions to &lt;code&gt;raw_us_market/*&lt;/code&gt;&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Verify Internet access&lt;/td&gt;
-					&lt;td&gt;The Job must be able to call Wikipedia, Yahoo Finance, and PyPI to install additional packages&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Prepare source code&lt;/td&gt;
-					&lt;td&gt;Copy the complete &lt;code&gt;daily_ingestion.py&lt;/code&gt; code at the bottom of this page&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Do not hardcode credentials&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;boto3.client(&amp;quot;s3&amp;quot;)&lt;/code&gt; automatically uses temporary credentials supplied by the Glue Role&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Architectural Principle – Direct Editor.&lt;/strong&gt; Glue Studio allows creating a new Python Shell script and writing code directly in the Script editor. You do not need to manually upload the script file to S3. AWS Glue still manages the Script Location for the Job at the service layer, but no manual operations with a &lt;code&gt;glue-scripts/&lt;/code&gt; directory are required.&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Ingestion Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title>
+		<link>http://localhost:1313/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/</link>
+		<description>Recent content in Ingestion Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Run Local Price History Backfill</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.1-local-backfill-history/</link>
+				<pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.1-local-backfill-history/</guid>
+				<description>&lt;p&gt;The local backfill script ingests historical price data from &lt;code&gt;2023-01-01&lt;/code&gt; to the current date. The code filters S&amp;amp;P 500 by &lt;code&gt;MIN_MARKET_CAP = 10_000_000_000&lt;/code&gt;, partitions prices by individual trading date, and writes a company info snapshot on the day the script runs.&lt;/p&gt;&#xA;&lt;p&gt;The local backfill script does not write &lt;code&gt;us_financials_raw.parquet&lt;/code&gt;. Financials are ingested via the daily ingestion pipeline; the transformation code includes appropriate fallback handlers.&lt;/p&gt;&#xA;&lt;h2 id=&#34;install-local-dependencies&#34;&gt;Install Local Dependencies&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Create a dedicated virtual environment for local backfill.&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python -m venv .venv&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.&lt;span style=&#34;color:#ae81ff&#34;&gt;\.&lt;/span&gt;venv&lt;span style=&#34;color:#ae81ff&#34;&gt;\S&lt;/span&gt;cripts&lt;span style=&#34;color:#ae81ff&#34;&gt;\A&lt;/span&gt;ctivate.ps1&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Install packages required by source imports.&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pip install boto3 pandas requests yfinance pyarrow tqdm lxml&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;preparation-and-run-backfill&#34;&gt;Preparation and Run Backfill&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Step&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Action&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Technical Details&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Create file &lt;code&gt;backfill_raw_ingestion.py&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Use the full source code below&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Verify &lt;code&gt;BUCKET_NAME&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Must be &lt;code&gt;stock-screener-raw-your-name&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Set &lt;code&gt;MAX_TICKERS_FOR_TEST&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Test with a small batch first; use &lt;code&gt;None&lt;/code&gt; when running full execution&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Keep credentials outside source code&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;boto3 uses the AWS CLI profile/credential chain&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Run Python script&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Script calls STS to verify identity before crawling&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Run local backfill.&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python backfill_raw_ingestion.py&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/aws-project/images/stock-screener/2-ingestion-layer/backfill.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Run Local Backfill&#34;&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Deploy Daily Ingestion via Glue Python Shell</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.2-daily-ingestion-glue-python-shell/</link>
+				<pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.5-stock-screener/2-ingestion-layer/2.2-daily-ingestion-glue-python-shell/</guid>
+				<description>&lt;p&gt;Daily Ingestion fetches the S&amp;amp;P 500 ticker list from Wikipedia, pulls market data from Yahoo Finance via &lt;code&gt;yfinance&lt;/code&gt;, and writes three Raw datasets.&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;us_prices_raw.parquet&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;us_company_info.parquet&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;us_financials_raw.parquet&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Unlike local backfill execution, this step creates an AWS Glue Python Shell Job and pastes source code directly into the Glue Script editor.&lt;/p&gt;&#xA;&lt;h2 id=&#34;prerequisites-before-job-creation&#34;&gt;Prerequisites Before Job Creation&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Step&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Action&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Technical Details&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Verify Raw Bucket&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;The active S3 bucket is &lt;code&gt;stock-screener-raw-khanh&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Verify IAM Role&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Role &lt;code&gt;AWSGlueServiceRole-StockScreener&lt;/code&gt; must have write permissions to &lt;code&gt;raw_us_market/*&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Verify Internet access&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;The Job must be able to call Wikipedia, Yahoo Finance, and PyPI to install additional packages&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Prepare source code&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Copy the complete &lt;code&gt;daily_ingestion.py&lt;/code&gt; code at the bottom of this page&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Do not hardcode credentials&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;boto3.client(&amp;quot;s3&amp;quot;)&lt;/code&gt; automatically uses temporary credentials supplied by the Glue Role&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Architectural Principle – Direct Editor.&lt;/strong&gt; Glue Studio allows creating a new Python Shell script and writing code directly in the Script editor. You do not need to manually upload the script file to S3. AWS Glue still manages the Script Location for the Job at the service layer, but no manual operations with a &lt;code&gt;glue-scripts/&lt;/code&gt; directory are required.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

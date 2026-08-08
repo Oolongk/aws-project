@@ -1,1 +1,17 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Data Processing &amp; LLM Integration with Amazon Bedrock (Transformation Layer) on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.1-sentiment-sentinel/4-ai-processing/</link><description>Recent content in Data Processing &amp; LLM Integration with Amazon Bedrock (Transformation Layer) on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description><generator>Hugo</generator><language>en</language><lastBuildDate/><atom:link href="https://Oolongk.github.io/aws-project/en/2-workshop/2.1-sentiment-sentinel/4-ai-processing/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Data Processing &amp; LLM Integration with Amazon Bedrock (Transformation Layer) on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title>
+		<link>http://localhost:1313/aws-project/en/2-workshop/2.1-sentiment-sentinel/4-ai-processing/</link>
+		<description>Recent content in Data Processing &amp; LLM Integration with Amazon Bedrock (Transformation Layer) on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate></lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/en/2-workshop/2.1-sentiment-sentinel/4-ai-processing/index.xml" rel="self" type="application/rss+xml" />
+	</channel>
+</rss>

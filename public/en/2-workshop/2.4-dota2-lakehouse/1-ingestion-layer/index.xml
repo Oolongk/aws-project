@@ -1,129 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ingestion Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/</link><description>Recent content in Ingestion Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/index.xml" rel="self" type="application/rss+xml"/><item><title>Create S3 Bucket for Raw Data</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.1-setup-s3-raw/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.1-setup-s3-raw/</guid><description>&lt;p&gt;Create an Amazon S3 Bucket that acts as the &amp;ldquo;Landing Zone&amp;rdquo; for storing raw JSON data.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Step&lt;/th&gt;
-					&lt;th&gt;Action&lt;/th&gt;
-					&lt;th&gt;Technical Details&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Access the AWS Console&lt;/td&gt;
-					&lt;td&gt;Log in and search for the &lt;strong&gt;S3&lt;/strong&gt; service.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Initialize Bucket&lt;/td&gt;
-					&lt;td&gt;Click the orange &lt;strong&gt;Create bucket&lt;/strong&gt; button.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Configure General&lt;/td&gt;
-					&lt;td&gt;Bucket name: &lt;code&gt;dota2-raw-zone-yourname&lt;/code&gt; (name must be lowercase, no accents, globally unique). Region: &lt;code&gt;ap-southeast-1&lt;/code&gt; (Singapore).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Configure Object Ownership&lt;/td&gt;
-					&lt;td&gt;Keep &lt;strong&gt;ACLs disabled (recommended)&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Configure Block Public Access&lt;/td&gt;
-					&lt;td&gt;Check &lt;strong&gt;Block all public access&lt;/strong&gt; for absolute security.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;6&lt;/td&gt;
-					&lt;td&gt;Complete&lt;/td&gt;
-					&lt;td&gt;Scroll to the bottom and click &lt;strong&gt;Create bucket&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/1-ingestion-layer/s3-create-raw-bucket.png?featherlight=false&amp;amp;width=90pc" alt="S3 Bucket creation interface"&gt;
-&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/1-ingestion-layer/s3-create-raw-bucket-1.png?featherlight=false&amp;amp;width=90pc" alt="S3 Bucket creation interface"&gt;
-&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/1-ingestion-layer/s3-create-raw-bucket-2.png?featherlight=false&amp;amp;width=90pc" alt="S3 Bucket creation interface"&gt;&lt;/p&gt;</description></item><item><title>Create IAM Policy with Least Privilege</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.2-create-iam-user/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.2-create-iam-user/</guid><description>&lt;p&gt;For the Python script to push data to S3, it needs a set of keys (Access Key). We will create an IAM User and grant only the exact permissions needed to write files into the Raw Bucket.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Step&lt;/th&gt;
-					&lt;th&gt;Action&lt;/th&gt;
-					&lt;th&gt;Technical Details&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Access IAM&lt;/td&gt;
-					&lt;td&gt;Find the &lt;strong&gt;IAM&lt;/strong&gt; service &amp;gt; Select &lt;strong&gt;Users&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Create user&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Enter User information&lt;/td&gt;
-					&lt;td&gt;User name: &lt;code&gt;dota2-ingestion-bot&lt;/code&gt;. Skip the &lt;em&gt;Provide user access to the AWS Management Console&lt;/em&gt; option. Click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Initialize Policy&lt;/td&gt;
-					&lt;td&gt;On the Permissions screen, select &lt;strong&gt;Attach policies directly&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Create policy&lt;/strong&gt; (the system will open a new tab).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Configure Policy (JSON)&lt;/td&gt;
-					&lt;td&gt;Switch to &lt;strong&gt;JSON&lt;/strong&gt; format and paste the permissions code below &amp;gt; Click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Save Policy&lt;/td&gt;
-					&lt;td&gt;Policy name: &lt;code&gt;S3_PutObject_Dota2_Raw&lt;/code&gt;. Click &lt;strong&gt;Create policy&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;6&lt;/td&gt;
-					&lt;td&gt;Attach Policy to User&lt;/td&gt;
-					&lt;td&gt;Return to the Create User tab, click the &lt;em&gt;Refresh&lt;/em&gt; button, find and check &lt;code&gt;S3_PutObject_Dota2_Raw&lt;/code&gt; &amp;gt; Click &lt;strong&gt;Next&lt;/strong&gt; &amp;gt; &lt;strong&gt;Create user&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;7&lt;/td&gt;
-					&lt;td&gt;Generate Access Key&lt;/td&gt;
-					&lt;td&gt;Click into the newly created User &amp;gt; &lt;strong&gt;Security credentials&lt;/strong&gt; tab &amp;gt; Click &lt;strong&gt;Create access key&lt;/strong&gt; &amp;gt; Select &lt;em&gt;Local code&lt;/em&gt;. Download the &lt;code&gt;.csv&lt;/code&gt; file containing the Access Key and Secret Key pair to your machine.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;JSON Policy Code (Remember to replace &lt;code&gt;YOUR_BUCKET_NAME&lt;/code&gt; with the bucket name you created in section 1.1):&lt;/p&gt;</description></item><item><title>Python Data Fetcher (OpenDota API)</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.3-python-data-fetcher/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.3-python-data-fetcher/</guid><description>&lt;p&gt;We will write a Python script to act as the Ingestion Bot: call the OpenDota API, retrieve the 100 most recent professional matches, and push the JSON payload up to S3.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Step&lt;/th&gt;
-					&lt;th&gt;Action&lt;/th&gt;
-					&lt;th&gt;Technical Details&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Prepare environment&lt;/td&gt;
-					&lt;td&gt;Open Terminal (Command Prompt), install the AWS library: &lt;code&gt;pip install boto3 requests&lt;/code&gt;&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Load IAM keys&lt;/td&gt;
-					&lt;td&gt;Type the command &lt;code&gt;aws configure&lt;/code&gt;. Paste the Access Key and Secret Key retrieved in section 1.2. Select Region &lt;code&gt;ap-southeast-1&lt;/code&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Write source code&lt;/td&gt;
-					&lt;td&gt;Create a file named &lt;code&gt;dota2_ingestion.py&lt;/code&gt; and paste the code below. (Remember to update the &lt;code&gt;BUCKET_NAME&lt;/code&gt;).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Run Script&lt;/td&gt;
-					&lt;td&gt;Type &lt;code&gt;python dota2_ingestion.py&lt;/code&gt; in the Terminal.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Validate&lt;/td&gt;
-					&lt;td&gt;Access the AWS Console &amp;gt; &lt;strong&gt;S3&lt;/strong&gt; &amp;gt; Open the Raw Bucket. You will see a new directory structure automatically created containing JSON files.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;Source code &lt;code&gt;dota2_ingestion.py&lt;/code&gt;:&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Ingestion Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title>
+		<link>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/</link>
+		<description>Recent content in Ingestion Layer on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Create S3 Bucket for Raw Data</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.1-setup-s3-raw/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.1-setup-s3-raw/</guid>
+				<description>&lt;p&gt;Create an Amazon S3 Bucket that acts as the &amp;ldquo;Landing Zone&amp;rdquo; for storing raw JSON data.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Step&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Action&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Technical Details&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Access the AWS Console&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Log in and search for the &lt;strong&gt;S3&lt;/strong&gt; service.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Initialize Bucket&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Click the orange &lt;strong&gt;Create bucket&lt;/strong&gt; button.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Configure General&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Bucket name: &lt;code&gt;dota2-raw-zone-yourname&lt;/code&gt; (name must be lowercase, no accents, globally unique). Region: &lt;code&gt;ap-southeast-1&lt;/code&gt; (Singapore).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Configure Object Ownership&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Keep &lt;strong&gt;ACLs disabled (recommended)&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Configure Block Public Access&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Check &lt;strong&gt;Block all public access&lt;/strong&gt; for absolute security.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;6&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Complete&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Scroll to the bottom and click &lt;strong&gt;Create bucket&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/1-ingestion-layer/s3-create-raw-bucket.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;S3 Bucket creation interface&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/1-ingestion-layer/s3-create-raw-bucket-1.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;S3 Bucket creation interface&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/1-ingestion-layer/s3-create-raw-bucket-2.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;S3 Bucket creation interface&#34;&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Create IAM Policy with Least Privilege</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.2-create-iam-user/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.2-create-iam-user/</guid>
+				<description>&lt;p&gt;For the Python script to push data to S3, it needs a set of keys (Access Key). We will create an IAM User and grant only the exact permissions needed to write files into the Raw Bucket.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Step&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Action&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Technical Details&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Access IAM&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Find the &lt;strong&gt;IAM&lt;/strong&gt; service &amp;gt; Select &lt;strong&gt;Users&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Create user&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Enter User information&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;User name: &lt;code&gt;dota2-ingestion-bot&lt;/code&gt;. Skip the &lt;em&gt;Provide user access to the AWS Management Console&lt;/em&gt; option. Click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Initialize Policy&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;On the Permissions screen, select &lt;strong&gt;Attach policies directly&lt;/strong&gt; &amp;gt; Click &lt;strong&gt;Create policy&lt;/strong&gt; (the system will open a new tab).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Configure Policy (JSON)&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Switch to &lt;strong&gt;JSON&lt;/strong&gt; format and paste the permissions code below &amp;gt; Click &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Save Policy&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Policy name: &lt;code&gt;S3_PutObject_Dota2_Raw&lt;/code&gt;. Click &lt;strong&gt;Create policy&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;6&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Attach Policy to User&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Return to the Create User tab, click the &lt;em&gt;Refresh&lt;/em&gt; button, find and check &lt;code&gt;S3_PutObject_Dota2_Raw&lt;/code&gt; &amp;gt; Click &lt;strong&gt;Next&lt;/strong&gt; &amp;gt; &lt;strong&gt;Create user&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;7&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Generate Access Key&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Click into the newly created User &amp;gt; &lt;strong&gt;Security credentials&lt;/strong&gt; tab &amp;gt; Click &lt;strong&gt;Create access key&lt;/strong&gt; &amp;gt; Select &lt;em&gt;Local code&lt;/em&gt;. Download the &lt;code&gt;.csv&lt;/code&gt; file containing the Access Key and Secret Key pair to your machine.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;JSON Policy Code (Remember to replace &lt;code&gt;YOUR_BUCKET_NAME&lt;/code&gt; with the bucket name you created in section 1.1):&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Python Data Fetcher (OpenDota API)</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.3-python-data-fetcher/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.4-dota2-lakehouse/1-ingestion-layer/1.3-python-data-fetcher/</guid>
+				<description>&lt;p&gt;We will write a Python script to act as the Ingestion Bot: call the OpenDota API, retrieve the 100 most recent professional matches, and push the JSON payload up to S3.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Step&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Action&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Technical Details&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Prepare environment&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Open Terminal (Command Prompt), install the AWS library: &lt;code&gt;pip install boto3 requests&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Load IAM keys&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Type the command &lt;code&gt;aws configure&lt;/code&gt;. Paste the Access Key and Secret Key retrieved in section 1.2. Select Region &lt;code&gt;ap-southeast-1&lt;/code&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Write source code&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Create a file named &lt;code&gt;dota2_ingestion.py&lt;/code&gt; and paste the code below. (Remember to update the &lt;code&gt;BUCKET_NAME&lt;/code&gt;).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Run Script&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Type &lt;code&gt;python dota2_ingestion.py&lt;/code&gt; in the Terminal.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Validate&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Access the AWS Console &amp;gt; &lt;strong&gt;S3&lt;/strong&gt; &amp;gt; Open the Raw Bucket. You will see a new directory structure automatically created containing JSON files.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;Source code &lt;code&gt;dota2_ingestion.py&lt;/code&gt;:&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

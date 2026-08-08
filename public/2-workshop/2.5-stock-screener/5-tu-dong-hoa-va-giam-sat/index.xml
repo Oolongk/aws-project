@@ -1,61 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Automation và Observability on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/5-tu-dong-hoa-va-giam-sat/</link><description>Recent content in Automation và Observability on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description><generator>Hugo</generator><language>vi</language><lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/5-tu-dong-hoa-va-giam-sat/index.xml" rel="self" type="application/rss+xml"/><item><title>Tạo EventBridge Scheduler cho Daily Ingestion</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/5-tu-dong-hoa-va-giam-sat/5.1-schedule-daily-ingestion/</link><pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/5-tu-dong-hoa-va-giam-sat/5.1-schedule-daily-ingestion/</guid><description>&lt;p&gt;Scheduler khởi chạy Glue Python Shell Job hằng ngày. Không cấu hình scheduler chạy cùng lúc transform/publisher vì cần đợi Raw output hoàn chỉnh.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Bước&lt;/th&gt;
-					&lt;th&gt;Hành động&lt;/th&gt;
-					&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;EventBridge → Scheduler → &lt;strong&gt;Create schedule&lt;/strong&gt;&lt;/td&gt;
-					&lt;td&gt;Tạo recurring schedule&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Schedule name&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;stock-screener-daily-ingestion&lt;/code&gt;&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Schedule pattern&lt;/td&gt;
-					&lt;td&gt;Chọn cron-based schedule&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Expression&lt;/td&gt;
-					&lt;td&gt;Ví dụ &lt;code&gt;cron(0 7 ? * TUE-SAT *)&lt;/code&gt;&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Timezone&lt;/td&gt;
-					&lt;td&gt;Chọn &lt;code&gt;Asia/Ho_Chi_Minh&lt;/code&gt; nếu UI hỗ trợ&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;6&lt;/td&gt;
-					&lt;td&gt;Target&lt;/td&gt;
-					&lt;td&gt;Universal target: AWS SDK → Glue → &lt;code&gt;StartJobRun&lt;/code&gt;&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;7&lt;/td&gt;
-					&lt;td&gt;Input payload&lt;/td&gt;
-					&lt;td&gt;Dán JSON bên dưới&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;8&lt;/td&gt;
-					&lt;td&gt;Execution role&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;EventBridgeSchedulerStockScreenerRole&lt;/code&gt;&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;9&lt;/td&gt;
-					&lt;td&gt;Create schedule&lt;/td&gt;
-					&lt;td&gt;Kiểm tra schedule Enabled&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;{
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;JobName&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;us-stock-daily-ingestion&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Automation và Observability on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title>
+		<link>http://localhost:1313/aws-project/2-workshop/2.5-stock-screener/5-tu-dong-hoa-va-giam-sat/</link>
+		<description>Recent content in Automation và Observability on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description>
+		<generator>Hugo</generator>
+		<language>vi</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/2-workshop/2.5-stock-screener/5-tu-dong-hoa-va-giam-sat/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Tạo EventBridge Scheduler cho Daily Ingestion</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.5-stock-screener/5-tu-dong-hoa-va-giam-sat/5.1-schedule-daily-ingestion/</link>
+				<pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.5-stock-screener/5-tu-dong-hoa-va-giam-sat/5.1-schedule-daily-ingestion/</guid>
+				<description>&lt;p&gt;Scheduler khởi chạy Glue Python Shell Job hằng ngày. Không cấu hình scheduler chạy cùng lúc transform/publisher vì cần đợi Raw output hoàn chỉnh.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Bước&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Hành động&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;EventBridge → Scheduler → &lt;strong&gt;Create schedule&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tạo recurring schedule&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Schedule name&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;stock-screener-daily-ingestion&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Schedule pattern&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chọn cron-based schedule&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Expression&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Ví dụ &lt;code&gt;cron(0 7 ? * TUE-SAT *)&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Timezone&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chọn &lt;code&gt;Asia/Ho_Chi_Minh&lt;/code&gt; nếu UI hỗ trợ&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;6&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Target&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Universal target: AWS SDK → Glue → &lt;code&gt;StartJobRun&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;7&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Input payload&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Dán JSON bên dưới&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;8&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Execution role&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;EventBridgeSchedulerStockScreenerRole&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;9&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Create schedule&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Kiểm tra schedule Enabled&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;JobName&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;us-stock-daily-ingestion&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+			</item>
+	</channel>
+</rss>

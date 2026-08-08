@@ -1,114 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tầng Xử Lý Dữ Liệu (Processing Layer) on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/</link><description>Recent content in Tầng Xử Lý Dữ Liệu (Processing Layer) on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description><generator>Hugo</generator><language>vi</language><lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/index.xml" rel="self" type="application/rss+xml"/><item><title>Tạo S3 Bucket cho Dữ liệu Đã Xử Lý</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.1-setup-s3-processed/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.1-setup-s3-processed/</guid><description>&lt;p&gt;Chúng ta cần tạo một Bucket mới đóng vai trò là kho chứa dữ liệu sạch (Processed Data Lake).&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Bước&lt;/th&gt;
-					&lt;th&gt;Hành động&lt;/th&gt;
-					&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Truy cập AWS Console&lt;/td&gt;
-					&lt;td&gt;Mở dịch vụ &lt;strong&gt;S3&lt;/strong&gt; &amp;gt; Chọn &lt;strong&gt;Create bucket&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Đặt tên Bucket&lt;/td&gt;
-					&lt;td&gt;Nhập tên: &lt;code&gt;dota2-processed-zone-tencuaban&lt;/code&gt; (Nhớ chọn cùng Region với Raw Bucket).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Bảo mật mặc định&lt;/td&gt;
-					&lt;td&gt;Đảm bảo &lt;strong&gt;Block all public access&lt;/strong&gt; đang được bật.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Hoàn tất&lt;/td&gt;
-					&lt;td&gt;Nhấn &lt;strong&gt;Create bucket&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;</description></item><item><title>Cấp quyền cho AWS Glue (IAM Role)</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.2-create-iam-role-glue/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.2-create-iam-role-glue/</guid><description>&lt;p&gt;AWS Glue là một dịch vụ tính toán, bản thân nó không có quyền tự ý vào nhà kho S3 của bạn lấy đồ. Ta phải tạo cho nó một &amp;ldquo;thẻ nhân viên&amp;rdquo; (IAM Role) có quyền truy cập vào cả 2 bucket.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Bước&lt;/th&gt;
-					&lt;th&gt;Hành động&lt;/th&gt;
-					&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Mở IAM Console&lt;/td&gt;
-					&lt;td&gt;Truy cập dịch vụ &lt;strong&gt;IAM&lt;/strong&gt; &amp;gt; Chọn &lt;strong&gt;Roles&lt;/strong&gt; ở menu trái &amp;gt; Nhấn &lt;strong&gt;Create role&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Chọn Trusted Entity&lt;/td&gt;
-					&lt;td&gt;Chọn &lt;strong&gt;AWS service&lt;/strong&gt; &amp;gt; Tìm và chọn &lt;strong&gt;Glue&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Gắn Policy&lt;/td&gt;
-					&lt;td&gt;Tìm kiếm và tích chọn Policy: &lt;code&gt;AmazonS3FullAccess&lt;/code&gt; (Tạm thời cấp full quyền S3 để Glue làm việc mượt mà) và &lt;code&gt;AWSGlueServiceRole&lt;/code&gt; &amp;gt; Nhấn &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Đặt tên Role&lt;/td&gt;
-					&lt;td&gt;Đặt tên: &lt;code&gt;Glue_Dota2_Processing_Role&lt;/code&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Hoàn tất&lt;/td&gt;
-					&lt;td&gt;Cuộn xuống nhấn &lt;strong&gt;Create role&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/2-processing-layer/glue-iam-role.png?featherlight=false&amp;amp;width=90pc" alt="Gắn Role cho AWS Glue"&gt;
-&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/2-processing-layer/glue-iam-role-1.png?featherlight=false&amp;amp;width=90pc" alt="Gắn Role cho AWS Glue"&gt;
-&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/2-processing-layer/glue-iam-role-2.png?featherlight=false&amp;amp;width=90pc" alt="Gắn Role cho AWS Glue"&gt;
-&lt;img src="https://Oolongk.github.io/aws-project/images/dota2/2-processing-layer/glue-iam-role-3.png?featherlight=false&amp;amp;width=90pc" alt="Gắn Role cho AWS Glue"&gt;&lt;/p&gt;</description></item><item><title>Viết Job ETL bằng PySpark</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.3-glue-pyspark-etl/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.3-glue-pyspark-etl/</guid><description>&lt;p&gt;Đây là linh hồn của hệ thống. Chúng ta sẽ tạo một Job ETL trên AWS Glue để đọc file JSON, làm phẳng mảng cầu thủ và ghi ra Parquet.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Bước&lt;/th&gt;
-					&lt;th&gt;Hành động&lt;/th&gt;
-					&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Mở AWS Glue&lt;/td&gt;
-					&lt;td&gt;Vào Console, tìm &lt;strong&gt;AWS Glue&lt;/strong&gt; &amp;gt; Chọn &lt;strong&gt;ETL jobs&lt;/strong&gt; (menu trái).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Khởi tạo Job&lt;/td&gt;
-					&lt;td&gt;Chọn tùy chọn &lt;strong&gt;Script editor&lt;/strong&gt; &amp;gt; Chọn &lt;strong&gt;Spark&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Create script&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Cấu hình Job Details&lt;/td&gt;
-					&lt;td&gt;Chuyển sang tab &lt;strong&gt;Job details&lt;/strong&gt;. Đặt tên: &lt;code&gt;dota2_etl_job&lt;/code&gt;. Mục IAM Role, chọn &lt;code&gt;Glue_Dota2_Processing_Role&lt;/code&gt; (vừa tạo ở bước 2.2).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Tối ưu chi phí&lt;/td&gt;
-					&lt;td&gt;Trong phần &lt;em&gt;Job bookmark&lt;/em&gt;, chọn Enable. Phần &lt;em&gt;Number of workers&lt;/em&gt;, giảm từ 10 xuống &lt;strong&gt;2&lt;/strong&gt; (Vì chúng ta đang dùng dữ liệu nhỏ, không cần máy quá to).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Chèn Code&lt;/td&gt;
-					&lt;td&gt;Chuyển lại tab &lt;strong&gt;Script&lt;/strong&gt;, dán đoạn code PySpark bên dưới vào. Nhớ thay thế các biến &lt;code&gt;RAW_PATH&lt;/code&gt; và &lt;code&gt;PROCESSED_PATH&lt;/code&gt; bằng tên Bucket của bạn.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;6&lt;/td&gt;
-					&lt;td&gt;Lưu và Chạy&lt;/td&gt;
-					&lt;td&gt;Nhấn &lt;strong&gt;Save&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Run&lt;/strong&gt;. Đợi khoảng 2-3 phút, sau đó kiểm tra S3 Processed Bucket để xem thành quả.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;strong&gt;Đoạn mã PySpark hoàn chỉnh:&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Tầng Xử Lý Dữ Liệu (Processing Layer) on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title>
+		<link>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/</link>
+		<description>Recent content in Tầng Xử Lý Dữ Liệu (Processing Layer) on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description>
+		<generator>Hugo</generator>
+		<language>vi</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 29 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Tạo S3 Bucket cho Dữ liệu Đã Xử Lý</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.1-setup-s3-processed/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.1-setup-s3-processed/</guid>
+				<description>&lt;p&gt;Chúng ta cần tạo một Bucket mới đóng vai trò là kho chứa dữ liệu sạch (Processed Data Lake).&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Bước&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Hành động&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Truy cập AWS Console&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Mở dịch vụ &lt;strong&gt;S3&lt;/strong&gt; &amp;gt; Chọn &lt;strong&gt;Create bucket&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Đặt tên Bucket&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Nhập tên: &lt;code&gt;dota2-processed-zone-tencuaban&lt;/code&gt; (Nhớ chọn cùng Region với Raw Bucket).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Bảo mật mặc định&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Đảm bảo &lt;strong&gt;Block all public access&lt;/strong&gt; đang được bật.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Hoàn tất&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Nhấn &lt;strong&gt;Create bucket&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;</description>
+			</item>
+			<item>
+				<title>Cấp quyền cho AWS Glue (IAM Role)</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.2-create-iam-role-glue/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.2-create-iam-role-glue/</guid>
+				<description>&lt;p&gt;AWS Glue là một dịch vụ tính toán, bản thân nó không có quyền tự ý vào nhà kho S3 của bạn lấy đồ. Ta phải tạo cho nó một &amp;ldquo;thẻ nhân viên&amp;rdquo; (IAM Role) có quyền truy cập vào cả 2 bucket.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Bước&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Hành động&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Mở IAM Console&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Truy cập dịch vụ &lt;strong&gt;IAM&lt;/strong&gt; &amp;gt; Chọn &lt;strong&gt;Roles&lt;/strong&gt; ở menu trái &amp;gt; Nhấn &lt;strong&gt;Create role&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chọn Trusted Entity&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chọn &lt;strong&gt;AWS service&lt;/strong&gt; &amp;gt; Tìm và chọn &lt;strong&gt;Glue&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Gắn Policy&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tìm kiếm và tích chọn Policy: &lt;code&gt;AmazonS3FullAccess&lt;/code&gt; (Tạm thời cấp full quyền S3 để Glue làm việc mượt mà) và &lt;code&gt;AWSGlueServiceRole&lt;/code&gt; &amp;gt; Nhấn &lt;strong&gt;Next&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Đặt tên Role&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Đặt tên: &lt;code&gt;Glue_Dota2_Processing_Role&lt;/code&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Hoàn tất&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cuộn xuống nhấn &lt;strong&gt;Create role&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/2-processing-layer/glue-iam-role.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Gắn Role cho AWS Glue&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/2-processing-layer/glue-iam-role-1.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Gắn Role cho AWS Glue&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/2-processing-layer/glue-iam-role-2.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Gắn Role cho AWS Glue&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/dota2/2-processing-layer/glue-iam-role-3.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Gắn Role cho AWS Glue&#34;&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Viết Job ETL bằng PySpark</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.3-glue-pyspark-etl/</link>
+				<pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.4-dota2-lakehouse/2-processing-layer/2.3-glue-pyspark-etl/</guid>
+				<description>&lt;p&gt;Đây là linh hồn của hệ thống. Chúng ta sẽ tạo một Job ETL trên AWS Glue để đọc file JSON, làm phẳng mảng cầu thủ và ghi ra Parquet.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Bước&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Hành động&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Mở AWS Glue&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Vào Console, tìm &lt;strong&gt;AWS Glue&lt;/strong&gt; &amp;gt; Chọn &lt;strong&gt;ETL jobs&lt;/strong&gt; (menu trái).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Khởi tạo Job&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chọn tùy chọn &lt;strong&gt;Script editor&lt;/strong&gt; &amp;gt; Chọn &lt;strong&gt;Spark&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Create script&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cấu hình Job Details&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chuyển sang tab &lt;strong&gt;Job details&lt;/strong&gt;. Đặt tên: &lt;code&gt;dota2_etl_job&lt;/code&gt;. Mục IAM Role, chọn &lt;code&gt;Glue_Dota2_Processing_Role&lt;/code&gt; (vừa tạo ở bước 2.2).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tối ưu chi phí&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Trong phần &lt;em&gt;Job bookmark&lt;/em&gt;, chọn Enable. Phần &lt;em&gt;Number of workers&lt;/em&gt;, giảm từ 10 xuống &lt;strong&gt;2&lt;/strong&gt; (Vì chúng ta đang dùng dữ liệu nhỏ, không cần máy quá to).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chèn Code&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chuyển lại tab &lt;strong&gt;Script&lt;/strong&gt;, dán đoạn code PySpark bên dưới vào. Nhớ thay thế các biến &lt;code&gt;RAW_PATH&lt;/code&gt; và &lt;code&gt;PROCESSED_PATH&lt;/code&gt; bằng tên Bucket của bạn.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;6&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Lưu và Chạy&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Nhấn &lt;strong&gt;Save&lt;/strong&gt; &amp;gt; Nhấn &lt;strong&gt;Run&lt;/strong&gt;. Đợi khoảng 2-3 phút, sau đó kiểm tra S3 Processed Bucket để xem thành quả.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;Đoạn mã PySpark hoàn chỉnh:&lt;/strong&gt;&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

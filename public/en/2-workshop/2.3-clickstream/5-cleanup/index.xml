@@ -1,36 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cleanup and Conclusion on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.3-clickstream/5-cleanup/</link><description>Recent content in Cleanup and Conclusion on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 25 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/en/2-workshop/2.3-clickstream/5-cleanup/index.xml" rel="self" type="application/rss+xml"/><item><title>Thorough resource cleanup</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.3-clickstream/5-cleanup/5.1-clean-up-all-services/</link><pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.3-clickstream/5-cleanup/5.1-clean-up-all-services/</guid><description>&lt;p&gt;Please perform the cleanup in the exact order of the tables below. Absolutely do not delete the S3 Data Lake before deleting other services, as it will cause a system bottleneck error.&lt;/p&gt;
-&lt;h4 id="1-delete-machine-learning-layer-highest-priority"&gt;1. Delete Machine Learning Layer (Highest priority)&lt;/h4&gt;
-&lt;p&gt;This is the fastest &amp;ldquo;money burning&amp;rdquo; component. You must clean it up first.&lt;/p&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th style="text-align: left"&gt;Step&lt;/th&gt;
-					&lt;th style="text-align: left"&gt;Action&lt;/th&gt;
-					&lt;th style="text-align: left"&gt;Technical details&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td style="text-align: left"&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/td&gt;
-					&lt;td style="text-align: left"&gt;Delete Campaign&lt;/td&gt;
-					&lt;td style="text-align: left"&gt;Access &lt;strong&gt;Amazon Personalize&lt;/strong&gt; -&amp;gt; Select &lt;strong&gt;Campaigns&lt;/strong&gt; -&amp;gt; Click &lt;strong&gt;Delete&lt;/strong&gt;. (If you applied the FinOps &amp;ldquo;Hit and Run&amp;rdquo; tactic in the previous chapter, skip this step).&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td style="text-align: left"&gt;&lt;strong&gt;2&lt;/strong&gt;&lt;/td&gt;
-					&lt;td style="text-align: left"&gt;Delete Solution&lt;/td&gt;
-					&lt;td style="text-align: left"&gt;Select the &lt;strong&gt;Solutions&lt;/strong&gt; section -&amp;gt; Open your Solution -&amp;gt; Click &lt;strong&gt;Delete&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td style="text-align: left"&gt;&lt;strong&gt;3&lt;/strong&gt;&lt;/td&gt;
-					&lt;td style="text-align: left"&gt;Delete Dataset&lt;/td&gt;
-					&lt;td style="text-align: left"&gt;Open the &lt;strong&gt;Datasets&lt;/strong&gt; section -&amp;gt; Sequentially delete all Datasets inside.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td style="text-align: left"&gt;&lt;strong&gt;4&lt;/strong&gt;&lt;/td&gt;
-					&lt;td style="text-align: left"&gt;Delete Dataset Group&lt;/td&gt;
-					&lt;td style="text-align: left"&gt;Finally, select &lt;strong&gt;Dataset groups&lt;/strong&gt; -&amp;gt; Select the &lt;code&gt;news_recommender_group&lt;/code&gt; group and click &lt;strong&gt;Delete&lt;/strong&gt;.&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The Solution deletion process may take a few minutes. You must wait for the Solution to completely disappear before you can delete the Dataset Group.&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Cleanup and Conclusion on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title>
+		<link>http://localhost:1313/aws-project/en/2-workshop/2.3-clickstream/5-cleanup/</link>
+		<description>Recent content in Cleanup and Conclusion on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Thu, 25 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/en/2-workshop/2.3-clickstream/5-cleanup/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Thorough resource cleanup</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.3-clickstream/5-cleanup/5.1-clean-up-all-services/</link>
+				<pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.3-clickstream/5-cleanup/5.1-clean-up-all-services/</guid>
+				<description>&lt;p&gt;Please perform the cleanup in the exact order of the tables below. Absolutely do not delete the S3 Data Lake before deleting other services, as it will cause a system bottleneck error.&lt;/p&gt;&#xA;&lt;h4 id=&#34;1-delete-machine-learning-layer-highest-priority&#34;&gt;1. Delete Machine Learning Layer (Highest priority)&lt;/h4&gt;&#xA;&lt;p&gt;This is the fastest &amp;ldquo;money burning&amp;rdquo; component. You must clean it up first.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th style=&#34;text-align: left&#34;&gt;Step&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th style=&#34;text-align: left&#34;&gt;Action&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th style=&#34;text-align: left&#34;&gt;Technical details&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Delete Campaign&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Access &lt;strong&gt;Amazon Personalize&lt;/strong&gt; -&amp;gt; Select &lt;strong&gt;Campaigns&lt;/strong&gt; -&amp;gt; Click &lt;strong&gt;Delete&lt;/strong&gt;. (If you applied the FinOps &amp;ldquo;Hit and Run&amp;rdquo; tactic in the previous chapter, skip this step).&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;2&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Delete Solution&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Select the &lt;strong&gt;Solutions&lt;/strong&gt; section -&amp;gt; Open your Solution -&amp;gt; Click &lt;strong&gt;Delete&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;3&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Delete Dataset&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Open the &lt;strong&gt;Datasets&lt;/strong&gt; section -&amp;gt; Sequentially delete all Datasets inside.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;4&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Delete Dataset Group&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td style=&#34;text-align: left&#34;&gt;Finally, select &lt;strong&gt;Dataset groups&lt;/strong&gt; -&amp;gt; Select the &lt;code&gt;news_recommender_group&lt;/code&gt; group and click &lt;strong&gt;Delete&lt;/strong&gt;.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The Solution deletion process may take a few minutes. You must wait for the Solution to completely disappear before you can delete the Dataset Group.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

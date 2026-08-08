@@ -1,23 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>System Testing &amp; Verification on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/</link><description>Recent content in System Testing &amp; Verification on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 13 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/index.xml" rel="self" type="application/rss+xml"/><item><title>Run IoT Device Simulator</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/1-run-simulator/</link><pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/1-run-simulator/</guid><description>&lt;h4 id="1-update-the-python-source-code"&gt;1. Update the Python Source Code&lt;/h4&gt;
-&lt;p&gt;Return to your project folder on your computer, open the &lt;code&gt;truck_simulator.py&lt;/code&gt; file (created in Chapter 1) and update the 2 most important pieces of information we just retrieved from AWS IoT Core in Lesson 2.3:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;IOT_ENDPOINT&lt;/strong&gt;: Paste your Endpoint address here.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Security certificates&lt;/strong&gt;: Make sure the paths to the 3 certificate files (&lt;code&gt;Root CA&lt;/code&gt;, &lt;code&gt;Certificate&lt;/code&gt;, &lt;code&gt;Private Key&lt;/code&gt;) are correct.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# ==========================================&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# CONFIGURATION SETTINGS&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# ==========================================&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;IOT_ENDPOINT &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;afjy7...-ats.iot.ap-southeast-1.amazonaws.com&amp;#34;&lt;/span&gt; &lt;span style="color:#75715e"&gt;# Replace with yours&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PATH_TO_ROOT_CA &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;certs/AmazonRootCA1.pem&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PATH_TO_CERT &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;certs/128eb8547f...-certificate.pem.crt&amp;#34;&lt;/span&gt; &lt;span style="color:#75715e"&gt;# Update to your file name&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PATH_TO_PRIVATE_KEY &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;certs/128eb8547f...-private.pem.key&amp;#34;&lt;/span&gt; &lt;span style="color:#75715e"&gt;# Update to your file name&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Save the file.&lt;/p&gt;</description></item><item><title>Verify Data Flow &amp; Alerts</title><link>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/2-verify-results/</link><pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/2-verify-results/</guid><description>&lt;h4 id="1-inspect-the-dynamodb-storage"&gt;1. Inspect the DynamoDB Storage&lt;/h4&gt;
-&lt;p&gt;As soon as the Python script is running, data is being pushed through IoT Core, into SQS, and written directly to the database by Lambda.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Return to the AWS Console and open &lt;strong&gt;DynamoDB&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;Select &lt;strong&gt;Explore items&lt;/strong&gt; from the left menu.&lt;/li&gt;
-&lt;li&gt;Select your &lt;code&gt;IoT_Fleet_Data&lt;/code&gt; table.&lt;/li&gt;
-&lt;li&gt;Click the &lt;strong&gt;Run&lt;/strong&gt; (or Scan) button. You will see a stream of records (Items) appear with complete information: &lt;code&gt;truck_id&lt;/code&gt;, &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;latitude&lt;/code&gt;, &lt;code&gt;longitude&lt;/code&gt;, and &lt;code&gt;timestamp_ms&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src="https://Oolongk.github.io/aws-project/images/IoTSentinel/3-kiem-tra/dynamo_data.png?featherlight=false&amp;amp;width=90pc" alt="DynamoDB data"&gt;&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>System Testing &amp; Verification on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</title>
+		<link>http://localhost:1313/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/</link>
+		<description>Recent content in System Testing &amp; Verification on AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Wed, 13 May 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Run IoT Device Simulator</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/1-run-simulator/</link>
+				<pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/1-run-simulator/</guid>
+				<description>&lt;h4 id=&#34;1-update-the-python-source-code&#34;&gt;1. Update the Python Source Code&lt;/h4&gt;&#xA;&lt;p&gt;Return to your project folder on your computer, open the &lt;code&gt;truck_simulator.py&lt;/code&gt; file (created in Chapter 1) and update the 2 most important pieces of information we just retrieved from AWS IoT Core in Lesson 2.3:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;IOT_ENDPOINT&lt;/strong&gt;: Paste your Endpoint address here.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Security certificates&lt;/strong&gt;: Make sure the paths to the 3 certificate files (&lt;code&gt;Root CA&lt;/code&gt;, &lt;code&gt;Certificate&lt;/code&gt;, &lt;code&gt;Private Key&lt;/code&gt;) are correct.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ==========================================&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# CONFIGURATION SETTINGS&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# ==========================================&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;IOT_ENDPOINT &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;afjy7...-ats.iot.ap-southeast-1.amazonaws.com&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# Replace with yours&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PATH_TO_ROOT_CA &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;certs/AmazonRootCA1.pem&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PATH_TO_CERT &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;certs/128eb8547f...-certificate.pem.crt&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# Update to your file name&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PATH_TO_PRIVATE_KEY &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;certs/128eb8547f...-private.pem.key&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# Update to your file name&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Save the file.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Verify Data Flow &amp; Alerts</title>
+				<link>http://localhost:1313/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/2-verify-results/</link>
+				<pubDate>Wed, 13 May 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/en/2-workshop/2.2-iotsentinel/3-verification/2-verify-results/</guid>
+				<description>&lt;h4 id=&#34;1-inspect-the-dynamodb-storage&#34;&gt;1. Inspect the DynamoDB Storage&lt;/h4&gt;&#xA;&lt;p&gt;As soon as the Python script is running, data is being pushed through IoT Core, into SQS, and written directly to the database by Lambda.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Return to the AWS Console and open &lt;strong&gt;DynamoDB&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;Select &lt;strong&gt;Explore items&lt;/strong&gt; from the left menu.&lt;/li&gt;&#xA;&lt;li&gt;Select your &lt;code&gt;IoT_Fleet_Data&lt;/code&gt; table.&lt;/li&gt;&#xA;&lt;li&gt;Click the &lt;strong&gt;Run&lt;/strong&gt; (or Scan) button. You will see a stream of records (Items) appear with complete information: &lt;code&gt;truck_id&lt;/code&gt;, &lt;code&gt;temperature&lt;/code&gt;, &lt;code&gt;latitude&lt;/code&gt;, &lt;code&gt;longitude&lt;/code&gt;, and &lt;code&gt;timestamp_ms&lt;/code&gt;.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/aws-project/images/IoTSentinel/3-kiem-tra/dynamo_data.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;DynamoDB data&#34;&gt;&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

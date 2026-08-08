@@ -1,145 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Chuẩn bị kiến trúc, Storage và IAM on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/</link><description>Recent content in Chuẩn bị kiến trúc, Storage và IAM on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description><generator>Hugo</generator><language>vi</language><lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/index.xml" rel="self" type="application/rss+xml"/><item><title>Kiến trúc và Data Contract</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.1-current-architecture-and-data-contract/</link><pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.1-current-architecture-and-data-contract/</guid><description>&lt;p&gt;Tôi chia kiến trúc thành Data Lake path và Serving path. Điểm nối hai path là Lambda QMJ Loader: S3 tạo Parquet mới, S3 gửi &lt;code&gt;ObjectCreated&lt;/code&gt; event, Lambda đọc file và ghi item sang DynamoDB.&lt;/p&gt;
-&lt;h2 id="data-flow"&gt;Data Flow&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Data Lake path
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Sources → Backfill/Daily Ingestion → S3 Raw → Glue PySpark QMJ → S3 Processed
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Serving path
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;S3 Processed -- ObjectCreated (*.parquet) --&amp;gt; Lambda QMJ Loader --&amp;gt; DynamoDB
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;DynamoDB --&amp;gt; Lambda Reader --&amp;gt; API Gateway --&amp;gt; Browser
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Automation path
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;EventBridge Scheduler - - -→ Glue Python Shell Daily Ingestion
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="data-contract"&gt;Data Contract&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Dataset&lt;/th&gt;
-					&lt;th&gt;Grain&lt;/th&gt;
-					&lt;th&gt;Output location&lt;/th&gt;
-					&lt;th&gt;Consumer&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;&lt;code&gt;us_prices_raw.parquet&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;ticker + price_date&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;raw_us_market/YYYY/MM/DD/&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;Glue PySpark QMJ&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;&lt;code&gt;us_company_info.parquet&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;ticker + snapshot_date&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;raw_us_market/YYYY/MM/DD/&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;Glue PySpark QMJ&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;&lt;code&gt;us_financials_raw.parquet&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;ticker + report_date + period_type + snapshot_date&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;raw_us_market/YYYY/MM/DD/&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;Glue PySpark QMJ&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;QMJ output Parquet&lt;/td&gt;
-					&lt;td&gt;Một row cho một &lt;code&gt;ticker&lt;/code&gt; tại &lt;code&gt;AS_OF_DATE&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;processed_qmj/as_of_date=.../&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;Lambda QMJ Loader&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;DynamoDB item&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;ticker + snapshot_date&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;Table &lt;code&gt;qmj_screener&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;Lambda Reader&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;</description></item><item><title>Tạo S3 Data Zones</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.2-create-s3-data-zones/</link><pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.2-create-s3-data-zones/</guid><description>&lt;p&gt;Tạo ba Bucket tách biệt: Raw, Processed và Static Website. Raw/Processed không public; Website Bucket chỉ public qua CloudFront hoặc Static Website policy sau khi hoàn thiện.&lt;/p&gt;
-&lt;h2 id="tạo-buckets"&gt;Tạo Buckets&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Bước&lt;/th&gt;
-					&lt;th&gt;Hành động&lt;/th&gt;
-					&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;Amazon S3 → &lt;strong&gt;Create bucket&lt;/strong&gt;&lt;/td&gt;
-					&lt;td&gt;Tạo Raw Bucket&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;2&lt;/td&gt;
-					&lt;td&gt;Nhập name&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;stock-screener-raw-tên-của-bạn&lt;/code&gt;&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;3&lt;/td&gt;
-					&lt;td&gt;Chọn Region&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;ap-southeast-1&lt;/code&gt; hoặc Region bạn dùng cho Glue&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;4&lt;/td&gt;
-					&lt;td&gt;Giữ Block Public Access&lt;/td&gt;
-					&lt;td&gt;Raw data không public&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;5&lt;/td&gt;
-					&lt;td&gt;Lặp lại&lt;/td&gt;
-					&lt;td&gt;Tạo &lt;code&gt;stock-screener-processed-tên-của-bạn&lt;/code&gt;&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;6&lt;/td&gt;
-					&lt;td&gt;Lặp lại&lt;/td&gt;
-					&lt;td&gt;Tạo &lt;code&gt;stock-screener-web-tên-của-bạn&lt;/code&gt; cho frontend&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id="prefix-contract"&gt;Prefix Contract&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Raw
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;raw_us_market/YYYY/MM/DD/us_prices_raw.parquet
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;raw_us_market/YYYY/MM/DD/us_company_info.parquet
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;raw_us_market/YYYY/MM/DD/us_financials_raw.parquet
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Processed
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;processed_qmj/as_of_date=YYYY-MM-DD/part-*.snappy.parquet
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Static frontend
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index.html
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;assets/
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src="https://Oolongk.github.io/aws-project/images/stock-screener/1-preparation/create-s3-1.png?featherlight=false&amp;amp;width=90pc" alt="Tạo S3 data zones"&gt;
-&lt;img src="https://Oolongk.github.io/aws-project/images/stock-screener/1-preparation/create-s3-2.png?featherlight=false&amp;amp;width=90pc" alt="Tạo S3 data zones"&gt;
-&lt;img src="https://Oolongk.github.io/aws-project/images/stock-screener/1-preparation/create-s3-3.png?featherlight=false&amp;amp;width=90pc" alt="Tạo S3 data zones"&gt;&lt;/p&gt;</description></item><item><title>Tạo IAM Role theo Least Privilege</title><link>https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.3-create-iam-roles/</link><pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate><guid>https://Oolongk.github.io/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.3-create-iam-roles/</guid><description>&lt;p&gt;Tạo Role riêng cho Glue, Lambda Loader, Lambda Reader và EventBridge Scheduler. Không hard-code Access Key trong Python source code, Glue argument hoặc Lambda environment variable.&lt;/p&gt;
-&lt;h2 id="role-matrix"&gt;Role matrix&lt;/h2&gt;
-&lt;table&gt;
-	&lt;thead&gt;
-			&lt;tr&gt;
-					&lt;th&gt;Role&lt;/th&gt;
-					&lt;th&gt;Dùng bởi&lt;/th&gt;
-					&lt;th&gt;Quyền tối thiểu&lt;/th&gt;
-			&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-			&lt;tr&gt;
-					&lt;td&gt;&lt;code&gt;AWSGlueServiceRole-StockScreener&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;Daily Ingestion và QMJ Transform&lt;/td&gt;
-					&lt;td&gt;Đọc/Ghi Raw, đọc/ghi Processed&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;&lt;code&gt;LambdaQMJLoaderRole&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;Lambda được S3 trigger&lt;/td&gt;
-					&lt;td&gt;List/Get QMJ Parquet, &lt;code&gt;dynamodb:BatchWriteItem&lt;/code&gt;, CloudWatch Logs&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;&lt;code&gt;LambdaStockScreenerReaderRole&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;Lambda Reader&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;dynamodb:Query&lt;/code&gt;, CloudWatch Logs&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-					&lt;td&gt;&lt;code&gt;EventBridgeSchedulerStockScreenerRole&lt;/code&gt;&lt;/td&gt;
-					&lt;td&gt;EventBridge Scheduler&lt;/td&gt;
-					&lt;td&gt;&lt;code&gt;glue:StartJobRun&lt;/code&gt; cho Daily Ingestion Job&lt;/td&gt;
-			&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Tư duy kiến trúc sư – boundary per role.&lt;/strong&gt; QMJ Transform không cần quyền DynamoDB vì source code chỉ write Processed Parquet. Lambda Loader mới là service có quyền batch write vào &lt;code&gt;qmj_screener&lt;/code&gt;.&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Chuẩn bị kiến trúc, Storage và IAM on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</title>
+		<link>http://localhost:1313/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/</link>
+		<description>Recent content in Chuẩn bị kiến trúc, Storage và IAM on AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh</description>
+		<generator>Hugo</generator>
+		<language>vi</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Kiến trúc và Data Contract</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.1-current-architecture-and-data-contract/</link>
+				<pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.1-current-architecture-and-data-contract/</guid>
+				<description>&lt;p&gt;Tôi chia kiến trúc thành Data Lake path và Serving path. Điểm nối hai path là Lambda QMJ Loader: S3 tạo Parquet mới, S3 gửi &lt;code&gt;ObjectCreated&lt;/code&gt; event, Lambda đọc file và ghi item sang DynamoDB.&lt;/p&gt;&#xA;&lt;h2 id=&#34;data-flow&#34;&gt;Data Flow&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Data Lake path&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Sources → Backfill/Daily Ingestion → S3 Raw → Glue PySpark QMJ → S3 Processed&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Serving path&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;S3 Processed -- ObjectCreated (*.parquet) --&amp;gt; Lambda QMJ Loader --&amp;gt; DynamoDB&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DynamoDB --&amp;gt; Lambda Reader --&amp;gt; API Gateway --&amp;gt; Browser&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Automation path&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;EventBridge Scheduler - - -→ Glue Python Shell Daily Ingestion&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;data-contract&#34;&gt;Data Contract&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Dataset&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Grain&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Output location&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Consumer&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;us_prices_raw.parquet&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;ticker + price_date&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;raw_us_market/YYYY/MM/DD/&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Glue PySpark QMJ&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;us_company_info.parquet&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;ticker + snapshot_date&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;raw_us_market/YYYY/MM/DD/&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Glue PySpark QMJ&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;us_financials_raw.parquet&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;ticker + report_date + period_type + snapshot_date&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;raw_us_market/YYYY/MM/DD/&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Glue PySpark QMJ&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;QMJ output Parquet&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Một row cho một &lt;code&gt;ticker&lt;/code&gt; tại &lt;code&gt;AS_OF_DATE&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;processed_qmj/as_of_date=.../&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Lambda QMJ Loader&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;DynamoDB item&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;ticker + snapshot_date&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Table &lt;code&gt;qmj_screener&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Lambda Reader&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;</description>
+			</item>
+			<item>
+				<title>Tạo S3 Data Zones</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.2-create-s3-data-zones/</link>
+				<pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.2-create-s3-data-zones/</guid>
+				<description>&lt;p&gt;Tạo ba Bucket tách biệt: Raw, Processed và Static Website. Raw/Processed không public; Website Bucket chỉ public qua CloudFront hoặc Static Website policy sau khi hoàn thiện.&lt;/p&gt;&#xA;&lt;h2 id=&#34;tạo-buckets&#34;&gt;Tạo Buckets&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Bước&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Hành động&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Chi tiết kỹ thuật&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;1&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Amazon S3 → &lt;strong&gt;Create bucket&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tạo Raw Bucket&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Nhập name&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;stock-screener-raw-tên-của-bạn&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;3&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Chọn Region&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;ap-southeast-1&lt;/code&gt; hoặc Region bạn dùng cho Glue&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;4&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Giữ Block Public Access&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Raw data không public&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Lặp lại&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tạo &lt;code&gt;stock-screener-processed-tên-của-bạn&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;6&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Lặp lại&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Tạo &lt;code&gt;stock-screener-web-tên-của-bạn&lt;/code&gt; cho frontend&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;prefix-contract&#34;&gt;Prefix Contract&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;# Raw&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;raw_us_market/YYYY/MM/DD/us_prices_raw.parquet&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;raw_us_market/YYYY/MM/DD/us_company_info.parquet&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;raw_us_market/YYYY/MM/DD/us_financials_raw.parquet&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;# Processed&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;processed_qmj/as_of_date=YYYY-MM-DD/part-*.snappy.parquet&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;# Static frontend&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;index.html&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;assets/&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/aws-project/images/stock-screener/1-preparation/create-s3-1.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Tạo S3 data zones&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/stock-screener/1-preparation/create-s3-2.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Tạo S3 data zones&#34;&gt;&#xA;&lt;img src=&#34;http://localhost:1313/aws-project/images/stock-screener/1-preparation/create-s3-3.png?featherlight=false&amp;amp;width=90pc&#34; alt=&#34;Tạo S3 data zones&#34;&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Tạo IAM Role theo Least Privilege</title>
+				<link>http://localhost:1313/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.3-create-iam-roles/</link>
+				<pubDate>Mon, 06 Jul 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/aws-project/2-workshop/2.5-stock-screener/1-chuan-bi/1.3-create-iam-roles/</guid>
+				<description>&lt;p&gt;Tạo Role riêng cho Glue, Lambda Loader, Lambda Reader và EventBridge Scheduler. Không hard-code Access Key trong Python source code, Glue argument hoặc Lambda environment variable.&lt;/p&gt;&#xA;&lt;h2 id=&#34;role-matrix&#34;&gt;Role matrix&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Role&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Dùng bởi&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Quyền tối thiểu&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;AWSGlueServiceRole-StockScreener&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Daily Ingestion và QMJ Transform&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Đọc/Ghi Raw, đọc/ghi Processed&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;LambdaQMJLoaderRole&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Lambda được S3 trigger&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;List/Get QMJ Parquet, &lt;code&gt;dynamodb:BatchWriteItem&lt;/code&gt;, CloudWatch Logs&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;LambdaStockScreenerReaderRole&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Lambda Reader&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;dynamodb:Query&lt;/code&gt;, CloudWatch Logs&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;EventBridgeSchedulerStockScreenerRole&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;EventBridge Scheduler&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;glue:StartJobRun&lt;/code&gt; cho Daily Ingestion Job&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Tư duy kiến trúc sư – boundary per role.&lt;/strong&gt; QMJ Transform không cần quyền DynamoDB vì source code chỉ write Processed Parquet. Lambda Loader mới là service có quyền batch write vào &lt;code&gt;qmj_screener&lt;/code&gt;.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>
