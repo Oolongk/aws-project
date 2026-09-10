@@ -3,7 +3,7 @@ weight: 5
 date: 2026-06-25
 title: "Cleanup and Conclusion"
 chapter: false
-pre: "<b>2.3.5. </b>"
+pre: "<b>4.5. </b>"
 ---
 
 Hello, welcome to **Chapter 5: Cleanup and Conclusion**. You have successfully completed building a massive Data Pipeline system and integrated AI on AWS. 

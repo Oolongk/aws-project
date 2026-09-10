@@ -3,7 +3,7 @@ weight: 1
 date: 2026-06-25
 title: "Chuẩn bị Tài nguyên (Preparation)"
 chapter: false
-pre: "<b>2.3.1. </b>"
+pre: "<b>4.1. </b>"
 ---
 
 Trước khi bắt tay vào xây dựng đường ống dữ liệu (Data Pipeline), chúng ta cần chuẩn bị sẵn sàng các "nguyên liệu" nền tảng trên đám mây AWS. 

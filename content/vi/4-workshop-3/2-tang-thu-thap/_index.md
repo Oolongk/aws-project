@@ -3,7 +3,7 @@ weight: 2
 date: 2026-06-25
 title: "Tầng Tiếp nhận (Ingestion Layer)"
 chapter: false
-pre: "<b>2.3.2. </b>"
+pre: "<b>4.2. </b>"
 ---
 
 Sau khi đã chuẩn bị xong cơ sở hạ tầng, chúng ta bước vào cấu hình tầng tiếp nhận. 

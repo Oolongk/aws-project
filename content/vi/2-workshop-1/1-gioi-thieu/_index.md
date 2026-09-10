@@ -3,7 +3,7 @@ weight: 1
 date: 2026-02-25
 title: "Giới thiệu và Kiến trúc"
 chapter: false
-pre: "<b>2.1.1. </b>"
+pre: "<b>2.1. </b>"
 ---
 
 ## Bài toán đặt ra

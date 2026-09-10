@@ -3,7 +3,7 @@ weight: 3
 date: 2026-06-29
 title: "Tầng Phân Tích Dữ Liệu (Analytics Layer)"
 chapter: false
-pre: "<b>2.4.3. </b>"
+pre: "<b>5.3. </b>"
 ---
 
 Sau khi dữ liệu đã được làm phẳng và nén thành Parquet ở Chương 2, chúng đã sẵn sàng để khai thác. Tuy nhiên, thay vì phải tải dữ liệu về máy để phân tích, chúng ta sẽ sử dụng **Amazon Athena** – một dịch vụ truy vấn SQL Serverless siêu mạnh mẽ của AWS.

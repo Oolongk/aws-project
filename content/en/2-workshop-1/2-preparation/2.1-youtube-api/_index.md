@@ -3,7 +3,7 @@ weight: 1
 date: 2026-02-25
 title: "Create YouTube API Key"
 chapter: false
-pre: "<b>2.1.2.1. </b>"
+pre: "<b>2.2.1. </b>"
 ---
 
 To scrape comments, we need to request permission from Google.

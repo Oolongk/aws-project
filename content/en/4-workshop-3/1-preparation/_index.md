@@ -3,7 +3,7 @@ weight: 1
 date: 2026-06-25
 title: "Resource Preparation"
 chapter: false
-pre: "<b>2.3.1. </b>"
+pre: "<b>4.1. </b>"
 ---
 
 Before building the Data Pipeline, we need to prepare the foundational "ingredients" on the AWS cloud. 

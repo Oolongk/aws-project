@@ -3,7 +3,7 @@ weight: 4
 date: "2026-05-13"
 title: "Resource Cleanup"
 chapter: false
-pre: "<b>2.2.4. </b>"
+pre: "<b>3.4. </b>"
 ---
 
 #### Resource Cleanup

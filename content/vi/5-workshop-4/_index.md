@@ -1,6 +1,6 @@
 ---
 weight: 5
-title: "Xây Dựng Data Lakehouse Serverless: Dota 2 Meta Analytics"
+title: "Workshop 4: Dota 2 Data Lakehouse & Live Dashboard"
 date: 2026-06-29
 chapter: true
 pre: "<b>5. </b>"

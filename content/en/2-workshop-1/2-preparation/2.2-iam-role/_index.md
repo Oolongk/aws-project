@@ -3,7 +3,7 @@ weight: 2
 date: 2026-03-05
 title: "Create IAM Role & Enable AI"
 chapter: false
-pre: "<b>2.1.2.2. </b>"
+pre: "<b>2.2.2. </b>"
 ---
 
 In AWS, services are isolated by default and are not permitted to communicate with each other. To allow Lambda to call AI Bedrock, read/write files on S3, and run Athena queries, we must grant it an identity card called an **IAM Role**.

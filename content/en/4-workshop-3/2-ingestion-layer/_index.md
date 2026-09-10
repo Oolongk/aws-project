@@ -3,7 +3,7 @@ weight: 2
 date: 2026-06-25
 title: "Ingestion Layer"
 chapter: false
-pre: "<b>2.3.2. </b>"
+pre: "<b>4.2. </b>"
 ---
 
 After completing the infrastructure preparation, we move on to configuring the ingestion layer. 

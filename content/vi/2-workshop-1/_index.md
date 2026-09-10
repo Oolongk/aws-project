@@ -1,6 +1,6 @@
 ---
 weight: 2
-title: "Xây dựng Data Pipeline Phân tích Cảm xúc Mạng xã hội trên AWS"
+title: "Workshop 1: Phân tích Cảm xúc Mạng xã hội"
 date: 2026-02-25
 chapter: true
 pre: "<b>2. </b>"

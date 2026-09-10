@@ -1,6 +1,6 @@
 ---
 weight: 6
-title: "US Stock Screener Pipeline"
+title: "Workshop 5: US Stock Screener Pipeline"
 date: 2026-07-06
 chapter: true
 pre: "<b>6. </b>"

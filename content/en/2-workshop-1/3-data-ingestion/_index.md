@@ -3,7 +3,7 @@ weight: 3
 date: 2026-03-12
 title: "Data Ingestion Layer with AWS SQS & Lambda"
 chapter: false
-pre: "<b>2.1.3. </b>"
+pre: "<b>2.3. </b>"
 ---
 
 Welcome to the first critical stage: Building the Data Collection Pipeline. Instead of a bulky monolithic design, we will build a **Decoupled** architecture using **Amazon SQS** as a buffer between "finding videos" and "scraping comments".

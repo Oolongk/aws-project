@@ -3,7 +3,7 @@ weight: 3
 date: 2026-03-05
 title: "Build Data Lake with Amazon S3"
 chapter: false
-pre: "<b>2.1.2.3. </b>"
+pre: "<b>2.2.3. </b>"
 ---
 
 Following the standard Data Engineer architecture, we will build a central Data Lake using **Amazon S3**. Instead of creating multiple separate Buckets, we will use **a single Bucket** and divide it into folders following a multi-tier data management model.

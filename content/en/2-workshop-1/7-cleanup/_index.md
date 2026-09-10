@@ -3,7 +3,7 @@ weight: 7
 date: 2026-03-18
 title: "Resource Cleanup"
 chapter: false
-pre: "<b>2.1.7. </b>"
+pre: "<b>2.7. </b>"
 ---
 
 Congratulations on completing the project! In the world of Cloud Computing, resources cost money, and if forgotten they will "burn through" your budget. Even though our project primarily uses Serverless services within the Free Tier, cleaning up thoroughly after practice is a mandatory habit for every professional Data Engineer.

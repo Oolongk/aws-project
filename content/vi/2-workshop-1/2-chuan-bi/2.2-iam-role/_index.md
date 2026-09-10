@@ -3,7 +3,7 @@ weight: 2
 date: 2026-03-05
 title: "Tạo IAM Role & Kích hoạt AI"
 chapter: false
-pre: "<b>2.1.2.2. </b>"
+pre: "<b>2.2.2. </b>"
 ---
 
 Trong AWS, các dịch vụ mặc định bị cách ly và không được phép "nói chuyện" với nhau. Để Lambda có thể gọi AI Bedrock, đọc/ghi file trên S3 và chạy lệnh Athena, chúng ta phải cấp cho nó một "tấm thẻ căn cước" gọi là **IAM Role**.

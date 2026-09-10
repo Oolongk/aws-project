@@ -3,7 +3,7 @@ weight: 4
 date: 2026-06-25
 title: "Tầng Trí tuệ Nhân tạo (AI)"
 chapter: false
-pre: "<b>2.3.4. </b>"
+pre: "<b>4.4. </b>"
 ---
 
 Chào bạn, chào mừng đến với **Chương 4: Tầng Trí tuệ Nhân tạo (AI)**. Sau khi luồng dữ liệu Clickstream đã được làm sạch, ép kiểu và chuẩn hóa mốc thời gian về dạng UNIX Epoch Time thông qua Data Pipeline ở các chương trước, chúng ta đã có một "nguyên liệu" đạt chuẩn Enterprise sẵn sàng phục vụ Học máy.

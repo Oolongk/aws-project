@@ -3,7 +3,7 @@ weight: 1
 date: 2026-02-25
 title: "Introduction"
 chapter: false
-pre: "<b>2.1.1. </b>"
+pre: "<b>2.1. </b>"
 ---
 
 ### Project Introduction

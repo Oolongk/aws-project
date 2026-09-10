@@ -12,8 +12,8 @@ chapter: false
 
 &emsp; **Major:** Information Technology / Software Engineering
 
-&emsp; **Program:** AWS First Cloud Journey (FCJ)
+&emsp; **Program:** AWS First Cloud AI Journey (FCAJ)
 
 &emsp; **Direction:** Data Engineer
 
-Welcome to the personal project report page for the AWS FCJ program. Please select the corresponding section in the left navigation bar to view detailed content.
+Welcome to the personal project report page for the AWS FCAJ program. Please select the corresponding section in the left navigation bar to view detailed content.

@@ -3,7 +3,7 @@ weight: 5
 date: 2026-06-29
 title: "Tầng API & Giao Diện Người Dùng (API & UI Layer)"
 chapter: false
-pre: "<b>2.4.5. </b>"
+pre: "<b>5.5. </b>"
 ---
 
 Khi dữ liệu tổng hợp (Metrics) đã được nạp an toàn vào Amazon DynamoDB ở Chương 4, khâu cuối cùng là xây dựng một cổng giao tiếp API và giao diện để người dùng có thể tra cứu.

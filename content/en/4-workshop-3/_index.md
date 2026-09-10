@@ -1,6 +1,6 @@
 ---
 weight: 4
-title: "Building an AI-Driven Serverless Data Lakehouse for Clickstream"
+title: "Workshop 3: Clickstream AI Data Lakehouse"
 date: 2026-06-25
 chapter: false
 pre: "<b>4. </b>"

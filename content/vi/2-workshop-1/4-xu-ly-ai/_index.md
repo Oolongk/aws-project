@@ -3,7 +3,7 @@ weight: 4
 date: 2026-03-12
 title: "Xử lý Dữ liệu và Tích hợp LLM với Amazon Bedrock (Transformation Layer)"
 chapter: false
-pre: "<b>2.1.4. </b>"
+pre: "<b>2.4. </b>"
 ---
 
 Tại lớp Transformation, dữ liệu JSON thô từ S3 sẽ được phân tích, tóm tắt và dán nhãn cảm xúc tự động. Hệ thống sử dụng kiến trúc Hướng sự kiện (Event-driven) với S3 Trigger để kích hoạt hàm `Transformer_Lambda`. Lõi xử lý ngôn ngữ tự nhiên (NLP) được đảm nhiệm bởi mô hình **Claude 4.5 Haiku** thông qua dịch vụ **Amazon Bedrock**.

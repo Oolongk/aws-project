@@ -3,7 +3,7 @@ weight: 5
 date: 2026-03-14
 title: "Data Visualization: Amazon Athena and AWS QuickSight"
 chapter: false
-pre: "<b>2.1.5. </b>"
+pre: "<b>2.5. </b>"
 ---
 
 The final step of the Data Pipeline architecture is the Presentation Layer. Instead of building complex ETL flows to load data into a traditional Database, the system uses **Amazon Athena** to query JSON files directly on S3 using SQL (Schema-on-read architecture). The data is then pushed into the SPICE memory of **Amazon QuickSight** to build a BI Dashboard.

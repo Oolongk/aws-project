@@ -3,7 +3,7 @@ weight: 3
 date :  "2026-05-13" 
 title: "Kiểm tra và Xác minh Hệ thống"
 chapter: false
-pre: "<b>2.2.3. </b>"
+pre: "<b>3.3. </b>"
 ---
 
 #### Kiểm tra hoạt động của hệ thống

@@ -3,7 +3,7 @@ weight: 3
 date: 2026-06-29
 title: "Analytics Layer"
 chapter: false
-pre: "<b>2.4.3. </b>"
+pre: "<b>5.3. </b>"
 ---
 
 After data has been flattened and compressed into Parquet in Chapter 2, it is ready for analysis. However, instead of downloading data to a local machine for analysis, we will use **Amazon Athena** — AWS's extremely powerful Serverless SQL query service.

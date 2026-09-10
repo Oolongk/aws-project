@@ -1,6 +1,6 @@
 ---
 weight: 2
-title: "Social Media Sentiment Analysis Data Pipeline on AWS"
+title: "Workshop 1: Social Media Sentiment Sentinel"
 date: 2026-02-25
 chapter: true
 pre: "<b>2. </b>"

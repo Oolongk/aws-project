@@ -3,7 +3,7 @@ weight: 1
 date :  "2026-05-13" 
 title: "Chạy Giả lập Thiết bị IoT"
 chapter: false
-pre: "<b>2.2.3.1. </b>"
+pre: "<b>3.3.1. </b>"
 ---
 
 #### 1. Cập nhật mã nguồn Python

@@ -3,7 +3,7 @@ weight: 3
 date: 2026-03-12
 title: "Thu thập dữ liệu (Ingestion Layer) với AWS SQS & Lambda"
 chapter: false
-pre: "<b>2.1.3. </b>"
+pre: "<b>2.3. </b>"
 ---
 
 Chào mừng các bạn đến với chặng quan trọng đầu tiên: Xây dựng đường ống thu thập dữ liệu (Data Pipeline). Thay vì một thiết kế nguyên khối (Monolithic) cồng kềnh, chúng ta sẽ xây dựng kiến trúc **Decoupled (Tách rời)** bằng cách dùng **Amazon SQS** làm vùng đệm giữa việc "tìm video" và "cào bình luận".

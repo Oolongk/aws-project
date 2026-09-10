@@ -3,7 +3,7 @@ weight: 2
 date: "2026-05-13"
 title: "Create Amazon SQS & Write AWS Lambda"
 chapter: false
-pre: "<b>2.2.2.2. </b>"
+pre: "<b>3.2.2. </b>"
 ---
 
 #### 1. Create Amazon SQS Queue

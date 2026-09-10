@@ -3,7 +3,7 @@ weight: 3
 date: 2026-03-05
 title: "Xây dựng Data Lake với Amazon S3"
 chapter: false
-pre: "<b>2.1.2.3. </b>"
+pre: "<b>2.2.3. </b>"
 ---
 
 Trong kiến trúc chuẩn của Data Engineer, chúng ta sẽ xây dựng một Data Lake trung tâm bằng **Amazon S3**. Thay vì tạo nhiều Bucket rời rạc, chúng ta sẽ dùng **1 Bucket duy nhất** và chia thành các thư mục (Folders) theo mô hình quản lý dữ liệu đa tầng.

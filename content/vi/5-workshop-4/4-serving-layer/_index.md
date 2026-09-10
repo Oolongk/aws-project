@@ -3,7 +3,7 @@ weight: 4
 date: 2026-06-29
 title: "Tầng Phục Vụ Dữ Liệu (Serving Layer)"
 chapter: false
-pre: "<b>2.4.4. </b>"
+pre: "<b>5.4. </b>"
 ---
 
 Dữ liệu phân tích dù có hay đến mấy cũng sẽ trở nên vô giá trị nếu hệ thống mất tới vài phút để hiển thị nó lên màn hình cho người dùng. 

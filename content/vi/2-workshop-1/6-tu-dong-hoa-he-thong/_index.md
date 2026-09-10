@@ -3,7 +3,7 @@ weight: 6
 date: 2026-03-14
 title: "Tự động hóa toàn phần (Full Automation) với Amazon EventBridge"
 chapter: false
-pre: "<b>2.1.6. </b>"
+pre: "<b>2.6. </b>"
 ---
 
 Một hệ thống dữ liệu Serverless chỉ thực sự hoàn thiện khi nó đạt trạng thái "Zero-touch" – tự động vận hành mà không cần con người can thiệp. Ở chương cuối cùng này, chúng ta sẽ thiết lập đồng hồ sinh học cho toàn bộ dự án: Tự động thức dậy cào dữ liệu vào 8:00 sáng mỗi ngày, và tự động cập nhật báo cáo lên Dashboard để sếp có thể xem cùng ly cà phê sáng.

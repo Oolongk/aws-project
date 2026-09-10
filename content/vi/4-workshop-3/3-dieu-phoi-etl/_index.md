@@ -3,7 +3,7 @@ weight: 3
 date: 2026-06-25
 title: "Tầng Điều phối và ETL"
 chapter: false
-pre: "<b>2.3.3. </b>"
+pre: "<b>4.3. </b>"
 ---
 
 Chào bạn, chào mừng đến với **Chương 3: Tầng Điều phối và ETL**. Đây chính là "trung tâm điều khiển" chịu trách nhiệm tự động hóa toàn bộ dòng chảy dữ liệu trong hệ thống Serverless Data Lakehouse.

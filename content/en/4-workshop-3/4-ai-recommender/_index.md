@@ -3,7 +3,7 @@ weight: 4
 date: 2026-06-25
 title: "Artificial Intelligence (AI) Layer"
 chapter: false
-pre: "<b>2.3.4. </b>"
+pre: "<b>4.4. </b>"
 ---
 
 Hello, welcome to **Chapter 4: Artificial Intelligence (AI) Layer**. After the Clickstream data flow has been cleaned, type-casted, and time-standardized to UNIX Epoch Time format through the Data Pipeline in the previous chapters, we have an Enterprise-standard "ingredient" ready for Machine Learning.

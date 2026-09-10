@@ -3,7 +3,7 @@ weight: 3
 date: "2026-05-13"
 title: "Configure AWS IoT Core & IoT Rules"
 chapter: false
-pre: "<b>2.2.2.3. </b>"
+pre: "<b>3.2.3. </b>"
 ---
 
 #### 1. Create a "Thing" for the Truck Fleet

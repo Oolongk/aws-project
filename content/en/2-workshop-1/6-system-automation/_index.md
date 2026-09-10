@@ -3,7 +3,7 @@ weight: 6
 date: 2026-03-14
 title: "Full Automation with Amazon EventBridge"
 chapter: false
-pre: "<b>2.1.6. </b>"
+pre: "<b>2.6. </b>"
 ---
 
 A Serverless data system is only truly complete when it reaches a "Zero-touch" state — operating automatically without human intervention. In this final chapter, we will set the biological clock for the entire project: automatically wake up and scrape data at 8:00 AM every day, and automatically refresh the report on the Dashboard so stakeholders can view it over their morning coffee.

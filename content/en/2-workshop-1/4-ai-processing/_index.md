@@ -3,7 +3,7 @@ weight: 4
 date: 2026-03-12
 title: "Data Processing & LLM Integration with Amazon Bedrock (Transformation Layer)"
 chapter: false
-pre: "<b>2.1.4. </b>"
+pre: "<b>2.4. </b>"
 ---
 
 At the Transformation layer, raw JSON data from S3 will be analyzed, summarized, and automatically sentiment-labeled. The system uses an Event-Driven architecture with an S3 Trigger to activate the `Transformer_Lambda` function. Natural language processing (NLP) is handled by the **Claude 4.5 Haiku** model via **Amazon Bedrock**.

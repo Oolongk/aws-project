@@ -3,7 +3,7 @@ weight: 2
 date :  "2026-05-13" 
 title: "Triển khai Cơ sở hạ tầng Cloud"
 chapter: false
-pre: "<b>2.2.2. </b>"
+pre: "<b>3.2. </b>"
 ---
 
 #### Triển khai hệ thống trên AWS

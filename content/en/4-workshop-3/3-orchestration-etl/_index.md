@@ -3,7 +3,7 @@ weight: 3
 date: 2026-06-25
 title: "Orchestration and ETL Layer"
 chapter: false
-pre: "<b>2.3.3. </b>"
+pre: "<b>4.3. </b>"
 ---
 
 Hello, welcome to **Chapter 3: Orchestration and ETL Layer**. This is the "control center" responsible for automating the entire data flow in the Serverless Data Lakehouse system.

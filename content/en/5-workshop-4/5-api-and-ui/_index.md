@@ -3,7 +3,7 @@ weight: 5
 date: 2026-06-29
 title: "API & UI Layer"
 chapter: false
-pre: "<b>2.4.5. </b>"
+pre: "<b>5.5. </b>"
 ---
 
 With aggregated metrics securely loaded into Amazon DynamoDB in Chapter 4, the final phase is building an API interface and web UI so users can query the data.

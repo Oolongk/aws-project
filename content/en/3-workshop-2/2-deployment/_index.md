@@ -3,7 +3,7 @@ weight: 2
 date: "2026-05-13"
 title: "Cloud Infrastructure Deployment"
 chapter: false
-pre: "<b>2.2.2. </b>"
+pre: "<b>3.2. </b>"
 ---
 
 #### Deploy the System on AWS

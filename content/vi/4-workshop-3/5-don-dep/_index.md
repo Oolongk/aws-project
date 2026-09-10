@@ -3,7 +3,7 @@ weight: 5
 date: 2026-06-25
 title: "Dọn dẹp và Kết luận"
 chapter: false
-pre: "<b>2.3.5. </b>"
+pre: "<b>4.5. </b>"
 ---
 
 Chào bạn, chào mừng đến với **Chương 5: Dọn dẹp và Kết luận**. Bạn đã xuất sắc hoàn thành việc xây dựng một hệ thống Data Pipeline khổng lồ và tích hợp AI trên AWS. 

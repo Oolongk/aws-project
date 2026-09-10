@@ -3,7 +3,7 @@ weight: 5
 date: 2026-03-14
 title: "Trực quan hóa dữ liệu: Amazon Athena và AWS QuickSight"
 chapter: false
-pre: "<b>2.1.5. </b>"
+pre: "<b>2.5. </b>"
 ---
 
 Bước cuối cùng của kiến trúc Data Pipeline là lớp Trình bày (Presentation Layer). Thay vì phải xây dựng các luồng ETL (Extract, Transform, Load) phức tạp để đưa dữ liệu vào một Database truyền thống, hệ thống sẽ sử dụng **Amazon Athena** để truy vấn trực tiếp các file JSON trên S3 bằng SQL (kiến trúc Schema-on-read). Sau đó, dữ liệu được đẩy vào bộ nhớ SPICE của **Amazon QuickSight** để xây dựng BI Dashboard.

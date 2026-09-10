@@ -12,8 +12,8 @@ chapter: false
 
 &emsp; **Chuyên ngành:** Công nghệ Thông tin / Kỹ thuật Phần mềm
 
-&emsp; **Chương trình:** AWS First Cloud Journey (FCJ)
+&emsp; **Chương trình:** AWS First Cloud AI Journey (FCAJ)
 
 &emsp; **Định hướng:** Data Engineer
 
-Chào mừng Ban Quản trị đến với trang báo cáo dự án cá nhân chương trình AWS FCJ. Vui lòng chọn mục tương ứng trên thanh điều hướng bên trái để xem nội dung chi tiết.
+Chào mừng Ban Quản trị đến với trang báo cáo dự án cá nhân chương trình AWS FCAJ. Vui lòng chọn mục tương ứng trên thanh điều hướng bên trái để xem nội dung chi tiết.

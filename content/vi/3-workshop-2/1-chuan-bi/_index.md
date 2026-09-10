@@ -3,7 +3,7 @@ weight: 1
 date :  "2026-05-13" 
 title: "Chuẩn bị Môi trường và Giả lập"
 chapter: false
-pre: "<b>2.2.1. </b>"
+pre: "<b>3.1. </b>"
 ---
 
 #### Các bước chuẩn bị

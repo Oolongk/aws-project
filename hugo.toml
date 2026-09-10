@@ -10,19 +10,22 @@ home = [ "HTML", "RSS", "JSON"]
   showVisitedLinks = true
   disableSearch = false
   disableLanguageSwitching = false
+  disableLanguageSwitchingButton = false
   custom_css = ["css/custom.css"]
 
 [languages]
   [languages.vi]
     contentDir = 'content/vi'
-    title = 'AWS FCJ Capstone Report - Nguyễn Ngọc Tuấn Khanh'
+    title = 'AWS FCAJ Capstone Report - Nguyễn Ngọc Tuấn Khanh'
     weight = 1
+    languageName = 'Tiếng Việt'
     label = 'Tiếng Việt'
 
   [languages.en]
     contentDir = 'content/en'
-    title = 'AWS FCJ Capstone Report - Nguyen Ngoc Tuan Khanh'
+    title = 'AWS FCAJ Capstone Report - Nguyen Ngoc Tuan Khanh'
     weight = 2
+    languageName = 'English'
     label = 'English'
 
 [markup]

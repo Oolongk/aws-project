@@ -3,7 +3,7 @@ weight: 3
 date: "2026-05-13"
 title: "System Testing & Verification"
 chapter: false
-pre: "<b>2.2.3. </b>"
+pre: "<b>3.3. </b>"
 ---
 
 #### Verifying System Operation

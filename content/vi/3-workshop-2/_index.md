@@ -1,7 +1,7 @@
 ---
 weight: 3
 pre: "<b>3. </b>"
-title: "IoT Fleet Monitoring System"
+title: "Workshop 2: Hệ thống IoT Giám sát Đội xe"
 date: 2026-05-13
 chapter: false
 ---

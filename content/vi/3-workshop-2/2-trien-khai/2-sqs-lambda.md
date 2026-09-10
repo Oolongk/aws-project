@@ -3,7 +3,7 @@ weight: 2
 date :  "2026-05-13" 
 title: "Tạo Amazon SQS & Viết AWS Lambda"
 chapter: false
-pre: "<b>2.2.2.2. </b>"
+pre: "<b>3.2.2. </b>"
 ---
 
 #### 1. Tạo hàng đợi Amazon SQS

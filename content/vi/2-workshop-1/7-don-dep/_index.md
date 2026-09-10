@@ -3,7 +3,7 @@ weight: 7
 date: 2026-03-18
 title: "Dọn dẹp tài nguyên (Clean up)"
 chapter: false
-pre: "<b>2.1.7. </b>"
+pre: "<b>2.7. </b>"
 ---
 
 Chúc mừng bạn đã hoàn thành dự án! Trong thế giới Điện toán Đám mây (Cloud Computing), tài nguyên sinh ra tiền, nhưng nếu để quên thì nó sẽ "đốt" tiền. Dù dự án của chúng ta sử dụng chủ yếu các dịch vụ Serverless nằm trong gói Free Tier, việc dọn dẹp (Clean up) sạch sẽ sau khi thực hành vẫn là một thói quen bắt buộc của mọi Kỹ sư Dữ liệu chuyên nghiệp.

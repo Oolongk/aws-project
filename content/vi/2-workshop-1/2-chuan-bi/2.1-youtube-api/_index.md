@@ -3,7 +3,7 @@ weight: 1
 date: 2026-02-25
 title: "Tạo YouTube API Key"
 chapter: false
-pre: "<b>2.1.2.1. </b>"
+pre: "<b>2.2.1. </b>"
 ---
 
 Để cào được comment, chúng ta cần xin phép Google.

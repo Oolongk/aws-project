@@ -3,7 +3,7 @@ weight: 2
 date: "2026-05-13"
 title: "Verify Data Flow & Alerts"
 chapter: false
-pre: "<b>2.2.3.2. </b>"
+pre: "<b>3.3.2. </b>"
 ---
 
 #### 1. Inspect the DynamoDB Storage
